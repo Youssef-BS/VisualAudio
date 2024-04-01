@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import $ from 'jquery'; // Import jQuery
 import 'slick-carousel/slick/slick'; // Import Slick Carousel library
 import MainHeader from './right';
+import ForContainer from './components/FourContainer/ForContainer';
 window.ddfullscreenmenu = {
   togglemenu: () => {
     // Define the functionality of togglemenu here
@@ -297,6 +298,7 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <ForContainer />
     </div>       
         </>
     );
