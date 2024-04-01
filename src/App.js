@@ -6,6 +6,7 @@ import $ from 'jquery'; // Import jQuery
 import 'slick-carousel/slick/slick'; // Import Slick Carousel library
 import MainHeader from './right';
 import ForContainer from './components/FourContainer/ForContainer';
+import "./css/style.css";
 window.ddfullscreenmenu = {
   togglemenu: () => {
     // Define the functionality of togglemenu here
