@@ -5,7 +5,11 @@ import 'slick-carousel/slick/slick-theme.css';
 import $ from 'jquery'; // Import jQuery
 import 'slick-carousel/slick/slick'; // Import Slick Carousel library
 import MainHeader from './right';
-import Boxes from "./components/boxes/Boxes"
+import Boxes from "./components/boxes/Boxes";
+import Videos from "./components/videos/Videos"
+import Footer from './components/footer/Footer';
+import Privacy from './components/privacy/Privacy';
+
 window.ddfullscreenmenu = {
   togglemenu: () => {
     // Define the functionality of togglemenu here
@@ -298,8 +302,14 @@ const Header = () => {
           </div>
         </div>
       </div>
- <Boxes />
-    </div>       
+
+
+    </div> 
+
+<Boxes />
+<Videos /> 
+<Footer />  
+<Privacy />   
         </>
     );
 };

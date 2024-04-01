@@ -1,6 +1,5 @@
 import React from 'react';
 import { cheriket } from './testData';
-import "./boxes.css";
 
 const ForContainer = () => {
   return (
@@ -33,6 +32,8 @@ const ForContainer = () => {
                       </a>
                     </div>
                   ))}
+                  <button className="slick-prev slick-arrow" aria-label="Previous" type="button">Previous</button>
+                  <button className="slick-next slick-arrow" aria-label="Next" type="button">Next</button>
                 </div>
               </div>
             </div>
