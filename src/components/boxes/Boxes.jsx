@@ -1,7 +1,18 @@
 import React from 'react';
+import Slider from 'react-slick';
 import { cheriket } from './testData';
 
 const ForContainer = () => {
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    prevArrow: <button className="slick-prev slick-arrow" aria-label="Previous" type="button"><i className="fas fa-chevron-left"></i></button>,
+    nextArrow: <button className="slick-next slick-arrow" aria-label="Next" type="button"><i className="fas fa-chevron-right"></i></button>
+  };
+
   return (
     <section className="section-categories-boxes">
       <div className="container">
@@ -18,22 +29,22 @@ const ForContainer = () => {
                   <a href={category.photo} className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</a>
                 </div>
                 <div className="category-box__right jsProductsBoxSlider">
-                  {category.product.map((product, idx) => (
-                    <div className="product-box" key={idx}>
-                      <a href={product.photo}>
-                        <div className="product-box__img">
-                          <img src={product.photo} className="lazy-scroll" alt={product.title} />
-                        </div>
-                        <div className="product-box__details">
-                          <div className="product-box__title">{product.title}</div>
-                          <div className="product-box__desc">{product.text}</div>
-                        </div>
-                        <div className="product-box__price">Price: ${product.price}</div>
-                      </a>
-                    </div>
-                  ))}
-                  <button className="slick-prev slick-arrow" aria-label="Previous" type="button">Previous</button>
-                  <button className="slick-next slick-arrow" aria-label="Next" type="button">Next</button>
+                  <Slider {...settings}>
+                    {category.product.map((product, idx) => (
+                      <div className="product-box" key={idx}>
+                        <a href={product.photo}>
+                          <div className="product-box__img">
+                            <img src={product.photo} className="lazy-scroll" alt={product.title} />
+                          </div>
+                          <div className="product-box__details">
+                            <div className="product-box__title">{product.title}</div>
+                            <div className="product-box__desc">{product.text}</div>
+                          </div>
+                          <div className="product-box__price">Price: ${product.price}</div>
+                        </a>
+                      </div>
+                    ))}
+                  </Slider>
                 </div>
               </div>
             </div>

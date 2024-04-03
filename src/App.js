@@ -9,6 +9,9 @@ import Boxes from "./components/boxes/Boxes";
 import Videos from "./components/videos/Videos"
 import Footer from './components/footer/Footer';
 import Privacy from './components/privacy/Privacy';
+import NewsRoom from './components/newsroom/NewsRoom';
+import New from './components/new/New';
+import NewIn from './components/newIn/NewIn';
 
 window.ddfullscreenmenu = {
   togglemenu: () => {
@@ -307,7 +310,10 @@ const Header = () => {
     </div> 
 
 <Boxes />
-<Videos /> 
+<Videos />
+<NewsRoom /> 
+<NewIn />
+<New />
 <Footer />  
 <Privacy />   
         </>
