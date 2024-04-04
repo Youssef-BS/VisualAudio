@@ -26,12 +26,13 @@ const Header = () => {
 <MainHeader />
 <InfoBar />
 <Boxes />
+
+
 <Videos />
 <NewsRoom /> 
 <NewIn />
 <New />
 <Footer />  
-<Privacy />   
         </>
     );
 };
