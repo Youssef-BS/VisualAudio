@@ -4,13 +4,23 @@ import { cheriket } from './testData';
 
 const ForContainer = () => {
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    prevArrow: <button className="slick-prev slick-arrow" aria-label="Previous" type="button"><i className="fas fa-chevron-left"></i></button>,
-    nextArrow: <button className="slick-next slick-arrow" aria-label="Next" type="button"><i className="fas fa-chevron-right"></i></button>
+    slidesToShow: 1, // Display one slide at a time
+    slidesToScroll: 1, // Slide one slide at a time
+    autoplay: true,
+    autoplaySpeed: 2000,
+    arrows: true,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   };
 
   return (
@@ -28,9 +38,9 @@ const ForContainer = () => {
                   <div className="category-box__text">{category.text}</div>
                   <a href={category.photo} className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</a>
                 </div>
-                <div className="category-box__right jsProductsBoxSlider">
-                  <Slider {...settings}>
-                    {category.product.map((product, idx) => (
+                <Slider {...settings}>
+                {category.product.map((product, idx) => (
+                <div className="category-box__right jsProductsBoxSlider">                  
                       <div className="product-box" key={idx}>
                         <a href={product.photo}>
                           <div className="product-box__img">
@@ -40,12 +50,11 @@ const ForContainer = () => {
                             <div className="product-box__title">{product.title}</div>
                             <div className="product-box__desc">{product.text}</div>
                           </div>
-                          <div className="product-box__price">Price: ${product.price}</div>
                         </a>
                       </div>
+                      </div>
                     ))}
-                  </Slider>
-                </div>
+                </Slider>
               </div>
             </div>
           ))}
