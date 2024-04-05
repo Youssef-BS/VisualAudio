@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 
+
 const CategoryBox = () => {
   const [slidesToShow, setSlidesToShow] = useState(2);
 
@@ -33,14 +34,28 @@ const CategoryBox = () => {
     {
       id: 1,
       title: 'FOS Pixel Line 80',
-      image: 'https://studio-alterego.com/wp-content/uploads/2022/01/VPR_2482R_BD.jpg',
+      imageUrl: '/images/product.jpg',
       description: 'Pixel Bar 100 cm , 11.25 pitch, 80 LEDs (tri-color RGB) SMD 5050. Art-Net, Kling-Net,DMX,RDM, Viewing Angle: 120?, 2500 NITS (clear filter), IP Rating: IP20, Art-Net&amp;DMX Channels: 10/55/480. Required pixel line driver, 1000 x 37 x 95 mm , 2 kg',
       link: 'https://www.fos-lighting.eu/fos-pixel-line-80-p-1319.html'
     },
     {
       id: 2,
       title: 'FOS Product 2',
-      image: 'https://studio-alterego.com/wp-content/uploads/2022/01/VPR_2482R_BD.jpg',
+      imageUrl: '/images/product.jpg',
+      description: 'Description of Product 2',
+      link: 'https://www.example.com/product-2'
+    },
+    {
+      id: 3,
+      title: 'FOS Pixel Line 80',
+      imageUrl: '/images/product.jpg',
+      description: 'Pixel Bar 100 cm , 11.25 pitch, 80 LEDs (tri-color RGB) SMD 5050. Art-Net, Kling-Net,DMX,RDM, Viewing Angle: 120?, 2500 NITS (clear filter), IP Rating: IP20, Art-Net&amp;DMX Channels: 10/55/480. Required pixel line driver, 1000 x 37 x 95 mm , 2 kg',
+      link: 'https://www.fos-lighting.eu/fos-pixel-line-80-p-1319.html'
+    },
+    {
+      id: 4,
+      title: 'FOS Product 2',
+      imageUrl: '/images/product.jpg',
       description: 'Description of Product 2',
       link: 'https://www.example.com/product-2'
     }
@@ -72,7 +87,15 @@ const CategoryBox = () => {
     ]
   };
   
-  
+  const [startIndex, setStartIndex] = useState(0);
+
+  const handlePrev = () => {
+    setStartIndex(prevIndex => Math.max(0, prevIndex - 1));
+  };
+
+  const handleNext = () => {
+    setStartIndex(prevIndex => Math.min(products.length - 2, prevIndex + 1));
+  };
   
   
 
@@ -92,21 +115,13 @@ const CategoryBox = () => {
               </div>
               <div className="category-box__right">
                 
-              <Slider
-                  dots={true}
-                  infinite={true}
-                  speed={500}
-                  slidesToShow={slidesToShow}
-                  slidesToScroll={1}
-                  autoplay={false}
-                  autoplaySpeed={3000}
-                  arrows={true}
-                >            
-                      {products.map(product => (
+             { /*<div className="custom-slider">
+      <div className="slides" style={{ display: 'flex', overflowX: 'hidden',transition: 'transform 0.5s ease' }}>
+        {products.slice(startIndex, startIndex + 2).map(product => (
                     <div key={product.id}>
                       <div className="product-box">
                         <div className="product-box__img">
-                          <img className="lazy-scroll loaded" src={product.image} alt={product.title} />
+                          <img className="lazy-scroll loaded" src={product.imageUrl} alt={product.title} />
                         </div>
                         <div className="product-box__title">
                           <span>{product.title}</span>
@@ -115,7 +130,10 @@ const CategoryBox = () => {
                       </div>
                     </div>
                   ))}
-                </Slider>
+              </div>
+        </div>*/}
+              <button className="prev" onClick={handlePrev}>Previous</button>
+        <button className="next" onClick={handleNext}>Next</button>
               </div>
             </div>
           </div>
@@ -142,7 +160,7 @@ const CategoryBox = () => {
                     <div key={product.id}>
                       <div className="product-box">
                         <div className="product-box__img">
-                          <img className="lazy-scroll loaded" src={product.image} alt={product.title} />
+                          <img className="lazy-scroll loaded" src={product.imageUrl} alt={product.title} />
                         </div>
                         <div className="product-box__title">
                           <span>{product.title}</span>
@@ -179,7 +197,7 @@ const CategoryBox = () => {
                     <div key={product.id}>
                       <div className="product-box">
                         <div className="product-box__img">
-                          <img className="lazy-scroll loaded" src={product.image} alt={product.title} />
+                          <img className="lazy-scroll loaded" src={product.imageUrl} alt={product.title} />
                         </div>
                         <div className="product-box__title">
                           <span>{product.title}</span>
@@ -219,7 +237,7 @@ const CategoryBox = () => {
                     <div key={product.id}>
                       <div className="product-box">
                         <div className="product-box__img">
-                          <img src={product.image} alt={product.title} />
+                          <img src={product.imageUrl} alt={product.title} />
                         </div>
                         <div className="product-box__title">
                           <span>{product.title}</span>

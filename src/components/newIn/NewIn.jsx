@@ -1,28 +1,52 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Slider from 'react-slick';
+import { data } from './data'; // Importing the data array
 
-const products = [
-  {
-    id: 1,
-    image: "/images/product.jpg",
-    title: "FOS Ares Profile",
-    description: "Professional low noise Led profile moving head for stages and theater applications, high power 600W LED engine module, 4- 55? linear zoom, intelligent fan, noise 45dB, Framing system: 4 Blades with +/-45? rotation, Color system: CMY + independent CTO, Animation wheel, Iris, 7 interchangeable rotating and 7 static gobos, 6 dichroic color filters,  4-facet prism, 0-100% linear frost, Linear Dimmer 0-100%, 4 dimming curves, 32kg.",
-    link: "https://www.fos-lighting.eu/fos-ares-profile-p-2748.html"
-  }
-];
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  autoplay: false,
-  autoplaySpeed: 5000,
-  arrows: true
-};
 
 const ProductBox = () => {
+  const products = [
+    {
+      id: 1,
+      title: 'FOS Pixel Line 80',
+      image: 'https://studio-alterego.com/wp-content/uploads/2022/01/VPR_2482R_BD.jpg',
+      description: 'Pixel Bar 100 cm , 11.25 pitch, 80 LEDs (tri-color RGB) SMD 5050. Art-Net, Kling-Net,DMX,RDM, Viewing Angle: 120?, 2500 NITS (clear filter), IP Rating: IP20, Art-Net&amp;DMX Channels: 10/55/480. Required pixel line driver, 1000 x 37 x 95 mm , 2 kg',
+      link: 'https://www.fos-lighting.eu/fos-pixel-line-80-p-1319.html'
+    },
+    {
+      id: 2,
+      title: 'FOS Product 2',
+      image: 'https://studio-alterego.com/wp-content/uploads/2022/01/VPR_2482R_BD.jpg',
+      description: 'Description of Product 2',
+      link: 'https://www.example.com/product-2'
+    }
+  ];
+  const [startIndex, setStartIndex] = useState(0);
+
+  const handlePrev = () => {
+    setStartIndex(prevIndex => Math.max(0, prevIndex - 1));
+  };
+
+  const handleNext = () => {
+    setStartIndex(prevIndex => Math.min(data.length - 4, prevIndex + 1));
+  };
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: false,
+    autoplaySpeed: 5000,
+    arrows: true
+  };
+  const carouselSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   return (
     <section className="new-in-featured mb-4">
     <div className="new-in-featured__wrapper">
@@ -68,35 +92,31 @@ const ProductBox = () => {
                       </div>
                       {/* Your additional product */}
                       <div className="boxes-section slick-slide slick-cloned" style={{ width: '1077px' }} data-slick-index="0">
-                        <a href="URL_TO_YOUR_PRODUCT_PAGE" tabIndex="-1">
-                          <div className="product-box" data-id="YOUR_PRODUCT_ID" data-quantity="YOUR_PRODUCT_QUANTITY" data-price="YOUR_PRODUCT_PRICE">
-                            <div className="product-box__img">
-                              <img className="lazy-scroll loaded" src="/images/product.jpg" />
-                            </div>
-                            <div className="product-box__title">
-                              <span><span id="">YOUR_PRODUCT_TITLE</span></span>
-                            </div>
-                            <div className="product-box__code">
-                              <div className="product-box__code">YOUR_PRODUCT_CODE</div>
-                            </div>
-                            <p className="product-box__desc">YOUR_PRODUCT_DESCRIPTION</p>
-                          </div>
-                        </a>
-                        <a href="URL_TO_YOUR_PRODUCT_PAGE" tabIndex="-1">
-                          <div className="product-box" data-id="YOUR_PRODUCT_ID" data-quantity="YOUR_PRODUCT_QUANTITY" data-price="YOUR_PRODUCT_PRICE">
-                            <div className="product-box__img">
-                              <img className="lazy-scroll loaded" src="/images/product.jpg" />
-                            </div>
-                            <div className="product-box__title">
-                              <span><span id="">YOUR_PRODUCT_TITLE</span></span>
-                            </div>
-                            <div className="product-box__code">
-                              <div className="product-box__code">YOUR_PRODUCT_CODE</div>
-                            </div>
-                            <p className="product-box__desc">YOUR_PRODUCT_DESCRIPTION</p>
-                          </div>
-                        </a>
-                      </div>
+                      <div className="custom-slider">
+      <div className="slides" style={{ display: 'flex', overflowX: 'hidden', transition: 'transform 0.5s ease' }}>
+        {data.slice(startIndex, startIndex + 4).map(product => (
+          <div key={product.id} >
+            <a href={product.link} tabIndex="-1">
+              <div className="product-box" data-id={product.id} data-quantity="YOUR_PRODUCT_QUANTITY" data-price="YOUR_PRODUCT_PRICE">
+                <div className="product-box__img">
+                  <img src={product.imageUrl} alt={product.title} className="lazy-scroll loaded" />
+                </div>
+                <div className="product-box__title">
+                  <span><span id="">{product.title}</span></span>
+                </div>
+                <div className="product-box__code">
+                  <div className="product-box__code">{product.id}</div>
+                </div>
+                <p className="product-box__desc">{product.description}</p>
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+      <button onClick={handlePrev}>Previous</button>
+      <button onClick={handleNext}>Next</button>
+    </div>
+    </div>
                     </div>
                   </div>
                 </div>
@@ -108,6 +128,34 @@ const ProductBox = () => {
               </div>
             </div>
           </div>
+          <div className="col-xl-6">
+              <div className="featured-products__slider jsFeaturedProductsHome featured-products__slider h-100 slick-initialized slick-slider slick-dotted">
+                <Slider {...carouselSettings}>
+                  {/* You can map over your data array to render featured products */}
+                  {data.map(product => (
+                    <div key={product.id} className="featured-products new-in-featured__box" style={{ backgroundImage: `url(${product.imageUrl})` }}>
+                      <h2 className="new-in-featured__title">{product.title}</h2>
+                      <div className="featured-products__tag">{product.title}</div>
+                      <div className="product-box">
+                        <a href={product.link} className="product-box__img" tabIndex="-1">
+                          <img src={product.imageUrl} alt={product.title} />
+                        </a>
+                        <a href={product.link} className="product-box__title" tabIndex="-1">
+                          <span>{product.title}</span>
+                        </a>
+                        <div className="product-box__availability product-box__availability--in-stock">
+                          <span>In stock</span>
+                        </div>
+                        <p className="product-box__desc">{product.description}</p>
+                        <a href={product.link} className="btn btn-secondary btn-primary-white" tabIndex="-1">
+                          <span>View details</span>
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </Slider>
+              </div>
+            </div>
         </div>
       </div>
     </div>
