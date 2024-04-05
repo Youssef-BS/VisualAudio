@@ -84,7 +84,7 @@ const CategoryBox = () => {
             <div className="category-box">
               <div className="category-box__left">
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="category-box__image-wrapper">
-                  <img className="category-box__image" src="uploads/categories_0_cat_image_172.png" alt="Intelligent Lighting Technology" />
+                  <img className="category-box__image" src="/images/logo1.svg" alt="Intelligent Lighting Technology" />
                 </a>
                 <h2 className="category-box__title">Intelligent Lighting Technology</h2>
                 <div className="category-box__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</div>
@@ -98,7 +98,7 @@ const CategoryBox = () => {
                   speed={500}
                   slidesToShow={slidesToShow}
                   slidesToScroll={1}
-                  autoplay={true}
+                  autoplay={false}
                   autoplaySpeed={3000}
                   arrows={true}
                 >            
@@ -106,7 +106,7 @@ const CategoryBox = () => {
                     <div key={product.id}>
                       <div className="product-box">
                         <div className="product-box__img">
-                          <img src={product.image} alt={product.title} />
+                          <img className="lazy-scroll loaded" src={product.image} alt={product.title} />
                         </div>
                         <div className="product-box__title">
                           <span>{product.title}</span>
@@ -123,19 +123,26 @@ const CategoryBox = () => {
             <div className="category-box">
               <div className="category-box__left">
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="category-box__image-wrapper">
-                  <img className="category-box__image" src="uploads/categories_0_cat_image_172.png" alt="Intelligent Lighting Technology" />
+                  <img className="category-box__image" src="/images/logo1.svg" alt="Intelligent Lighting Technology" />
                 </a>
                 <h2 className="category-box__title">Intelligent Lighting Technology</h2>
                 <div className="category-box__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</div>
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</a>
               </div>
               <div className="category-box__right">
-                <Slider {...settings}>
+                <Slider  dots={true}
+                  infinite={true}
+                  speed={500}
+                  slidesToShow={slidesToShow}
+                  slidesToScroll={1}
+                  autoplay={true}
+                  autoplaySpeed={3000}
+                  arrows={true}>
                   {products.map(product => (
                     <div key={product.id}>
                       <div className="product-box">
                         <div className="product-box__img">
-                          <img src={product.image} alt={product.title} />
+                          <img className="lazy-scroll loaded" src={product.image} alt={product.title} />
                         </div>
                         <div className="product-box__title">
                           <span>{product.title}</span>
@@ -153,19 +160,26 @@ const CategoryBox = () => {
             <div className="category-box">
               <div className="category-box__left">
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="category-box__image-wrapper">
-                  <img className="category-box__image" src="uploads/categories_0_cat_image_172.png" alt="Intelligent Lighting Technology" />
+                  <img className="category-box__image" src="/images/logo1.svg" alt="Intelligent Lighting Technology" />
                 </a>
                 <h2 className="category-box__title">Intelligent Lighting Technology</h2>
                 <div className="category-box__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</div>
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</a>
               </div>
               <div className="category-box__right">
-                <Slider {...settings}>
+                <Slider  dots={true}
+                  infinite={true}
+                  speed={500}
+                  slidesToShow={slidesToShow}
+                  slidesToScroll={1}
+                  autoplay={true}
+                  autoplaySpeed={3000}
+                  arrows={true}>
                   {products.map(product => (
                     <div key={product.id}>
                       <div className="product-box">
                         <div className="product-box__img">
-                          <img src={product.image} alt={product.title} />
+                          <img className="lazy-scroll loaded" src={product.image} alt={product.title} />
                         </div>
                         <div className="product-box__title">
                           <span>{product.title}</span>
@@ -183,14 +197,24 @@ const CategoryBox = () => {
             <div className="category-box">
               <div className="category-box__left">
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="category-box__image-wrapper">
-                  <img className="category-box__image" src="uploads/categories_0_cat_image_172.png" alt="Intelligent Lighting Technology" />
+                  <img className="category-box__image" src="/images/logo1.svg" alt="Intelligent Lighting Technology" />
                 </a>
                 <h2 className="category-box__title">Intelligent Lighting Technology</h2>
                 <div className="category-box__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</div>
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</a>
               </div>
-              <div className="category-box__right">
-                <Slider {...settings}>
+              <div className="category-box__right jsProductsBoxSlider slick-initialized slick-slider">
+                <div className="slick-list draggable">
+                <div className="slick-track" >
+                
+                <Slider  dots={true}
+                  infinite={true}
+                  speed={500}
+                  slidesToShow={slidesToShow}
+                  slidesToScroll={1}
+                  autoplay={false}
+                  autoplaySpeed={5000}
+                  arrows={true}>
                   {products.map(product => (
                     <div key={product.id}>
                       <div className="product-box">
@@ -206,6 +230,8 @@ const CategoryBox = () => {
                     </div>
                   ))}
                 </Slider>
+              </div>
+              </div>
               </div>
             </div>
           </div>

@@ -14,6 +14,7 @@ import New from './components/new/New';
 import NewIn from './components/newIn/NewIn';
 import HeaderComponent from './components/header/Header';
 import InfoBar from './components/endHeader/endHeader';
+import ProductDetail from './components/ProductDetails/ProductDetails';
 
 
 const Header = () => {
@@ -25,6 +26,8 @@ const Header = () => {
 <HeaderComponent />
 <MainHeader />
 <InfoBar />
+<ProductDetail/>
+
 <Boxes />
 
 

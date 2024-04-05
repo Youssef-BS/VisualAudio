@@ -34,7 +34,7 @@ const MainHeader = () => {
                     <div className="col menu-col">
                         <div className="row menu-row">
                             <div className="col logo my-auto">
-                                <a href="https://www.fos-lighting.eu"><img className="header-logo" src="images/logo.svg" alt="Logo" /></a>
+                                <a href="https://www.fos-lighting.eu"><img className="header-logo" src="/images/logo1.svg" alt="Logo" /></a>
                             </div>
                             <div className="col-auto button menu">
                                 <a href="#" className="menu-open"onClick={toggleMenu}>

@@ -16798,7 +16798,7 @@ body.home .maincontent.cart {
 }
 
 .category-slider.slick-initialized {
-  display: block;
+  display: flex;
 }
 
 .category-slider .prev-arrow {
@@ -26973,7 +26973,7 @@ select {
   position: relative;
   padding-bottom: 30px;
   display: flex;
-  opacity: 0;
+  opacity: 1;
   transition: all 0.1s ease;
 }
 
@@ -27479,6 +27479,7 @@ select {
 .new-in-featured .products-carousel .slick-slide {
   padding-left: 15px;
   padding-right: 15px;
+  display: flex;
 }
 
 /*New In Featured End*/
