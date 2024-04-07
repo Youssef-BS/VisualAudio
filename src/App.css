@@ -10532,6 +10532,8 @@ img[data-src] {
 
 .maincontent {
   min-height: 500px;
+  margin: 20px auto;
+  width: 95%;
 }
 
 .bg-gray {
@@ -26894,10 +26896,11 @@ select {
   border-radius: 30px;
   padding: 35px;
   display: flex;
-  height: 100%;
+  height: 400px;
   position: relative;
   overflow: hidden;
   flex-wrap: nowrap;
+  margin-top: 50px;
 }
 
 .category-box .category-box__left {
@@ -27467,6 +27470,7 @@ select {
 .new-in-featured__wrapper>.container-fluid>.row.no-gutters {
   border-radius: 30px;
   overflow: hidden;
+  margin-top: 35px;
 }
 
 .new-in-featured .products-carousel .slick-track {
@@ -29944,6 +29948,7 @@ width: 100%;
   .featured-products .product-box__img img {
       max-width: 100% !important;
       height: auto;
+      
   }
 
   .featured-products__slider .slick-prev {

@@ -1,7 +1,16 @@
-import React from 'react'
+import React , {useState  } from 'react'
+import {Link} from 'react-router-dom'
 
 const HeaderComponent = () => {
+ 
+   const [fetched , setFetched] = useState(false);
+
+   const inverseFunction = () => {
+      setFetched(!fetched);
+   }
+
   return (
+    <>
     <div className="top-bar">
   <div className="container-fluid">
     <div className="row">
@@ -38,29 +47,18 @@ const HeaderComponent = () => {
         </div>
       </div>
       <div className="col d-none d-lg-flex center header-links">
-        <a href="https://www.fos-lighting.eu/create_account.php">Become a Dealer</a>
+        <Link to="/create-account">Become a dealer</Link>
         <span>⋅</span>
-        <a href="https://www.fos-lighting.eu/projects.php">Projects</a>
+        <Link to="/projects" className="more">Projects</Link>
         <span>⋅</span>
         <div className="header-links__submenu dropdown">
-          <a href="#" className="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">About us</a>
-          <ul className="dropdown-menu">
-            <li>
-              <a href="https://www.fos-lighting.eu/who-we-are-pr-1.html">Who we Are</a>
-            </li>
-            <li>
-              <a href="https://www.fos-lighting.eu/terms-of-cooperation-pr-3.html">Terms of Cooperation</a>
-            </li>
-            <li>
-              <a href="https://www.fos-lighting.eu/freight-handling-costs-pr-5.html">Freight &amp; Handling Costs</a>
-            </li>
-            <li>
-              <a href="https://www.fos-lighting.eu/why-choose-fos-pr-6.html">Why Choose FOS</a>
-            </li>
-            <li>
-              <a href="https://www.fos-lighting.eu/trade-shows-events-pr-7.html">Trade Shows &amp; Events</a>
-            </li>
-          </ul>
+          <Link href="#" className="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" onClick={inverseFunction}>About us</Link>
+          { fetched && (<>
+          <div>
+            test
+          </div>
+          </>
+        )}
         </div>
       </div>
       <div className="col-6 col-lg-3 right">
@@ -83,6 +81,8 @@ const HeaderComponent = () => {
   </div>
 </div>
 
+
+</>
   )
 }
 

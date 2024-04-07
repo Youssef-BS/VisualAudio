@@ -1,6 +1,7 @@
 import React from 'react';
 import Slider from 'react-slick';
 import { projects } from './data';
+import {Link} from "react-router-dom";
 
 function New() {
   const settings = {
@@ -22,7 +23,7 @@ function New() {
                   <div className="wrap inner pt-10 pb-10 pr-5 pl-5">
                     <div className="projects-title-cont">
                       <h2>Our Projects</h2>
-                      <a href="projects.php" className="more">View all projects</a>
+                      <Link to="/projects" className="more">View all projects</Link>
                     </div>
                     <h1>{project.title}</h1>
                     <p>{project.description}</p>
@@ -38,10 +39,10 @@ function New() {
                 </div>
                 <div className="col-lg-7 col-xl-7 col-md-12 pl-0 image-wrap">
                   <div className="imagemapper-wrapper">
-                    <img src={project.imageUrl} alt={project.title} />
+                    <img src={project.imageUrl} alt={project.title} className='crisp canvas-img' />
                     {project.pins.map((pin, pinIndex) => (
                       <div key={pinIndex} className="imapper-pin pin-style" data-sku={pin.sku} style={{ top: pin.top, left: pin.left }}>
-                        <i className="las la-plus"></i>
+                      
                       </div>
                     ))}
                   </div>

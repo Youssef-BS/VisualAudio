@@ -1,13 +1,39 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Slider from 'react-slick';
+import ReactPlayer from 'react-player';
+import { FaPlay, FaChevronLeft, FaChevronRight } from 'react-icons/fa'; // Importing icons from React Icons
+
+// Custom next arrow component
+const NextArrow = (props) => {
+  const { onClick } = props;
+  return (
+    <div className="slick-arrow slick-next" onClick={onClick}>
+      <FaChevronRight />
+    </div>
+  );
+};
+
+// Custom previous arrow component
+const PrevArrow = (props) => {
+  const { onClick } = props;
+  return (
+    <div className="slick-arrow slick-prev" onClick={onClick}>
+      <FaChevronLeft />
+    </div>
+  );
+};
 
 const Videos = () => {
+  const sliderRef = useRef(null); // Ref for the Slider component
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />
   };
 
   return (
@@ -15,20 +41,23 @@ const Videos = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
-            <Slider {...settings}>
+            <Slider ref={sliderRef} {...settings}>
               <div className="product-info-video-wrapper product-info-video-wrapper--fullradius">
                 <div className="video-slider__video-wrapper jsVideoSlideWrapper jsNotYtVideo">
-                  <div className="video-slider__slide-video jsVideoSliderVideo">
-                    <video muted loop autoPlay>
-                      <source src="https://videos.pexels.com/video-files/1526909/1526909-sd_640_360_24fps.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
+                  <ReactPlayer
+                    url="https://videos.pexels.com/video-files/5948574/5948574-hd_1920_1080_30fps.mp4"
+                    playing={true}
+                    loop={true}
+                    muted={true}
+                    width='100%'
+                    height='auto'
+                  />
                   <div className="video-slider__slide-play jsPlayVideoSlider d-md-none">
-                    <img src="images/Svg/play.svg" alt="" />
+                    <FaPlay /> {/* Replacing image with FaPlay icon */}
                   </div>
                   <div className="video-slider__slide-play jsLoadingVideoSlider">
-                    <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="" />
+                    {/* You can replace loading image with any loading animation */}
+                    <div>Loading...</div>
                   </div>
                 </div>
                 <div className="video-slider__video-info">
@@ -44,17 +73,20 @@ const Videos = () => {
               {/* Add more video slides below */}
               <div className="product-info-video-wrapper product-info-video-wrapper--fullradius">
                 <div className="video-slider__video-wrapper jsVideoSlideWrapper jsNotYtVideo">
-                  <div className="video-slider__slide-video jsVideoSliderVideo">
-                    <video muted loop autoPlay>
-                      <source src="https://videos.pexels.com/video-files/1526909/1526909-sd_640_360_24fps.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
+                  <ReactPlayer
+                    url="https://videos.pexels.com/video-files/5948574/5948574-hd_1920_1080_30fps.mp4"
+                    playing={true}
+                    loop={true}
+                    muted={true}
+                    width='100%'
+                    height='auto'
+                  />
                   <div className="video-slider__slide-play jsPlayVideoSlider d-md-none">
-                    <img src="images/Svg/play.svg" alt="" />
+                    <FaPlay /> {/* Replacing image with FaPlay icon */}
                   </div>
                   <div className="video-slider__slide-play jsLoadingVideoSlider">
-                    <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="" />
+                    {/* You can replace loading image with any loading animation */}
+                    <div>Loading...</div>
                   </div>
                 </div>
                 <div className="video-slider__video-info">
@@ -69,17 +101,20 @@ const Videos = () => {
               </div>
               <div className="product-info-video-wrapper product-info-video-wrapper--fullradius">
                 <div className="video-slider__video-wrapper jsVideoSlideWrapper jsNotYtVideo">
-                  <div className="video-slider__slide-video jsVideoSliderVideo">
-                    <video muted loop autoPlay>
-                      <source src="https://videos.pexels.com/video-files/1526909/1526909-sd_640_360_24fps.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
+                  <ReactPlayer
+                    url="https://videos.pexels.com/video-files/5948574/5948574-hd_1920_1080_30fps.mp4"
+                    playing={true}
+                    loop={true}
+                    muted={true}
+                    width='100%'
+                    height='auto'
+                  />
                   <div className="video-slider__slide-play jsPlayVideoSlider d-md-none">
-                    <img src="images/Svg/play.svg" alt="" />
+                    <FaPlay /> {/* Replacing image with FaPlay icon */}
                   </div>
                   <div className="video-slider__slide-play jsLoadingVideoSlider">
-                    <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="" />
+                    {/* You can replace loading image with any loading animation */}
+                    <div>Loading...</div>
                   </div>
                 </div>
                 <div className="video-slider__video-info">
