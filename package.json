@@ -10,6 +10,7 @@
     "bootstrap": "^5.3.3",
     "html-webpack-plugin": "^5.6.0",
     "jquery": "^3.7.1",
+    "jquery-imagemapster": "^1.2.10",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
