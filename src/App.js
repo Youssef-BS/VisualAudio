@@ -19,6 +19,7 @@ import AllNews from './components/newsroom/AllNews';
 import Explore from './components/Explore/Explore';
 import AllProject from './components/new/AllProject';
 import ProjectPin from './components/new/SingleProject';
+import CreateAccountForm from './components/registre';
 const Header = () => {
 
 
@@ -28,6 +29,7 @@ const Header = () => {
 <HeaderComponent />
 <MainHeader />
 <InfoBar />
+<CreateAccountForm/>
 <ProjectPin/>
 <AllProject/>
 <Explore/>
