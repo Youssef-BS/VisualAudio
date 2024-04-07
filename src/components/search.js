@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
 import SideMenu from './SideMenu/SideMenu';
+import { GoX } from "react-icons/go";
+import { FiMenu } from "react-icons/fi";
+
 import Cart from './Cart';
 const MainHeader = () => {
+    const [isInputEmpty, setIsInputEmpty] = useState(false);
+
+    const handleInputChange = (event) => {
+        setIsOpen(event.target.value != '');
+        if(isOpen){
+            event.target.value=""
+        }
+    };
     const [showCart, setShowCart] = useState(false);
 
     const toggleCart = () => {
@@ -21,8 +32,9 @@ const MainHeader = () => {
     };
     const [isOpen, setIsOpen] = useState(false);
 
-    const toggleOpen = () => {
+    const toggleOpen = (event) => {
         setIsOpen(!isOpen);
+
     };
     return (
         <>
@@ -37,14 +49,18 @@ const MainHeader = () => {
                                 <a href="https://www.fos-lighting.eu"><img className="header-logo" src="/images/logo1.svg" alt="Logo" /></a>
                             </div>
                             <div className="col-auto button menu">
-                                <a href="#" className="menu-open"onClick={toggleMenu}>
-                                    <i className="las la-bars"></i>
+                                {isMenuOpen ?<a href="#" className="menu-open clicked"onClick={toggleMenu}>
+                                <GoX className="las la-bars" style={{ fontSize: '25px', position: 'absolute', left: '10px', height: '25px', top: '50%', transform: 'translateY(-50%)' }} />
                                     <span >Products</span>
-                                </a>
+                                </a> :<a href="#" className="menu-open clicked"onClick={toggleMenu}>
+                                <FiMenu className="las la-bars" style={{ fontSize: '25px', position: 'absolute', left: '10px', height: '25px', top: '50%', transform: 'translateY(-50%)' }} />
+                                    <span >Products</span>
+                                </a> }
+                                
                             </div>
                             <div className="col-auto button menu mobile">
                                 <div id="navtoggler" onClick={() => ddfullscreenmenu.togglemenu()}>
-                                    <i className="las la-bars"></i>
+                                <FiMenu className="las la-bars" style={{ fontSize: '25px', position: 'absolute', left: '10px', height: '25px', top: '50%', transform: 'translateY(-50%)' }} />
                                 </div>
                             </div>
                             {/* <div className="col-auto icon d-none">
@@ -64,8 +80,8 @@ const MainHeader = () => {
                             <div className="search-container inner txt-c clearfix search--open" id="search-container">
                                 <div className="search search__form" id="search_bar">
                                     <form name="quick_find" id="quick_find" action="https://www.fos-lighting.eu/advanced_search_result.php" method="get">
-                                        <input type="text" name="keywords" id="keywords" className="selectform keywords" autoComplete="off" placeholder="I'm looking for..." />
-                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <input type="text" name="keywords" id="keywords" onChange={handleInputChange} className="selectform keywords" autoComplete="off" placeholder="I'm looking for..." />
+                                        <svg  width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M13.377 11.6288H12.587L12.307 11.3588C13.507 9.9588 14.127 8.0488 13.787 6.0188C13.317 3.2388 10.997 1.0188 8.19697 0.678799C3.96697 0.158799 0.406968 3.7188 0.926968 7.9488C1.26697 10.7488 3.48697 13.0688 6.26697 13.5388C8.29697 13.8788 10.207 13.2588 11.607 12.0588L11.877 12.3388V13.1288L16.127 17.3788C16.537 17.7888 17.207 17.7888 17.617 17.3788C18.027 16.9688 18.027 16.2988 17.617 15.8888L13.377 11.6288ZM7.37697 11.6288C4.88697 11.6288 2.87697 9.6188 2.87697 7.1288C2.87697 4.6388 4.88697 2.6288 7.37697 2.6288C9.86697 2.6288 11.877 4.6388 11.877 7.1288C11.877 9.6188 9.86697 11.6288 7.37697 11.6288Z" fill="#454852"></path>
                                             </svg>                                        <div className="loader">
                                             <div className="loader-icon"></div>
@@ -74,7 +90,7 @@ const MainHeader = () => {
                                 </div>
                             </div>
                             {/* Add other search-related elements here */}
-                            <div className={`acresults ${isOpen ? 'search--open ' : ''}`} id="acresults" style={{ display: isOpen ? 'block' : 'none' }}>
+                            <div className={`acresults ${isOpen ? 'search--open ' : ''}`} id="acresults" style={{ display: isOpen ? 'block' : 'none' }}> 
             <div className="search-title">
                 <h3>Search Products</h3>
                 <p>Search with product name or model</p>
@@ -83,7 +99,7 @@ const MainHeader = () => {
         <div className="search search__form" id="search_bar">
           <form name="quick_find_mobile" id="quick_find_mobile" action="https://www.fos-lighting.eu/advanced_search_result.php" method="get">
             <input type="text" name="keywords" id="keywords_mobile" className="selectform keywords" autoComplete="off" placeholder="I'm looking for..." />
-            <img src="images/icons/search.svg" alt="Search" />
+            <img src="/images/icons/search.svg" alt="Search" />
             <div className="loader" style={{ display: 'none' }}>
               <div className="loader-icon"></div>
             </div>
@@ -91,17 +107,11 @@ const MainHeader = () => {
         </div>
       </div>
             <div className="container">
-                <i className="las la-times close-search search-toggle" onClick={toggleOpen}></i>
+              <GoX  onClick={toggleOpen} className="las la-times close-search search-toggle" size={32}/>
                 <div className="bcont" id="bcont-content" style={{ marginTop: '30px' }}>
-                    <div className="show_ac_results_title manufacturers" id="show_ac_results_title_manufacturers" style={{ display: 'none !important' }}>
-                        <h2 className="main-title" style={{ margin: '0' }}>Manufacturers</h2>
-                    </div>
                     
-                    <div className="show_ac_results_manufacturers" id="show_ac_results_manufacturers" style={{ display: 'none !important' }}></div>
-                    <div className="show_ac_results_title categories" id="show_ac_results_title_categories">
-                        <h2 className="main-title" style={{ margin: '0' }}>Category Results:</h2>
-                    </div>
-                    <div className="show_ac_results_categories" id="show_ac_results_categories"></div>
+                    
+                <div className="show_ac_results_categories" id="show_ac_results_categories"><div className="ac_result_item"><a href="https://www.fos-lighting.eu/in-ear-headphones-c-173_90_146.html"><div className="description"><div className="title">In Ear Monitoring / In-Ear <b>Hea</b>dphones</div></div><div className="clear"></div></a></div><div className="ac_result_item"><a href="https://www.fos-lighting.eu/led-theater-lighting-c-172_17_165.html"><div className="description"><div className="title">Stage Lighting / Led T<b>hea</b>ter Lighting </div></div><div className="clear"></div></a></div><div style={{clear:'both'}}></div></div>
                     <div className="show_ac_results_title products" id="show_ac_results_title_products">
                         <h2 className="main-title" style={{ margin: '0' }}>Product Results:</h2>
                     </div>
@@ -109,7 +119,7 @@ const MainHeader = () => {
         <div className="ac_result_item">
           <a href="https://www.fos-lighting.eu/fos-12r-hybrid-pro-p-647.html">
             <div className="image">
-              <img src="uploads/thumbnails/products_0_image_647.jpg.thumb_150x100.jpg" className="mouseOver" alt="" border="0" />
+              <img src="/images/product.jpg" className="mouseOver" alt="" border="0" />
             </div>
             <div className="description">
               <div className="title">FOS 12R Hybrid PRO</div>
@@ -122,7 +132,7 @@ const MainHeader = () => {
         <div className="ac_result_item">
           <a href="https://www.fos-lighting.eu/is706-speaker-wall-bracket-p-1052.html">
             <div className="image">
-              <img src="uploads/thumbnails/products_0_image_1052.jpg.thumb_150x100.jpg" className="mouseOver" alt="" border="0" />
+              <img src="/images/product.jpg" className="mouseOver" alt="" border="0" />
             </div>
             <div className="description">
               <div className="title">IS706- Speaker Wall bracket</div>
@@ -135,7 +145,7 @@ const MainHeader = () => {
         <div className="ac_result_item">
           <a href="https://www.fos-lighting.eu/fos-beam-7r-hybrid-plus-p-38.html">
             <div className="image">
-              <img src="uploads/thumbnails/products_0_image_38.jpg.thumb_150x100.jpg" className="mouseOver" alt="" border="0" />
+              <img src="/images/product.jpg" className="mouseOver" alt="" border="0" />
             </div>
             <div className="description">
               <div className="title">FOS Beam 7R Hybrid Plus</div>
@@ -174,7 +184,7 @@ const MainHeader = () => {
                                         </div>
                                     </div>
                                     <div className="col-auto icon search">
-                                        <a href="#" className="search-toggle"  onClick={toggleOpen} >
+                                        <a href="#" className="search-toggle"onClick={toggleOpen} >
                                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M13.377 11.6288H12.587L12.307 11.3588C13.507 9.9588 14.127 8.0488 13.787 6.0188C13.317 3.2388 10.997 1.0188 8.19697 0.678799C3.96697 0.158799 0.406968 3.7188 0.926968 7.9488C1.26697 10.7488 3.48697 13.0688 6.26697 13.5388C8.29697 13.8788 10.207 13.2588 11.607 12.0588L11.877 12.3388V13.1288L16.127 17.3788C16.537 17.7888 17.207 17.7888 17.617 17.3788C18.027 16.9688 18.027 16.2988 17.617 15.8888L13.377 11.6288ZM7.37697 11.6288C4.88697 11.6288 2.87697 9.6188 2.87697 7.1288C2.87697 4.6388 4.88697 2.6288 7.37697 2.6288C9.86697 2.6288 11.877 4.6388 11.877 7.1288C11.877 9.6188 9.86697 11.6288 7.37697 11.6288Z" fill="#454852"></path>
                                             </svg>

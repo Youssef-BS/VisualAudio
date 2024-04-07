@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
+import { GoArrowLeft,GoArrowRight } from "react-icons/go";
 
 
 const CategoryBox = () => {
@@ -132,8 +133,8 @@ const CategoryBox = () => {
                   ))}
               </div>
         </div>*/}
-              <button className="prev" onClick={handlePrev}>Previous</button>
-        <button className="next" onClick={handleNext}>Next</button>
+              <GoArrowLeft className="prev" onClick={handlePrev}>Previous</GoArrowLeft>
+        <GoArrowRight className="next" onClick={handleNext}>Next</GoArrowRight>
               </div>
             </div>
           </div>
@@ -222,6 +223,9 @@ const CategoryBox = () => {
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</a>
               </div>
               <div className="category-box__right jsProductsBoxSlider slick-initialized slick-slider">
+              <button className="slick-prev slick-arrow" aria-label="Previous" type="button" style={{ display: 'block' }}>
+        <GoArrowRight size={36} />
+    </button>
                 <div className="slick-list draggable">
                 <div className="slick-track" >
                 
@@ -250,6 +254,9 @@ const CategoryBox = () => {
                 </Slider>
               </div>
               </div>
+              <button className="slick-prev slick-arrow" aria-label="Previous" type="button" style={{ display: 'block' }}>
+        <GoArrowLeft size={36} />
+    </button>
               </div>
             </div>
           </div>
