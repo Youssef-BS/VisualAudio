@@ -30,7 +30,6 @@ const Header = () => {
 <MainHeader />
 <InfoBar />
 <CreateAccountForm/>
-<ProjectPin/>
 <AllProject/>
 <Explore/>
 <AllNews/>
