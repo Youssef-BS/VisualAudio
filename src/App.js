@@ -16,7 +16,7 @@ import HeaderComponent from './components/header/Header';
 import InfoBar from './components/endHeader/endHeader';
 import ProductDetail from './components/ProductDetails/ProductDetails';
 import AllNews from './components/newsroom/AllNews';
-
+import Explore from './components/Explore/Explore';
 const Header = () => {
 
 
@@ -26,6 +26,7 @@ const Header = () => {
 <HeaderComponent />
 <MainHeader />
 <InfoBar />
+<Explore/>
 <AllNews/>
 <ProductDetail/>
 
