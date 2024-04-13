@@ -9,12 +9,15 @@ import MainHeader from './components/search';
 import Footer from './components/footer/Footer';
 import HeaderComponent from './components/header/Header';
 import InfoBar from './components/endHeader/endHeader';
-import ProductDetail from './components/ProductDetails/ProductDetails';
 import AllNews from './components/newsroom/AllNews';
 import Explore from './components/Explore/Explore';
 import Home from './pages/Home';
 import Projects from './pages/Projects';
 import CreateAccountForm from './pages/CreateAcount';
+import ImageMapperContainer from './pages/ProjectSelector';
+import ProductDetail from './pages/ProductDetails';
+import ContactUs from './pages/ContactUs';
+
 
 
 
@@ -45,6 +48,22 @@ import CreateAccountForm from './pages/CreateAcount';
                 <Route
                     path="/create-account"
                     element={<Layout><CreateAccountForm /></Layout>}
+                />
+                <Route
+                    path="/project-select"
+                    element={<Layout><ImageMapperContainer /></Layout>}
+                />
+                <Route
+                    path="/explore"
+                    element={<Layout><Explore /></Layout>}
+                />
+                <Route
+                    path="/ProductDetail"
+                    element={<Layout><ProductDetail /></Layout>}
+                />
+                <Route
+                    path="/CntactsUs"
+                    element={<Layout><ContactUs /></Layout>}
                 />
             </Routes>
         </Router>

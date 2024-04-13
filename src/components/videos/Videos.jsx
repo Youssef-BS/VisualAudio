@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import Slider from 'react-slick';
 import ReactPlayer from 'react-player';
 import { FaPlay, FaChevronLeft, FaChevronRight } from 'react-icons/fa'; // Importing icons from React Icons
-
+import {Link} from "react-router-dom";
 // Custom next arrow component
 const NextArrow = (props) => {
   const { onClick } = props;
@@ -66,7 +66,7 @@ const Videos = () => {
                     <p>The best sparkle machine with RDM function and height adjustment channel! Adjustable Height 1.5-5M, Maximum Single Continuous Duration 30s, Heat Up Time 5 Minutes, seetronic connectors, consumption 20-25g/Minute.</p>
                   </div>
                   <div className="video-slider__video-info-btn">
-                    <a href="https://www.fos-lighting.eu/fos-spark-jet-pro-v2-p-621.html" className="btn btn-primary btn-big jsPlayVideoSliderBtn" tabIndex="-1">Explore more</a>
+                  <Link to="/ProductDetail" className="btn btn-primary btn-big jsPlayVideoSliderBtn" tabIndex="-1">Explore more</Link>
                   </div>
                 </div>
               </div>
@@ -95,7 +95,7 @@ const Videos = () => {
                     <p>The best sparkle machine with RDM function and height adjustment channel! Adjustable Height 1.5-5M, Maximum Single Continuous Duration 30s, Heat Up Time 5 Minutes, seetronic connectors, consumption 20-25g/Minute.</p>
                   </div>
                   <div className="video-slider__video-info-btn">
-                    <a href="https://www.fos-lighting.eu/fos-spark-jet-pro-v2-p-621.html" className="btn btn-primary btn-big jsPlayVideoSliderBtn" tabIndex="-1">Explore more</a>
+                  <Link to="/ProductDetail" className="btn btn-primary btn-big jsPlayVideoSliderBtn" tabIndex="-1">Explore more</Link>
                   </div>
                 </div>
               </div>
@@ -123,7 +123,7 @@ const Videos = () => {
                     <p>The best sparkle machine with RDM function and height adjustment channel! Adjustable Height 1.5-5M, Maximum Single Continuous Duration 30s, Heat Up Time 5 Minutes, seetronic connectors, consumption 20-25g/Minute.</p>
                   </div>
                   <div className="video-slider__video-info-btn">
-                    <a href="https://www.fos-lighting.eu/fos-spark-jet-pro-v2-p-621.html" className="btn btn-primary btn-big jsPlayVideoSliderBtn" tabIndex="-1">Explore more</a>
+                    <Link to="/ProductDetail" className="btn btn-primary btn-big jsPlayVideoSliderBtn" tabIndex="-1">Explore more</Link>
                   </div>
                 </div>
               </div>
