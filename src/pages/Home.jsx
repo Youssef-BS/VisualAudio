@@ -5,6 +5,7 @@ import Videos from '../components/videos/Videos'
 import New from '../components/new/New'
 import Projects from './Projects'
 import CreateAccount from './CreateAcount'
+import NewsRoom from '../components/newsroom/NewsRoom'
 
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
     <>
     <Boxes />   
     <Videos />
+    <NewsRoom />
     <ProductBox />
     <New />
     </>

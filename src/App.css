@@ -26896,7 +26896,7 @@ select {
   border-radius: 30px;
   padding: 35px;
   display: flex;
-  height: 400px;
+  min-height: 400px;
   position: relative;
   overflow: hidden;
   flex-wrap: nowrap;

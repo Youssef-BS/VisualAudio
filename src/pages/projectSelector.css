@@ -1,11 +1,12 @@
 /* ProductSlider.css */
 .product-box {
-    width: 250px; /* Adjust the width as needed */
-    margin: 0 20px; /* Adjust the margin as needed */
+    width: 170px; /* Adjust the width as needed */
+    margin: 0 100px; /* Adjust the margin as needed */
+    min-height: 300px;
   }
   
   .product-box img {
-    width: 100%;
+    width: 90%;
     height: auto;
   }
   

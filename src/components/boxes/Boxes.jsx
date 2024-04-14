@@ -22,7 +22,7 @@ const CategoryBox = () => {
   ];
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 2, 
@@ -30,6 +30,7 @@ const CategoryBox = () => {
     autoplay: true,
     autoplaySpeed: 3000,
     arrows: true,
+  
   };
   
   
@@ -91,7 +92,7 @@ const CategoryBox = () => {
                           <span>{product.title}</span>
                         </div>
                         <p className="product-box__desc">{product.description}</p>
-                        <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link>
+                        {/* <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link> */}
                       </div>
                     </div>
                   ))}
@@ -121,7 +122,7 @@ const CategoryBox = () => {
                           <span>{product.title}</span>
                         </div>
                         <p className="product-box__desc">{product.description}</p>
-                        <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link>
+                        {/* <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link> */}
                       </div>
                     </div>
                   ))}
@@ -151,7 +152,7 @@ const CategoryBox = () => {
                           <span>{product.title}</span>
                         </div>
                         <p className="product-box__desc">{product.description}</p>
-                        <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link>
+                        {/* <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link> */}
                       </div>
                     </div>
                   ))}

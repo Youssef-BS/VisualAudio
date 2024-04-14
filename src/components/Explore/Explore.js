@@ -34,9 +34,9 @@ const Explore = () => {
                                 <a href="https://www.fos-lighting.eu/plywood-active-speakers-c-173_97_98.html" className="boxlink">
                                     <div className="image">
                                         <picture>
-                                        <source media="(min-width: 1361px)" srcSet="/images/product.jpgg" />
+                                        <source media="(min-width: 1361px)" srcSet="https://www.fos-lighting.eu/uploads/categories_0_cat_image_172.png" />
 
-                                            <img src="/images/product.jpg" className="lazyload" alt="Plywood Active Speakers" />
+                                            <img src="https://www.fos-lighting.eu/uploads/categories_0_cat_image_172.png" className="lazyload" alt="Plywood Active Speakers" />
                                         </picture>
                                     </div>
                                     <div className="title">
@@ -49,8 +49,8 @@ const Explore = () => {
                                     <div className="image">
                                         <picture>
                                           
-                                            <source media="(min-width: 1361px)" srcSet="/images/product.jpgg" />
-                                            <img src="/images/product.jpg" className="lazyload" alt="ABS Active Speakers" />
+                                            <source media="(min-width: 1361px)" srcSet="https://www.fos-lighting.eu/uploads/categories_0_cat_image_172.png" />
+                                            <img src="https://www.fos-lighting.eu/uploads/categories_0_cat_image_172.png" className="lazyload" alt="ABS Active Speakers" />
                                         </picture>
                                     </div>
                                     <div className="title">

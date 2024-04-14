@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -70,7 +71,7 @@ const Footer = () => {
                 <b>We are all ears</b><br />
                 We would like to hear from you
               </p>
-              <a href="contact_us.php" className="btn btn-outline btn-outline--orange btn-big-fn18 w-100">Get In Touch</a>
+              <Link to="/CntactsUs" className="btn btn-outline btn-outline--orange btn-big-fn18 w-100">Get In Touch</Link>
             </div>
           </div>
         </div>

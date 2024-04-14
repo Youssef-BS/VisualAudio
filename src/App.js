@@ -17,6 +17,8 @@ import CreateAccountForm from './pages/CreateAcount';
 import ImageMapperContainer from './pages/ProjectSelector';
 import ProductDetail from './pages/ProductDetails';
 import ContactUs from './pages/ContactUs';
+import Support from './pages/Support';
+import AllNewsRoom from './pages/AllNews';
 
 
 
@@ -64,6 +66,14 @@ import ContactUs from './pages/ContactUs';
                 <Route
                     path="/CntactsUs"
                     element={<Layout><ContactUs /></Layout>}
+                />
+                <Route
+                    path="/Support"
+                    element={<Support />}
+                />
+                <Route
+                    path="/AllNews"
+                    element={<Layout><AllNewsRoom /></Layout>}
                 />
             </Routes>
         </Router>
