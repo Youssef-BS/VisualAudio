@@ -24,7 +24,7 @@ const Footer = () => {
                 <a className="mb-0 mail-link" href="mailto:support@fos-lighting.eu">support@fos-lighting.eu</a>
               </p>
               <p className="home-boxes__divider">Or</p>
-              <a href="https://fos.supportsystem.com/open.php" target="_blank" className="btn btn-outline btn-outline--orange btn-big-fn18 w-100">Support</a>
+              <Link to="/Support" target="_blank" className="btn btn-outline btn-outline--orange btn-big-fn18 w-100">Support</Link>
             </div>
           </div>
           {/* Dealer Section */}
