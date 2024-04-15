@@ -16,7 +16,6 @@ const CreateAccountForm = () => {
             <div className="row">
               <div className="col-12 col-xl-6 mx-auto title">
                 <div className="headingtitle w-100 text-center">
-                  <h1 className="text-center w-100">Our Projects</h1>
                 </div>
                 <div className="text-center mt-2"></div>
               </div>

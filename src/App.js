@@ -20,6 +20,7 @@ import Explore from './components/Explore/Explore';
 import AllProject from './components/new/AllProject';
 import ProjectPin from './components/new/SingleProject';
 import CreateAccountForm from './components/registre';
+import Store from './components/store/store';
 const Header = () => {
 
 
@@ -29,20 +30,23 @@ const Header = () => {
 <HeaderComponent />
 <MainHeader />
 <InfoBar />
+<Store/>
+<Boxes />
+<Videos />
+<NewsRoom /> 
+<NewIn />
+<New />
+<Footer />  
+
 <CreateAccountForm/>
 <AllProject/>
 <Explore/>
 <AllNews/>
 <ProductDetail/>
 
-<Boxes />
 
 
-<Videos />
-<NewsRoom /> 
-<NewIn />
-<New />
-<Footer />  
+
         </>
     );
 };

@@ -104,40 +104,7 @@ const CategoryBox = () => {
     <section className="section-categories-boxes">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-xl-6 mb-4">
-            <div className="category-box">
-              <div className="category-box__left">
-                <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="category-box__image-wrapper">
-                  <img className="category-box__image" src="/images/logo1.svg" alt="Intelligent Lighting Technology" />
-                </a>
-                <h2 className="category-box__title">Intelligent Lighting Technology</h2>
-                <div className="category-box__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</div>
-                <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</a>
-              </div>
-              <div className="category-box__right">
-                
-             { /*<div className="custom-slider">
-      <div className="slides" style={{ display: 'flex', overflowX: 'hidden',transition: 'transform 0.5s ease' }}>
-        {products.slice(startIndex, startIndex + 2).map(product => (
-                    <div key={product.id}>
-                      <div className="product-box">
-                        <div className="product-box__img">
-                          <img className="lazy-scroll loaded" src={product.imageUrl} alt={product.title} />
-                        </div>
-                        <div className="product-box__title">
-                          <span>{product.title}</span>
-                        </div>
-                        <p className="product-box__desc">{product.description}</p>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-        </div>*/}
-              <GoArrowLeft className="prev" onClick={handlePrev}>Previous</GoArrowLeft>
-        <GoArrowRight className="next" onClick={handleNext}>Next</GoArrowRight>
-              </div>
-            </div>
-          </div>
+         
           <div className="col-xl-6 mb-4">
             <div className="category-box">
               <div className="category-box__left">

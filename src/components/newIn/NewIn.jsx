@@ -134,7 +134,7 @@ const ProductBox = () => {
                   {/* You can map over your data array to render featured products */}
                   {data.map(product => (
                     <div key={product.id} className="featured-products new-in-featured__box" style={{ backgroundImage: `url(${product.imageUrl})` }}>
-                      <h2 className="new-in-featured__title">{product.title}</h2>
+                      <h2 className="new-in-featured__title">Featured products</h2>
                       <div className="featured-products__tag">{product.title}</div>
                       <div className="product-box">
                         <a href={product.link} className="product-box__img" tabIndex="-1">

@@ -17,23 +17,17 @@ const ProjectPin = () => {
       document.getElementById('imagemapper1-wrapper').removeEventListener('click', handleImageMapClick);
     };
   }, []);
+  
 
   return (
     <div className="mainbody">
-    <div className="breadcrumb" id="breadcrumb_static">
-      <div className="mainwrap container-fluid">
-        <a href="https://www.fos-lighting.eu" className="headerNavigation">Home</a>
-        <i>/</i>
-        <a href="https://www.fos-lighting.eu/projects.php" className="headerNavigation">Our Projects</a>
-      </div>
-    </div>
+   
 
     <div id="maincontent" className="maincontent">
       <div className="category-description-container container-fluid">
         <div className="row">
           <div className="col-12 col-xl-6 mx-auto title">
             <div className="headingtitle w-100 text-center">
-              <h1 className="text-center w-100">Our Projects</h1>
             </div>
             <div className="text-center mt-2"></div>
           </div>
@@ -53,8 +47,10 @@ const ProjectPin = () => {
       <section className="image-mapper-container">
         <div className="container-fluid main">
           <div className="row no-gutters">
+            
             <div className="col-lg-5 col-xl-5 col-md-12 text">
               <div className="wrap inner pt-10 pb-10 pr-5 pl-5">
+              <div className="projects-title-cont"> <h2>Our Projects</h2> <a href="@" className="more" tabindex="0">View all projects</a> </div>
                 <h1>FOS & ProLight & Sound 2023</h1>
                 <p>
                   We had a great time attending for once more the Prolight and Sound exhibition in Frankfurt! We

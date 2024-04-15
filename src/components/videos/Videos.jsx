@@ -20,7 +20,7 @@ const Videos = () => {
                 <div className="video-slider__video-wrapper jsVideoSlideWrapper jsNotYtVideo">
                   <div className="video-slider__slide-video jsVideoSliderVideo">
                     <video muted loop autoPlay>
-                      <source src="https://videos.pexels.com/video-files/1526909/1526909-sd_640_360_24fps.mp4" type="video/mp4" />
+                      <source src="/images/vd1.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </div>
@@ -46,7 +46,7 @@ const Videos = () => {
                 <div className="video-slider__video-wrapper jsVideoSlideWrapper jsNotYtVideo">
                   <div className="video-slider__slide-video jsVideoSliderVideo">
                     <video muted loop autoPlay>
-                      <source src="https://videos.pexels.com/video-files/1526909/1526909-sd_640_360_24fps.mp4" type="video/mp4" />
+                      <source src="/images/vd1.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </div>
