@@ -31,7 +31,7 @@ function New() {
                     <h1>{project.title}</h1>
                     <p>{project.description}</p>
                     <div className="btn-container">
-                      <a href={project.link} className="btn btn-primary-gray btn-big mt-4">Learn More</a>
+                      <Link to={'/project-select'} className="btn btn-primary-gray btn-big mt-4">Learn More</Link>
                     </div>
                     <div className="arrows-notification">
                       <div className="notification">
