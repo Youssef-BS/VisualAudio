@@ -1,14 +1,100 @@
-import React , {useState  } from 'react'
-import {Link} from 'react-router-dom'
-
+import React , {useState,useEffect  } from 'react'
+import {Link,useNavigate} from 'react-router-dom'
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import { GoX } from "react-icons/go";
+import { FiMenu } from "react-icons/fi";
+import $ from "jquery"
 const HeaderComponent = () => {
- 
+
+  const [register,setRegister]=useState(false);
+  const toogleRegister = ()=>{
+    setRegister(prevState => !prevState)
+  }
+  const navigate = useNavigate()
+const handleReverseAction = () => {
+   // Event listener for close icon inside login popup
+  
+    $("body").toggleClass("popup-open");
+    $(".login-popup-container").toggleClass("active");
+    $(".login-popup").toggleClass("show");
+
+ // Attach event listener to close icon inside login popup
+
+};
+  useEffect(() => {
+    // Event listener for login popup link
+    const handlePopupLinkClick = (e) => {
+        e.preventDefault();
+        $("body").toggleClass("popup-open");
+        $(".login-popup-container").toggleClass("active");
+        $(".login-popup").toggleClass("show");
+    };
+
+    // Event listener for close icon inside login popup
+    const handleCloseIconClick = () => {
+        $("body").toggleClass("popup-open");
+        $(".login-popup-container").toggleClass("active");
+        $(".login-popup").toggleClass("show");
+    };
+
+    // Attach event listener to login popup link
+    $(".login-popup-link").click(handlePopupLinkClick);
+
+    // Attach event listener to close icon inside login popup
+    $(".login-popup > i").click(handleCloseIconClick);
+
+
+
+
+
+    // Google Tag Manager setup
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start': new Date().getTime(),
+            event: 'gtm.js'
+        });
+        const f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-NFC5TJ2');
+
+    // Cleanup function
+    if(register){
+      handleReverseAction();
+      navigate('/')
+    }
+   
+}, [register]); 
+// Empty dependency array means this effect runs only once (on mount)
+
+
+
+
+
    const [fetched , setFetched] = useState(false);
 
    const inverseFunction = () => {
       setFetched(!fetched);
    }
+   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+   // Function to toggle the dropdown menu
+   const toggleDropdown = () => {
+     setIsDropdownOpen(!isDropdownOpen);
+   };
+   const dropdownStyle = {
+    display:'block',
+    position: 'absolute',
+    transform: 'translate3d(0px, 40px, 0px)',
+    top: 0,
+    left: 0,
+    willChange: 'transform',
+  };
   return (
     <>
     <div className="top-bar">
@@ -52,13 +138,24 @@ const HeaderComponent = () => {
         <Link to="/projects" className="more">Projects</Link>
         <span>⋅</span>
         <div className="header-links__submenu dropdown">
-          <Link href="#" className="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" onClick={inverseFunction}>About us</Link>
-          { fetched && (<>
-          <div>
-            test
-          </div>
-          </>
-        )}
+        <a href="#" className="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"onClick={toggleDropdown}>About us</a>
+        <ul className="dropdown-menu" style={isDropdownOpen ? dropdownStyle : {}}>
+            <li>
+              <a href="https://www.fos-lighting.eu/who-we-are-pr-1.html">Who we Are</a>
+            </li>
+            <li>
+              <a href="https://www.fos-lighting.eu/terms-of-cooperation-pr-3.html">Terms of Cooperation</a>
+            </li>
+            <li>
+              <a href="https://www.fos-lighting.eu/freight-handling-costs-pr-5.html">Freight &amp; Handling Costs</a>
+            </li>
+            <li>
+              <a href="https://www.fos-lighting.eu/why-choose-fos-pr-6.html">Why Choose FOS</a>
+            </li>
+            <li>
+              <a href="https://www.fos-lighting.eu/trade-shows-events-pr-7.html">Trade Shows &amp; Events</a>
+            </li>
+          </ul>
         </div>
       </div>
       <div className="col-6 col-lg-3 right">
@@ -77,6 +174,57 @@ const HeaderComponent = () => {
           </div>
         </div>
       </div>
+      <div id="login-popup-container" className="login-popup-container">
+            <div id="login-popup" className="login-popup">
+                <i className="las la-times"><GoX color='black'/></i>
+                <div className="column signupcolumn">
+                    <form name="login_c" id="login_c" action="https://www.fos-lighting.eu/create_account.php" method="post">
+                        <div>
+                            <span id="title" style={{color:"black"}}>New Customer</span>
+                        </div>
+                        <div className="intro"style={{color:"black"}}>
+                            New customer? Welcome!
+                        </div>
+                        <div className="btncontainer">
+                            <button type="button" className="shop-btn"onClick={toogleRegister}>
+                                Register
+                            </button>
+                        </div>
+                        <div className="clear"></div>
+                    </form>
+                </div>
+                <div className="column logincolumn">
+                    <form name="login" id="login" action="https://www.fos-lighting.eu/login.php?action=process" method="post">
+                        <div>
+                            <span id="title"style={{color:"black"}}>Registered User</span>
+                            <input type="hidden" id="come_from" name="come_from" value="https://www.fos-lighting.eu/"/>
+                        </div>
+                        <div className="intro"style={{color:"black"}}>
+                            Are you registered? Login:
+                        </div>
+                        <div className="input-wrap">
+                            <i className="las la-envelope"></i>
+                            <input type="text" name="email_address" id="email_address" className="field" placeholder="Email Address:" />
+                        </div>
+                        <div className="input-wrap">
+                            <i className="las la-lock"></i>
+                            <input type="password" name="password" id="password" className="field" placeholder="Password" />
+                        </div>
+                        <div className="forgot-pass">
+                            <a href="https://www.fos-lighting.eu/password_forgotten.php" className="forgotpassword" id="forgotpassword">Forgot your password?</a>
+                        </div>
+                        <div className="btncontainer">
+                            <button type="submit" className="shop-btn">
+                                Login
+                            </button>
+                        </div>
+                        <div className="clear"></div>
+                    </form>
+                </div>
+                <div className="clear"></div>
+            </div>
+        </div>
+    
     </div>
   </div>
 </div>

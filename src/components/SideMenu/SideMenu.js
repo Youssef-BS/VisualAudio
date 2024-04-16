@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-const SideMenu = ({ isOpen }) => {
+const SideMenu = ({ isOpen,isopen2 }) => {
     const [showSubMenu, setShowSubMenu] = useState(false);
     const [showThirdLevel, setShowThirdLevel] = useState(false);
     const [showFourthLevel, setShowFourthLevel] = useState(false);
+    const [responsiveweb,setResponsiveWeb]=useState("");
+    const [responsiveMob,setResponsiveMob]=useState("")
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
 
     const toggleSubMenu = () => {
         setShowSubMenu(!showSubMenu);
@@ -16,12 +20,74 @@ const SideMenu = ({ isOpen }) => {
     const toggleFourthLevel = () => {
         setShowFourthLevel(!showFourthLevel);
     };
+    const toggleMenu = () => {
+        setIsMenuOpen(true);
+        setResponsiveMob(false)
+      };
 
     useEffect(() => {
-        document.body.className = isOpen ? 'guest no-scroll' : 'guest';
-    }, [isOpen]);
+        if (window.innerWidth > 1000) {
+        document.body.className = isOpen ? 'guest no-scroll' : 'guest';}
+        else if (window.innerWidth < 1000){
+            setResponsiveMob(isopen2)
+            document.body.className = responsiveMob ? 'guest menu-open' : 'guest';}
+            if(isMenuOpen){
+                document.body.className = 'guest';
+
+
+            }
+
+
+    }, [isOpen,isMenuOpen,isopen2]);
 
     return (
+        <>
+        <nav id="ddfullscreenmenu" className={responsiveMob ? 'openmenu':''}>
+        <div className="mobile-title-menu">Main Menu</div>
+        <div id="closex"onClick={toggleMenu}></div>
+        <div id="ulwrapper">
+          {/* Define your UL (nested) menu below */}
+          <ul className="submenu " style={{ zIndex: 183 }}>
+            <li className="breadcrumb">FOS Technologies</li>
+            <li className="menu-view-all">
+              <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html">View Category</a>
+            </li>
+            <li className="header">
+              <a href="#">Stage Lighting</a>
+            </li>
+            <li className="header">
+              <a href="#">Static Led</a>
+            </li>
+          </ul>
+          <ul id="fullscreenmenu-ul" className="firstLevel " style={{ zIndex: 182 }}>
+            <li className="header">
+              <a href="#">
+                FOS Technologies
+                <div className="root-image">
+                  <img src="uploads/thumbnails/categories_0_cat_image_172.png.thumb_100x90.png" border="0" title="FOS Technologies" alt="FOS Technologies" />
+                </div>
+              </a>
+            </li>
+            {/* 
+            <li className="mobile-menu-item first">
+              <a href="https://www.new.fos-lighting.eu/specials.php">Offers</a>
+            </li>
+            */}
+            <li className="mobile-menu-item">
+              <a href="https://www.fos-lighting.eu/news.php">Newsroom</a>
+            </li>
+            <li className="mobile-menu-item">
+              <a href="projects.php">Projects</a>
+            </li>
+            <li className="mobile-menu-item">
+              <a href="who-we-are-pr-1.html">About us</a>
+            </li>
+            <li className="mobile-menu-item">
+              <a href="https://www.fos-lighting.eu/contact_us.php">Contact us</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
         <section className={`side-menu main-menu-container ${isOpen ? '' : 'hide'}`}>
             <div className="inner">
                 <div className="first-level">
@@ -89,6 +155,7 @@ const SideMenu = ({ isOpen }) => {
                 </div>
             </div>
         </section>
+        </>
     );
 };
 

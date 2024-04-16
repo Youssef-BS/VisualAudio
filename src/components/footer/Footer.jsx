@@ -43,7 +43,7 @@ const Footer = () => {
                 <b>Work with us</b><br />
                 Be a partner in growth
               </p>
-              <a href="create_account.php" className="btn btn-primary-black-text btn-big-fn18 w-100">Create Account</a>
+              <Link to="/create-account" className="btn btn-primary-black-text btn-big-fn18 w-100">Create Account</Link>
             </div>
           </div>
           {/* Sales Team Section */}

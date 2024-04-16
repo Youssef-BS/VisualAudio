@@ -1,7 +1,8 @@
 import React,{useState} from 'react';
 import Slider from 'react-slick';
 import { data } from './data'; // Importing the data array
-
+import { GoX } from "react-icons/go";
+import { FiMenu } from "react-icons/fi";
 
 
 const ProductBox = () => {
@@ -30,7 +31,7 @@ const ProductBox = () => {
   const handleNext = () => {
     setStartIndex(prevIndex => Math.min(data.length - 4, prevIndex + 1));
   };
-  const settings = {
+  const settin = {
     dots: true,
     infinite: true,
     speed: 500,
@@ -41,12 +42,59 @@ const ProductBox = () => {
     arrows: true
   };
   const carouselSettings = {
+    arrows: true,
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    autoplay: true,
+    autoplaySpeed: 4000,
+    cssEase: 'linear'
   };
+  const settings ={
+    dots: true,
+    arrows: false,
+    prevArrow:
+        <GoX size={32}color='black'/>,
+    nextArrow:
+    <GoX size={32}color='black'></GoX>,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    responsive: [
+        {
+            breakpoint: 1150,
+            settings: {
+                slidesToShow: 4,
+                slidesToScroll: 4,
+            },
+        },
+        {
+            breakpoint: 1200,
+            settings: {
+                slidesToShow: 5,
+                slidesToScroll:3,
+            },
+        },
+        {
+            breakpoint: 991,
+            settings: {
+                slidesToShow: 5,
+                slidesToScroll: 3,
+            },
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 4,
+                slidesToScroll: 1,
+            },
+        },
+    ],
+};
   return (
     <section className="new-in-featured mb-4">
     <div className="new-in-featured__wrapper">
@@ -75,26 +123,14 @@ const ProductBox = () => {
                     <div className="slick-track" style={{ opacity: 1, width: '11847px', transform: 'translate3d(-1077px, 0px, 0px)' }}>
                       {/* Your original product */}
                       <div className="boxes-section slick-slide slick-cloned"  style={{ width: '1077px' }} data-slick-index="2" id="" >
-                        <a href="https://www.fos-lighting.eu/fos-atlas-tube-p-1285.html" tabIndex="-1">
-                          <div className="product-box">
-                            <div className="product-box__img">
-                              <img className="lazy-scroll loaded" src="uploads/thumbnails/products_0_image_1285.jpg.thumb_450x300.jpg" />
-                            </div>
-                            <div className="product-box__title">
-                              <span><span id="">FOS Atlas Tube</span></span>
-                            </div>
-                            <div className="product-box__code">
-                              <div className="product-box__code">L006104</div>
-                            </div>
-                            <p className="product-box__desc">Wireless IP65 battery tube, run time 20 hours, 32 Pixels, LED Type: 288pcs ?0.3Watts RGBW 4in1 full-color LED, DMX 512, Mobile APP WIFI control, Wireless Protocol: W-DMX, Dimensions:119cm diameter 5.2cm , Weight: 1.75kg</p>
-                          </div>
-                        </a>
+                   
                       </div>
                       {/* Your additional product */}
                       <div className="boxes-section slick-slide slick-cloned" style={{ width: '1077px' }} data-slick-index="0">
                       <div className="custom-slider">
       <div className="slides" style={{ display: 'flex', overflowX: 'hidden', transition: 'transform 0.5s ease' }}>
-        {data.slice(startIndex, startIndex + 4).map(product => (
+        <Slider {...settings}>
+        {data.map(product => (
           <div key={product.id} >
             <a href={product.link} tabIndex="-1">
               <div className="product-box" data-id={product.id} data-quantity="YOUR_PRODUCT_QUANTITY" data-price="YOUR_PRODUCT_PRICE">
@@ -112,9 +148,9 @@ const ProductBox = () => {
             </a>
           </div>
         ))}
+        </Slider>
       </div>
-      <button onClick={handlePrev}>Previous</button>
-      <button onClick={handleNext}>Next</button>
+      
     </div>
     </div>
                     </div>

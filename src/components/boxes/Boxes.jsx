@@ -22,14 +22,42 @@ const CategoryBox = () => {
   ];
 
   const settings = {
+    arrows: true,
     dots: true,
     infinite: true,
-    speed: 500,
-    slidesToShow: 2, 
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: true,
+    speed: 600,
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    responsive: [
+        {
+            breakpoint: 1445,
+            settings: {
+                dots: false
+            },
+        },
+        {
+            breakpoint: 1380,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                dots: false
+            },
+        },
+        {
+            breakpoint: 1200,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                dots:false
+            },
+        },
+        {
+            breakpoint: 768,
+            settings: {
+                dots: false,
+            },
+        }
+    ],
   
   };
   

@@ -5,11 +5,14 @@ import {Link} from "react-router-dom";
 
 function New() {
   const settings = {
+    arrows: true,
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    autoplay: true,
+    autoplaySpeed: 4000,
+    cssEase: 'linear'
   };
 
   return (
