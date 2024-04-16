@@ -82,6 +82,7 @@ const CategoryBox = () => {
               <div className="category-box__right">
       <Slider {...settings}>
         {products.map((product) => (
+          <Link to ='/ProductDetail'>
           <div key={product.id}>
             <div className="product-box">
               <div className="product-box__img">
@@ -93,6 +94,7 @@ const CategoryBox = () => {
               <p className="product-box__desc">{product.description}</p>
             </div>
           </div>
+          </Link>
         ))}
       </Slider>
     </div>

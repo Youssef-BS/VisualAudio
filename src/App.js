@@ -71,7 +71,7 @@ import AllNewsRoom from './Pages/AllNews';
                 />
                 <Route
                     path="/AllNews"
-                    element={<Layout><AllNewsRoom /></Layout>}
+                    element={<Layout><AllNews /></Layout>}
                 />
             </Routes>
         </Router>

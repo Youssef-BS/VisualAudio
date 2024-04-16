@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function NewsRoom() {
   return (
@@ -9,7 +10,7 @@ function NewsRoom() {
             <div className="col-12">
               <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center align-items-sm-baseline">
                 <h2 className="product-page-section__title">Newsroom</h2>
-                <a href="news.php" className="btn news-view-all mb-4 mb-sm-0">View all news</a>
+                <Link to="/AllNews" className="btn news-view-all mb-4 mb-sm-0">View all news</Link>
               </div>
             </div>
           </div>
@@ -26,7 +27,7 @@ function NewsRoom() {
                       <i className="las la-calendar mr-2"></i>09/02/2024
                     </p>
                     <p>Professional bicolor Fresnel led light, 200-watt led source tunable white, warm white 3600K up to daylight 5600K, CRI 95, manual linear zoom 15 - 35 degrees, 0-100% linear dimmer, low noise operation, LCD screen and local control knobs, aluminum housing, 2-3-4 Dmx Channels, adjustable barndoor, 4kg.</p>
-                    <span className="btn btn-primary btn-big">View details</span>
+                    <Link to={'/ProductDetail'}><span className="btn btn-primary btn-big">View details</span></Link>
                   </div>
                 </a>
               </div>

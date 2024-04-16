@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import { data } from './data'; // Importing the data array
 import { GoX } from "react-icons/go";
 import { FiMenu } from "react-icons/fi";
+import { Link } from 'react-router-dom';
 
 
 const ProductBox = () => {
@@ -132,7 +133,7 @@ const ProductBox = () => {
         <Slider {...settings}>
         {data.map(product => (
           <div key={product.id} >
-            <a href={product.link} tabIndex="-1">
+            <Link to={'/ProductDetail'}  tabIndex="-1">
               <div className="product-box" data-id={product.id} data-quantity="YOUR_PRODUCT_QUANTITY" data-price="YOUR_PRODUCT_PRICE">
                 <div className="product-box__img">
                   <img src={product.imageUrl} alt={product.title} className="lazy-scroll loaded" />
@@ -145,7 +146,7 @@ const ProductBox = () => {
                 </div>
                 <p className="product-box__desc">{product.description}</p>
               </div>
-            </a>
+            </Link>
           </div>
         ))}
         </Slider>
