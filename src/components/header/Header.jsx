@@ -104,14 +104,14 @@ const handleReverseAction = () => {
         <div className="row d-flex align-items-center h-100">
           <div className="col header-social">
             <span>Follow us:</span>
-            <a href="https://www.facebook.com/FOSTechnologies/" target="_blank">
+            <a href="#" target="_blank">
               <span>
                 <svg viewBox="0 0 9 17">
                   <path fill="#070707" fillRule="evenodd" d="M7.156 3.056H8.5V.002L6.475 0C3.607 0 2.246 1.782 2.246 4.318v2.403H0v2.9h2.246V17h3.37V9.622H7.86l.638-2.9H5.615v-1.98c0-.812.425-1.686 1.54-1.686"></path>
                 </svg>
               </span>
             </a>
-            <a href="https://www.youtube.com/channel/UCksb-KjlN197GQL7gJhizww/videos?view=0&amp;shelf_id=0" target="_blank">
+            <a href="#" target="_blank">
               <span>
                 <svg xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 16">
                   <defs>
@@ -141,19 +141,19 @@ const handleReverseAction = () => {
         <a href="#" className="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"onClick={toggleDropdown}>About us</a>
         <ul className="dropdown-menu" style={isDropdownOpen ? dropdownStyle : {}}>
             <li>
-              <a href="https://www.fos-lighting.eu/who-we-are-pr-1.html">Who we Are</a>
+              <a href="#">Who we Are</a>
             </li>
             <li>
-              <a href="https://www.fos-lighting.eu/terms-of-cooperation-pr-3.html">Terms of Cooperation</a>
+              <a href="#">Terms of Cooperation</a>
             </li>
             <li>
-              <a href="https://www.fos-lighting.eu/freight-handling-costs-pr-5.html">Freight &amp; Handling Costs</a>
+              <a href="#">Freight &amp; Handling Costs</a>
             </li>
             <li>
-              <a href="https://www.fos-lighting.eu/why-choose-fos-pr-6.html">Why Choose FOS</a>
+              <a href="#">Why Choose FOS</a>
             </li>
             <li>
-              <a href="https://www.fos-lighting.eu/trade-shows-events-pr-7.html">Trade Shows &amp; Events</a>
+              <a href="#">Trade Shows &amp; Events</a>
             </li>
           </ul>
         </div>
@@ -211,7 +211,7 @@ const handleReverseAction = () => {
                             <input type="password" name="password" id="password" className="field" placeholder="Password" />
                         </div>
                         <div className="forgot-pass">
-                            <a href="https://www.fos-lighting.eu/password_forgotten.php" className="forgotpassword" id="forgotpassword">Forgot your password?</a>
+                            <a href="#" className="forgotpassword" id="forgotpassword">Forgot your password?</a>
                         </div>
                         <div className="btncontainer">
                             <button type="submit" className="shop-btn">

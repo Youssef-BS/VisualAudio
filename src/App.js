@@ -9,14 +9,14 @@ import HeaderComponent from './components/header/Header';
 import InfoBar from './components/endHeader/endHeader';
 import AllNews from './components/newsroom/AllNews';
 import Explore from './components/Explore/Explore';
-import Home from './Pages/Home';
-import Projects from './Pages/Projects';
-import CreateAccountForm from './Pages/CreateAcount';
-import ImageMapperContainer from './Pages/ProjectSelector';
-import ProductDetail from './Pages/ProductDetails';
-import ContactUs from './Pages/ContactUs';
-import Support from './Pages/Support';
-import AllNewsRoom from './Pages/AllNews';
+import Home from './pages/Home';
+import Projects from './pages/Projects';
+import CreateAccountForm from './pages/CreateAcount';
+import ImageMapperContainer from './pages/ProjectSelector';
+import ProductDetail from './pages/ProductDetails';
+import ContactUs from './pages/ContactUs';
+import Support from './pages/Support';
+import AllNewsRoom from './pages/AllNews';
 
 
 
