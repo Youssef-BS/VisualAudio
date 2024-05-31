@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
-
+import { useDispatch, useSelector } from "react-redux";
+import { GetAll, GetAllProductMarket, GetAllProducts, GetMarkets } from '../../Features/Product/ProductSlice';
 const CategoryBox = () => {
- 
+  const test=true;
+
+  const [data,setData] = useState({})
+  const [pdata,setPData] = useState({})
+
+  const dispatch = useDispatch();
+  const MarketState = useSelector((state)=> state?.product?.Markets);
+  const ProductState = useSelector((state)=> state?.product?.Products);
+
+
+  useEffect (()=>{
+    dispatch(GetMarkets())
+    dispatch(GetAllProducts())
+    setData(ProductState)
+
+  },[]);
+ console.log(ProductState);
   const products = [
     {
       id: 1,
@@ -69,98 +86,10 @@ const CategoryBox = () => {
     <section className="section-categories-boxes">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-xl-6 mb-4">
-            <div className="category-box">
-              <div className="category-box__left">
-                <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="category-box__image-wrapper">
-                  <img className="category-box__image" src="https://www.fos-lighting.eu/uploads/categories_0_cat_image_172.png" alt="Intelligent Lighting Technology" />
-                </a>
-                <h2 className="category-box__title">Intelligent Lighting Technology</h2>
-                <div className="category-box__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</div>
-                <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link>
-              </div>
-              <div className="category-box__right">
-      <Slider {...settings}>
-        {products.map((product) => (
-          <Link to ='/ProductDetail'>
-          <div key={product.id}>
-            <div className="product-box">
-              <div className="product-box__img">
-                <img src={product.image} alt={product.title} />
-              </div>
-              <div className="product-box__title">
-                <span>{product.title}</span>
-              </div>
-              <p className="product-box__desc">{product.description}</p>
-            </div>
-          </div>
-          </Link>
-        ))}
-      </Slider>
-    </div>
-            </div>
-          </div>
-          <div className="col-xl-6 mb-4">
-            <div className="category-box">
-              <div className="category-box__left">
-                <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="category-box__image-wrapper">
-                  <img className="category-box__image" src="https://www.fos-lighting.eu/uploads/categories_0_cat_image_172.png" alt="Intelligent Lighting Technology" />
-                </a>
-                <h2 className="category-box__title">Intelligent Lighting Technology</h2>
-                <div className="category-box__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</div>
-                <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link>
-              </div>
-              <div className="category-box__right">
-                <Slider {...settings}>
-                  {products.map(product => (
-                    <div key={product.id}>
-                      <div className="product-box">
-                        <div className="product-box__img">
-                          <img src={product.image} alt={product.title} />
-                        </div>
-                        <div className="product-box__title">
-                          <span>{product.title}</span>
-                        </div>
-                        <p className="product-box__desc">{product.description}</p>
-                        {/* <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link> */}
-                      </div>
-                    </div>
-                  ))}
-                </Slider>
-              </div>
-            </div>
-          </div>
-          <div className="col-xl-6 mb-4">
-            <div className="category-box">
-              <div className="category-box__left">
-                <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="category-box__image-wrapper">
-                  <img className="category-box__image" src="https://www.fos-lighting.eu/uploads/categories_0_cat_image_172.png" alt="Intelligent Lighting Technology" />
-                </a>
-                <h2 className="category-box__title">Intelligent Lighting Technology</h2>
-                <div className="category-box__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</div>
-                <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link>
-              </div>
-              <div className="category-box__right">
-                <Slider {...settings}>
-                  {products.map(product => (
-                    <div key={product.id}>
-                      <div className="product-box">
-                        <div className="product-box__img">
-                          <img src={product.image} alt={product.title} />
-                        </div>
-                        <div className="product-box__title">
-                          <span>{product.title}</span>
-                        </div>
-                        <p className="product-box__desc">{product.description}</p>
-                        {/* <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link> */}
-                      </div>
-                    </div>
-                  ))}
-                </Slider>
-              </div>
-            </div>
-          </div>
-          <div className="col-xl-6 mb-4">
+         
+         
+        {MarketState?.map((market)=>(
+            <div className="col-xl-6 mb-4">
             <div className="category-box">
               <div className="category-box__left">
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="category-box__image-wrapper">
@@ -172,11 +101,15 @@ const CategoryBox = () => {
               </div>
               <div className="category-box__right">
                 <Slider {...settings}>
-                  {products.map(product => (
+                  {ProductState?.map((product)=>(
+                     product.marketId === market.id ? (   
                     <div key={product.id}>
                       <div className="product-box">
                         <div className="product-box__img">
+                        <Link to={`/ProductDetail/${product.id}`}>
+
                           <img src={product.image} alt={product.title} />
+                          </Link>
                         </div>
                         <div className="product-box__title">
                           <span>{product.title}</span>
@@ -185,11 +118,14 @@ const CategoryBox = () => {
                         {/* <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link> */}
                       </div>
                     </div>
+                    ):null
                   ))}
                 </Slider>
               </div>
             </div>
           </div>
+
+))}
         </div>
       </div>
     </section>

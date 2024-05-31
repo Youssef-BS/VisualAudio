@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
-
+import { useDispatch,useSelector } from 'react-redux';
+import { GetAll } from '../../Features/Product/ProductSlice';
 const SideMenu = ({ isOpen,isopen2 }) => {
+  const Side = useSelector((state)=> state.product.All )
+
+ 
+  const [SideMeState, setSideMeState] = useState(useSelector((state)=> state?.product?.All));
+
+
+  console.log(Side)
     const [showSubMenu, setShowSubMenu] = useState(false);
     const [showThirdLevel, setShowThirdLevel] = useState(false);
     const [showFourthLevel, setShowFourthLevel] = useState(false);
@@ -8,6 +16,79 @@ const SideMenu = ({ isOpen,isopen2 }) => {
     const [responsiveMob,setResponsiveMob]=useState("")
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+
+// Define event handlers to toggle visibility of menu levels
+const handleMarketClick = (marketId) => {
+  setSideMeState(prevState => {
+      const updatedState = prevState?.map(market => {
+          if (market.id === marketId) {
+              return {
+                  ...market,
+                  showSubMenu: !market.showSubMenu
+              };
+          }
+          return market;
+      });
+      return updatedState;
+  });
+};
+
+const handleCategoryClick = (marketId, categoryId) => {
+  setSideMeState(prevState => {
+      const updatedState = prevState?.map(market => {
+          if (market.id === marketId) {
+              const updatedCategories = market?.Categories.map(category => {
+                  if (category.id === categoryId) {
+                      return {
+                          ...category,
+                          showThirdLevel: !category.showThirdLevel
+                      };
+                  }
+                  return category;
+              });
+              return {
+                  ...market,
+                  categories: updatedCategories
+              };
+          }
+          return market;
+      });
+      return updatedState;
+  });
+};
+
+const handleSubcategoryClick = (marketId, categoryId, subcategoryId) => {
+  setSideMeState(prevState => {
+      const updatedState = prevState.map(market => {
+          if (market.id === marketId) {
+              const updatedCategories = market.Categories.map(category => {
+                  if (category.id === categoryId) {
+                      const updatedSubcategories = category.Subcategories.map(subcategory => {
+                          if (subcategory.id === subcategoryId) {
+                              return {
+                                  ...subcategory,
+                                  showFourthLevel: !subcategory.showFourthLevel
+                              };
+                          }
+                          return subcategory;
+                      });
+                      return {
+                          ...category,
+                          subcategories: updatedSubcategories
+                      };
+                  }
+                  return category;
+              });
+              return {
+                  ...market,
+                  categories: updatedCategories
+              };
+          }
+          return market;
+      });
+      return updatedState;
+  });
+};
 
     const toggleSubMenu = () => {
         setShowSubMenu(!showSubMenu);
@@ -92,48 +173,63 @@ const SideMenu = ({ isOpen,isopen2 }) => {
             <div className="inner">
                 <div className="first-level">
                     <ul>
-                        <li className={`has-children menu-item jsFirstLevelMenuItem ${showSubMenu ? 'second-level-container' : ''}`} >
-                            <a className="d-flex flex-column main-parent-cat op-50" title="Intelligent Audio" data-href="https://www.fos-lighting.eu/intelligent-audio-c-173.html"onClick={toggleSubMenu}>
-                                <img className="img-fluid" src="/images/categ.png" alt="Intelligent Audio" />
-                                Intelligent Audio
-                            </a>
+                    {SideMeState?.map((market => (
+        <li key={market.id} className={`has-children menu-item jsFirstLevelMenuItem ${market.showSubMenu ? 'second-level-container' : ''}`} >
+            <a onClick={() => handleMarketClick(market.id)} className="d-flex flex-column main-parent-cat op-50" title={market.name} data-href={market.url}>
+                <img className="img-fluid" src={market.image} alt={market.name} />
+                {market.name}
+            </a>
                             <i className="las la-angle-right op-50" data-href="https://www.fos-lighting.eu/intelligent-audio-c-173.html" onClick={toggleSubMenu}></i>
-                            {showSubMenu && (
-                            <ul className="second-level" style={{ display: showSubMenu ? 'block' : 'none' }}>
-                            <ul className="inner-second" style={{ maxHeight: '571px' }}>
-                                        <li className="menu-item has-children third-level-container " >
-                                            <a title="Active Speakers" data-href="https://www.fos-lighting.eu/active-speakers-c-173_97.html"onClick={toggleThirdLevel}>Active Speakers</a>
-                                            <i className="las la-angle-right" data-href="https://www.fos-lighting.eu/active-speakers-c-173_97.html"onClick={toggleThirdLevel}></i>
-                                            {showThirdLevel && (
-                                                <ul className="third-level"  style={{ display: showThirdLevel ? 'block' : 'none' }}>
-                                                  <ul className="inner-third"  style={{ maxHeight: '571px' }}>
+                            {market.showSubMenu && (
+                <ul className="second-level" style={{ display: market.showSubMenu ? 'block' : 'none' }}>
+                                                                <ul className="inner-second" style={{ maxHeight: '571px' }}>
 
-                                                    <li className="menu-item has-children fourth-level-container" >
-                                                        <a title="Stage Lighting" data-href="https://www.fos-lighting.eu/abs-active-speakers-c-173_97_99.html"onClick={toggleFourthLevel}>ABS Active Speakers</a>
-                                                        <i className="las la-angle-right" data-href="https://www.fos-lighting.eu/abs-active-speakers-c-173_97_99.html"></i>
-                                                        {showFourthLevel && (
-                                                            <ul className="fourth-level menu-products-container"style={{ display: showFourthLevel ? 'block' : 'none' }}>
-                                                                <li>
-                                                                    <a href="https://www.fos-lighting.eu/ihos-wheels-kit-p-1264.html" className="menu-product-link d-inline-flex align-items-center">
-                                                                        <div className="menu-product-link__img mr-3">
-                                                                            <img src="/images/product.jpg" alt="IHOS Wheels Kit"  />
-                                                                        </div>
-                                                                        <div className="menu-product-link__title">
-                                                                            <span>IHOS Wheels Kit</span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        )}
-                                                    </li>
-                                                    </ul>
-                                                </ul>
-                                            )}
-                                        </li>
+                    {market?.Categories?.map((category => (
+                        <li key={category.id} className="menu-item has-children third-level-container">
+                            <a onClick={() => handleCategoryClick(market.id, category.id)} title={category.name} data-href={category.url}>{category.name}</a>
+                           
+                                <i className="las la-angle-right" data-href="https://www.fos-lighting.eu/active-speakers-c-173_97.html"onClick={toggleThirdLevel}></i>
+                                {category.showThirdLevel && (
+                                <ul className="third-level" style={{ display: category.showThirdLevel ? 'block' : 'none' }}>
+                                                                                                          <ul className="inner-third"  style={{ maxHeight: '571px' }}>
+
+                                    {category?.Subcategories?.map((subcategory => (
+                                        <li key={subcategory.id} className="menu-item">
+                                            <a onClick={() => handleSubcategoryClick(market.id, category.id, subcategory.id)} title={subcategory.name} data-href={subcategory.url}>{subcategory.name}</a>
+                                            <i className="las la-angle-right" data-href="https://www.fos-lighting.eu/abs-active-speakers-c-173_97_99.html"></i>
+                                            {subcategory?.showFourthLevel && (
+                                                <ul className="fourth-level menu-products-container" style={{ display: subcategory.showFourthLevel ? 'block' : 'none' }}>
+                                                     <li>
+                                                      <a href="https://www.fos-lighting.eu/ihos-wheels-kit-p-1264.html" className="menu-product-link d-inline-flex align-items-center">
+                                                          <div className="menu-product-link__img mr-3">
+                                                              <img src="/images/product.jpg" alt="IHOS Wheels Kit"  />
+                                                          </div>
+                                                          <div className="menu-product-link__title">
+                                                              <span>IHOS Wheels Kit</span>
+                                                          </div>
+                                                      </a>
+                                                  </li>
+                                              </ul>
+                                          )}
+                                      </li>
+
+                                      )))}
+                                      
+                                        </ul>
+                                    </ul>
+                                )}
+                            </li>
+
+                              )))
+}
+                            
+                                        
                                     </ul>
                                 </ul>
                             )}
                         </li>
+                      )))}
+                        
                     </ul>
                     <div className="tags-menu">
                         <span className="news">

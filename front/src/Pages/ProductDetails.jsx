@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
-
+import { useParams } from "react-router-dom";
+import { UseSelector,useSelector } from 'react-redux/es/hooks/useSelector';
+import { useDispatch } from 'react-redux';
+import { GetProductById } from '../Features/Product/ProductSlice';
 function ProductDetail() {
   const [xDisplayStyle, setXDisplayStyle] = useState('none');
   const [bDisplayStyle, setBDisplayStyle] = useState('block');
-  
+  const params = useParams()
+  const dispatch = useDispatch();
+  const ProductState = useSelector((state)=> state.product.Product)
+  useEffect(()=>{
+    dispatch(GetProductById(params.id))
+
+  },[params.id])
+  console.log(ProductState)
+  const Extra_images = ProductState?.extra_image ? JSON.parse(ProductState.extra_image) : null;
+
 const products = [
   {
     id: 1,
@@ -234,7 +246,7 @@ const product = [
                 {/* PRODUCT COLUMN 1 */}
                 <div className="col product-c-1">
                   <div className="headingtitle" style={{ display: bDisplayStyle }}>
-                    <h1>{product.title}</h1>
+                    <h1>{ProductState?.title}</h1>
                     <div className="product__category-img">
                       <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html">
                         <img className="cat-logo" src="/images/logo1.svg" alt="Category Logo" />
@@ -244,7 +256,7 @@ const product = [
                       <div className="model-wrap">
                         <div className="model">
                           <span>Product code:</span>
-                          {product[0].code}
+                          {ProductState?.code}
                         </div>
                       </div>
                     </div>
@@ -253,8 +265,8 @@ const product = [
                   <div className="product-c-1__wrapper">
                     <div className="product-gallery">
                       <div className="image">
-                        <a href={product[0].image} id="main_product_image_link">
-                          <img src={product[0].image} className="crisp" draggable="false" border="0" />
+                        <a href={ProductState?.image} id="main_product_image_link">
+                          <img src={ProductState?.image} className="crisp" draggable="false" border="0" />
                           <div className="product-box__extra-info">
                             <div className="product-box__hot">
                               <i className="las la-fire"></i>
@@ -265,7 +277,7 @@ const product = [
                       </div>
                       <input type="hidden" name="product_original_image" value={product.image} />
                       <div className="extra-images vertical">
-                        {product[0].extra_image.map((image, index) => (
+                        {Extra_images?.map((image, index) => (
                           <div className="box additional_image" key={index}>
                             <a href={image} data-fancybox="product-image" data-caption={product.title} className="gallerySmallImage" data-change={image}>
                               <img src={image} border="0" title={product.title} alt={product.title} />
@@ -279,7 +291,7 @@ const product = [
                 {/* PRODUCT COLUMN 2 */}
                 <div className="col product-c-2">
                   <div className="headingtitle" style={{ display: xDisplayStyle }}>
-                    <h1>{product[0].title}</h1>
+                    <h1>{ProductState?.title}</h1>
                     <div className="product__category-img">
                       <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html">
                         <img className="cat-logo" src="/images/logo1.svg" alt="Category Logo" />
@@ -289,13 +301,13 @@ const product = [
                       <div className="model-wrap">
                         <div className="model">
                           <span>Product code:</span>
-                          {product[0].code}
+                          {ProductState?.code}
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="product-c-2__wrapper">
-                    <div className="product_description">{product[0].description}</div>
+                    <div className="product_description">{ProductState?.description}</div>
                     <div className="product-checkpoints">
                       <a href="https://www.fos-lighting.eu/why-choose-fos-pr-6.html" target="_blank" className="product-checkpoint-item">
                         <img src="images/icons/Checkmark.svg" alt="" />

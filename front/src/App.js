@@ -58,7 +58,7 @@ import AllNewsRoom from './Pages/AllNews';
                     element={<Layout><Explore /></Layout>}
                 />
                 <Route
-                    path="/ProductDetail"
+                    path="/ProductDetail/:id"
                     element={<Layout><ProductDetail /></Layout>}
                 />
                 <Route

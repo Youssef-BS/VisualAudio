@@ -4,7 +4,9 @@ const Product = require('../Models/Products');
 const Market = require('../Models/Market')
 const Category = require('../Models/Category')
 const Subcategory = require('../Models/Subcategory')
-const SubSubcategory = require('../Models/SubSubcategory')
+const SubSubcategory = require('../Models/SubSubcategory');
+const Newsroom = require('../Models/Newsroom');
+const FeaturedProduct = require('../Models/FeaturedProduct');
 
 // @desc    Create a new product
 // @route   POST /api/products
@@ -27,6 +29,35 @@ const createProduct = asyncHandler(async (req, res) => {
 const getProducts = asyncHandler(async (req, res) => {
   const products = await Product.findAll();
   res.json(products);
+});
+const getNewsrooms = asyncHandler(async (req, res) => {
+  const newsrooms = await Newsroom.findAll({
+    include :[
+      {
+        model : Product,
+        Product
+        
+      }
+    ]
+  });
+  res.json(newsrooms);
+});
+const getFeaturedProduct = asyncHandler(async (req, res) => {
+  const newsrooms = await FeaturedProduct.findAll({
+    include :[
+      {
+        model : Product,
+        Product
+        
+      }
+    ]
+  });
+  res.json(newsrooms);
+});
+
+const getMarkets = asyncHandler(async (req, res) => {
+  const markets = await Market.findAll();
+  res.json(markets);
 });
 
 // @desc    Get a single product by ID
@@ -100,4 +131,4 @@ const getAllMarkets = asyncHandler(async (req, res) => {
   });
   
   
-module.exports = { createProduct, getProducts, getProductById, updateProduct, deleteProduct,getAllMarkets };
+module.exports = { createProduct, getFeaturedProduct, getProducts, getProductById, updateProduct, getNewsrooms, deleteProduct,getAllMarkets,getMarkets };

@@ -8,7 +8,7 @@ const AllNewsRoom = () => {
         <div className="row">
           <div className="col">
             <div className="pb-5">
-              <div className="headingtitle text-center pt-2 pb-3 pb-lg-5">Newsroom</div>
+              <div className="headingtitle text-center pt-2 pb-3 pb-lg-5">gg</div>
               <div className="row">
                 <div className="col inner-pages-text">
                   <div className="row news-page">

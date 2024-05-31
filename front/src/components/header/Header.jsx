@@ -3,9 +3,15 @@ import {Link,useNavigate} from 'react-router-dom'
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { GoX } from "react-icons/go";
+import { useDispatch } from 'react-redux';
 import { FiMenu } from "react-icons/fi";
 import $ from "jquery"
+import { GetAll } from '../../Features/Product/ProductSlice';
 const HeaderComponent = () => {
+const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(GetAll())
+  },[])
 
   const [register,setRegister]=useState(false);
   const toogleRegister = ()=>{

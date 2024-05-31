@@ -7,10 +7,12 @@ const Category = require('./Models/Category')
 const Subcategory = require('./Models/Subcategory')
 const ProductRoutes = require('./Routes/ProductRoute')
 const SubSubcategory = require('./Models/SubSubcategory');
+const Newsroom = require('./Models/Newsroom')
+const FeaturedProduct = require('./Models/FeaturedProduct');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// Initialize Sequelize
+const cors = require("cors");
 
 // Test the database connection
 sequelize.authenticate()
@@ -32,6 +34,9 @@ sequelize.authenticate()
     SubSubcategory.hasMany(Product)
     Subcategory.hasMany(Product)
     Category.hasMany(Product)
+    Newsroom.belongsTo(Product)
+    FeaturedProduct.belongsTo(Product)
+    
 
 
 
@@ -47,6 +52,8 @@ sequelize.authenticate()
   .catch((error) => {
     console.error('Error syncing Market model with database:', error);
   });
+  app.use(cors());
+
   app.use(express.json());
 
   app.use("/pro",ProductRoutes)

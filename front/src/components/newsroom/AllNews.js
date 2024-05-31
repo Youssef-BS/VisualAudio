@@ -1,6 +1,12 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import {GetNews} from '../../Features/Newsroom/newsSlices';
+import { Link } from 'react-router-dom';
 
 function AllNews() {
+  const dispatch = useDispatch();
+  const NewsState = useSelector((state)=> state?.news?.News)
+ 
   return (
     <div id="mainbody" className="mainbody pinfo">
       {/* Breadcrumb */}
@@ -27,125 +33,26 @@ function AllNews() {
               <div className="row">
                 <div className="col inner-pages-text">
                   <div className="row news-page">
-                    <div className="col-lg-6">
+                    {NewsState?.map((news)=>(
+                      <div className="col-lg-6">
                       <div className="home-boxes__box home-boxes__box--white">
                         <a href="https://www.fos-lighting.eu/fos-bicolor-200w-fresnel-p-2768.html" className="wrap-link row flex-column flex-xl-row">
                           <div className="home-boxes__box-left col-12 col-lg">
                             <img src="/images/product.jpg" className="img-fluid" alt="" />
                           </div>
                           <div className="home-boxes__box-right col">
-                            <h2>FOS Bicolor 200W Fresnel</h2>
+                            <h2>{news?.Product?.title}</h2>
                             <p className="home-boxes__date"><i className="las la-calendar mr-2"></i>09/02/2024</p>
-                            <p>Professional bicolor Fresnel led light, 200-watt led source tunable white, warm white 3600K up to daylight 5600K, CRI 95, manual linear zoom 15 ? 35 degrees, 0-100% linear dimmer, low noise operation, LCD screen and local control knobs, aluminum housing, 2-3-4 Dmx Channels, adjustable barndoor, 4kg.</p>
-                            <span className="btn btn-primary btn-big">
-                              View details
-                            </span>
+                            <p>{news?.Product?.title}</p>
+                            <Link to={`/ProductDetail/${news?.Product.id}`}><span className="btn btn-primary btn-big">View details</span></Link>
+
                           </div>
                         </a>
                       </div>
                     </div>
-                    <div className="col-lg-6">
-                      <div className="home-boxes__box home-boxes__box--white">
-                        <a href="https://www.fos-lighting.eu/fos-bicolor-200w-fresnel-p-2768.html" className="wrap-link row flex-column flex-xl-row">
-                          <div className="home-boxes__box-left col-12 col-lg">
-                            <img src="/images/product.jpg" className="img-fluid" alt="" />
-                          </div>
-                          <div className="home-boxes__box-right col">
-                            <h2>FOS Bicolor 200W Fresnel</h2>
-                            <p className="home-boxes__date"><i className="las la-calendar mr-2"></i>09/02/2024</p>
-                            <p>Professional bicolor Fresnel led light, 200-watt led source tunable white, warm white 3600K up to daylight 5600K, CRI 95, manual linear zoom 15 ? 35 degrees, 0-100% linear dimmer, low noise operation, LCD screen and local control knobs, aluminum housing, 2-3-4 Dmx Channels, adjustable barndoor, 4kg.</p>
-                            <span className="btn btn-primary btn-big">
-                              View details
-                            </span>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                    <div className="col-lg-6">
-                      <div className="home-boxes__box home-boxes__box--white">
-                        <a href="https://www.fos-lighting.eu/fos-bicolor-200w-fresnel-p-2768.html" className="wrap-link row flex-column flex-xl-row">
-                          <div className="home-boxes__box-left col-12 col-lg">
-                            <img src="/images/product.jpg" className="img-fluid" alt="" />
-                          </div>
-                          <div className="home-boxes__box-right col">
-                            <h2>FOS Bicolor 200W Fresnel</h2>
-                            <p className="home-boxes__date"><i className="las la-calendar mr-2"></i>09/02/2024</p>
-                            <p>Professional bicolor Fresnel led light, 200-watt led source tunable white, warm white 3600K up to daylight 5600K, CRI 95, manual linear zoom 15 ? 35 degrees, 0-100% linear dimmer, low noise operation, LCD screen and local control knobs, aluminum housing, 2-3-4 Dmx Channels, adjustable barndoor, 4kg.</p>
-                            <span className="btn btn-primary btn-big">
-                              View details
-                            </span>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                    <div className="col-lg-6">
-                      <div className="home-boxes__box home-boxes__box--white">
-                        <a href="https://www.fos-lighting.eu/fos-bicolor-200w-fresnel-p-2768.html" className="wrap-link row flex-column flex-xl-row">
-                          <div className="home-boxes__box-left col-12 col-lg">
-                            <img src="/images/product.jpg" className="img-fluid" alt="" />
-                          </div>
-                          <div className="home-boxes__box-right col">
-                            <h2>FOS Bicolor 200W Fresnel</h2>
-                            <p className="home-boxes__date"><i className="las la-calendar mr-2"></i>09/02/2024</p>
-                            <p>Professional bicolor Fresnel led light, 200-watt led source tunable white, warm white 3600K up to daylight 5600K, CRI 95, manual linear zoom 15 ? 35 degrees, 0-100% linear dimmer, low noise operation, LCD screen and local control knobs, aluminum housing, 2-3-4 Dmx Channels, adjustable barndoor, 4kg.</p>
-                            <span className="btn btn-primary btn-big">
-                              View details
-                            </span>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                    <div className="col-lg-6">
-                      <div className="home-boxes__box home-boxes__box--white">
-                        <a href="https://www.fos-lighting.eu/fos-bicolor-200w-fresnel-p-2768.html" className="wrap-link row flex-column flex-xl-row">
-                          <div className="home-boxes__box-left col-12 col-lg">
-                            <img src="/images/product.jpg" className="img-fluid" alt="" />
-                          </div>
-                          <div className="home-boxes__box-right col">
-                            <h2>FOS Bicolor 200W Fresnel</h2>
-                            <p className="home-boxes__date"><i className="las la-calendar mr-2"></i>09/02/2024</p>
-                            <p>Professional bicolor Fresnel led light, 200-watt led source tunable white, warm white 3600K up to daylight 5600K, CRI 95, manual linear zoom 15 ? 35 degrees, 0-100% linear dimmer, low noise operation, LCD screen and local control knobs, aluminum housing, 2-3-4 Dmx Channels, adjustable barndoor, 4kg.</p>
-                            <span className="btn btn-primary btn-big">
-                              View details
-                            </span>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                    <div className="col-lg-6">
-                      <div className="home-boxes__box home-boxes__box--white">
-                        <a href="https://www.fos-lighting.eu/fos-bicolor-200w-fresnel-p-2768.html" className="wrap-link row flex-column flex-xl-row">
-                          <div className="home-boxes__box-left col-12 col-lg">
-                            <img src="/images/product.jpg" className="img-fluid" alt="" />
-                          </div>
-                          <div className="home-boxes__box-right col">
-                            <h2>FOS Bicolor 200W Fresnel</h2>
-                            <p className="home-boxes__date"><i className="las la-calendar mr-2"></i>09/02/2024</p>
-                            <p>Professional bicolor Fresnel led light, 200-watt led source tunable white, warm white 3600K up to daylight 5600K, CRI 95, manual linear zoom 15 ? 35 degrees, 0-100% linear dimmer, low noise operation, LCD screen and local control knobs, aluminum housing, 2-3-4 Dmx Channels, adjustable barndoor, 4kg.</p>
-                            <span className="btn btn-primary btn-big">
-                              View details
-                            </span>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                    <div className="col-lg-6">
-                      <div className="home-boxes__box home-boxes__box--white">
-                        <a href="https://www.fos-lighting.eu/fos-bicolor-200w-fresnel-p-2768.html" className="wrap-link row flex-column flex-xl-row">
-                          <div className="home-boxes__box-left col-12 col-lg">
-                            <img src="/images/product.jpg" className="img-fluid" alt="" />
-                          </div>
-                          <div className="home-boxes__box-right col">
-                            <h2>FOS Bicolor 200W Fresnel</h2>
-                            <p className="home-boxes__date"><i className="las la-calendar mr-2"></i>09/02/2024</p>
-                            <p>Professional bicolor Fresnel led light, 200-watt led source tunable white, warm white 3600K up to daylight 5600K, CRI 95, manual linear zoom 15 ? 35 degrees, 0-100% linear dimmer, low noise operation, LCD screen and local control knobs, aluminum housing, 2-3-4 Dmx Channels, adjustable barndoor, 4kg.</p>
-                            <span className="btn btn-primary btn-big">
-                              View details
-                            </span>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
+                    ))}
+                    
+                 
                     {/* Add more news items here */}
                   </div>
                 </div>

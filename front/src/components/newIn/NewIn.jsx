@@ -1,12 +1,20 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import Slider from 'react-slick';
 import { data } from './data'; // Importing the data array
 import { GoX } from "react-icons/go";
 import { FiMenu } from "react-icons/fi";
 import { Link } from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
+import { GetFeaturedProduct } from '../../Features/Newsroom/newsSlices';
 
 
 const ProductBox = () => {
+  const dispatch = useDispatch()
+  const FeaturedP = useSelector((state)=> state?.news?.FeaturedP)
+  useEffect(()=>{
+    dispatch(GetFeaturedProduct())
+  },[])
+  console.log(FeaturedP)
   const products = [
     {
       id: 1,
@@ -169,24 +177,24 @@ const ProductBox = () => {
               <div className="featured-products__slider jsFeaturedProductsHome featured-products__slider h-100 slick-initialized slick-slider slick-dotted">
                 <Slider {...carouselSettings}>
                   {/* You can map over your data array to render featured products */}
-                  {data.map(product => (
-                    <div key={product.id} className="featured-products new-in-featured__box" style={{ backgroundImage: `url(${product.imageUrl})` }}>
+                  {FeaturedP?.map(product => (
+                    <div key={product.Product.id} className="featured-products new-in-featured__box" style={{ backgroundImage: `url(${product.imageUrl})` }}>
                       <h2 className="new-in-featured__title">{product.title}</h2>
                       <div className="featured-products__tag">{product.title}</div>
                       <div className="product-box">
-                        <a href={product.link} className="product-box__img" tabIndex="-1">
-                          <img src={product.imageUrl} alt={product.title} />
+                        <a href={product.Product.link} className="product-box__img" tabIndex="-1">
+                          <img src={product.Product.image} alt={product.title} />
                         </a>
                         <a href={product.link} className="product-box__title" tabIndex="-1">
-                          <span>{product.title}</span>
+                          <span>{product.Product.title}</span>
                         </a>
                         <div className="product-box__availability product-box__availability--in-stock">
-                          <span>In stock</span>
+                          <span>{product.Product.availability}</span>
                         </div>
-                        <p className="product-box__desc">{product.description}</p>
-                        <a href={product.link} className="btn btn-secondary btn-primary-white" tabIndex="-1">
+                        <p className="product-box__desc">{product.Product.description}</p>
+                        <Link to={`/ProductDetail/${product.Product.id}`}className="btn btn-secondary btn-primary-white">
                           <span>View details</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   ))}
