@@ -12,6 +12,12 @@ const GetAll = async()=>{
     );
     return response.data;
   }
+  const Search = async(query)=>{
+    const response = await axios.get(
+        `http://localhost:3000/pro/search?query=${query}`,
+    );
+    return response.data;
+  }
 const GetAllProducts = async()=>{
   const response = await axios.get(
       'http://localhost:3000/pro/products',
@@ -37,7 +43,8 @@ const AuthProduct = {
     GetProductById,
     GetAllProducts,
     GetAll,
-    GetMarkets
+    GetMarkets,
+    Search
 };
 
 export default AuthProduct;

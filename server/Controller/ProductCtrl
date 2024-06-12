@@ -7,6 +7,7 @@ const Subcategory = require('../Models/Subcategory')
 const SubSubcategory = require('../Models/SubSubcategory');
 const Newsroom = require('../Models/Newsroom');
 const FeaturedProduct = require('../Models/FeaturedProduct');
+const { Op } = require('sequelize');
 
 // @desc    Create a new product
 // @route   POST /api/products
@@ -104,6 +105,33 @@ const deleteProduct = asyncHandler(async (req, res) => {
     res.status(404).json({ success: false, message: 'Product not found' });
   }
 });
+const search = asyncHandler(async(req,res) => {
+  const { query } = req.query;
+
+    try {
+        // Perform database query to search for matching products
+        const products = await Product.findAll({
+            where: {
+                [Op.or]: [
+                    { title: { [Op.like]: `%${query}%` } },
+                    { description: { [Op.like]: `%${query}%` } }
+                ]
+            },
+            include: [
+                { model: Category },
+                { model: Subcategory },
+                { model: SubSubcategory },
+                { model: Market }
+            ]
+        });
+
+        // Send the search results back to the client
+        res.json(products);
+    } catch (error) {
+        console.error('Error performing search:', error);
+        res.status(500).json({ success: false, error: 'An error occurred while performing the search.' });
+    }
+})
 // Get a single market with its related categories, subcategories, subsubcategories, and products
 const getAllMarkets = asyncHandler(async (req, res) => {
     const markets = await Market.findAll({
@@ -131,4 +159,4 @@ const getAllMarkets = asyncHandler(async (req, res) => {
   });
   
   
-module.exports = { createProduct, getFeaturedProduct, getProducts, getProductById, updateProduct, getNewsrooms, deleteProduct,getAllMarkets,getMarkets };
+module.exports = { search, createProduct, getFeaturedProduct, getProducts, getProductById, updateProduct, getNewsrooms, deleteProduct,getAllMarkets,getMarkets };

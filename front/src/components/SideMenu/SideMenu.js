@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
-import { GetAll } from '../../Features/Product/ProductSlice';
+import { GetAll, GetAllProducts,GetMarkets } from '../../Features/Product/ProductSlice';
 const SideMenu = ({ isOpen,isopen2 }) => {
   const Side = useSelector((state)=> state.product.All )
 
@@ -15,10 +15,35 @@ const SideMenu = ({ isOpen,isopen2 }) => {
     const [responsiveweb,setResponsiveWeb]=useState("");
     const [responsiveMob,setResponsiveMob]=useState("")
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-
+    const MarketState = useSelector((state)=> state?.product?.Markets);
+    const ProductState = useSelector((state)=> state?.product?.Products);
+    const [activeMarket, setActiveMarket] = useState(null);
+    const [activeCategory, setActiveCategory] = useState(null);
+    const [activeSub, setAtiveSub] = useState(null);
+    const [activeSubSub, setActiveSubSub] = useState(null);
+  
+  
+    const [activeMarketProducts, setActiveMarketProducts] = useState([]);
+  const dispatch = useDispatch()
+  
+    useEffect (()=>{
+      dispatch(GetMarkets())
+      dispatch(GetAllProducts())
+  
+    },[dispatch]);
+    const handleMarketClick = (market) => {
+        setActiveMarket(market);
+        setActiveMarketProducts(market);
+        setShowSubMenu(!showSubMenu) // assuming market object has a products property
+      };
+      const handleCategoryClick = (category) => {
+        console.log(category)
+        setActiveCategory(category);
+        setActiveMarketProducts(category);
+        setShowThirdLevel(!showThirdLevel) // assuming market object has a products property
+      };
 // Define event handlers to toggle visibility of menu levels
-const handleMarketClick = (marketId) => {
+const ss = (marketId) => {
   setSideMeState(prevState => {
       const updatedState = prevState?.map(market => {
           if (market.id === marketId) {
@@ -33,7 +58,7 @@ const handleMarketClick = (marketId) => {
   });
 };
 
-const handleCategoryClick = (marketId, categoryId) => {
+const dd = (marketId, categoryId) => {
   setSideMeState(prevState => {
       const updatedState = prevState?.map(market => {
           if (market.id === marketId) {
@@ -56,6 +81,7 @@ const handleCategoryClick = (marketId, categoryId) => {
       return updatedState;
   });
 };
+console.log(activeMarket)
 
 const handleSubcategoryClick = (marketId, categoryId, subcategoryId) => {
   setSideMeState(prevState => {
@@ -173,24 +199,29 @@ const handleSubcategoryClick = (marketId, categoryId, subcategoryId) => {
             <div className="inner">
                 <div className="first-level">
                     <ul>
-                    {SideMeState?.map((market => (
-        <li key={market.id} className={`has-children menu-item jsFirstLevelMenuItem ${market.showSubMenu ? 'second-level-container' : ''}`} >
-            <a onClick={() => handleMarketClick(market.id)} className="d-flex flex-column main-parent-cat op-50" title={market.name} data-href={market.url}>
+                    {Side?.map((market => (
+        <li key={market.id} className={`has-children menu-item jsFirstLevelMenuItem ${showSubMenu ? 'second-level-container' : ''}`} >
+            <a onClick={() => handleMarketClick(market?.id)} className="d-flex flex-column main-parent-cat op-50" title={market.name} data-href={market.url}>
                 <img className="img-fluid" src={market.image} alt={market.name} />
                 {market.name}
             </a>
-                            <i className="las la-angle-right op-50" data-href="https://www.fos-lighting.eu/intelligent-audio-c-173.html" onClick={toggleSubMenu}></i>
-                            {market.showSubMenu && (
-                <ul className="second-level" style={{ display: market.showSubMenu ? 'block' : 'none' }}>
+                            <i className="las la-angle-right op-50" data-href="https://www.fos-lighting.eu/intelligent-audio-c-173.html" ></i>
+                            {showSubMenu && (
+                <ul className="second-level" style={{ display: showSubMenu ? 'block' : 'none' }}>
                                                                 <ul className="inner-second" style={{ maxHeight: '571px' }}>
 
-                    {market?.Categories?.map((category => (
+                  {market?.Categories?.filter(category => category?.marketId == 1).map(category => {
+                    if(category.marketId==1) console.log("www") 
+                    else console.log("qq") 
+                    
+  return (
                         <li key={category.id} className="menu-item has-children third-level-container">
-                            <a onClick={() => handleCategoryClick(market.id, category.id)} title={category.name} data-href={category.url}>{category.name}</a>
+                            <a onClick={() => handleCategoryClick(category?.id)} title={category?.name} data-href={category.url}>{category.name}</a>
+                            <h2>hhh</h2>
                            
                                 <i className="las la-angle-right" data-href="https://www.fos-lighting.eu/active-speakers-c-173_97.html"onClick={toggleThirdLevel}></i>
-                                {category.showThirdLevel && (
-                                <ul className="third-level" style={{ display: category.showThirdLevel ? 'block' : 'none' }}>
+                                {showThirdLevel && (
+                                <ul className="third-level" style={{ display: showThirdLevel ? 'block' : 'none' }}>
                                                                                                           <ul className="inner-third"  style={{ maxHeight: '571px' }}>
 
                                     {category?.Subcategories?.map((subcategory => (
@@ -220,8 +251,8 @@ const handleSubcategoryClick = (marketId, categoryId, subcategoryId) => {
                                 )}
                             </li>
 
-                              )))
-}
+
+                  )})} 
                             
                                         
                                     </ul>

@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import SideMenu from './SideMenu/SideMenu';
 import { GoX } from "react-icons/go";
 import { FiMenu } from "react-icons/fi";
-
+import { useDispatch,useSelector } from 'react-redux';
 import Cart from './Cart';
 import { Link } from 'react-router-dom';
+import { Search } from '../Features/Product/ProductSlice';
 const MainHeader = () => {
     const [isInputEmpty, setIsInputEmpty] = useState(false);
+    const [query, setQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const searchState = useSelector((state)=> state?.product?.Search)
+    console.log(searchState)
+    const dispatch = useDispatch()
+    useEffect(()=>{
+      dispatch(Search(query))
+      setSearchResults(searchState)
+    },[query])
+  
+    const handleSearch = async () => {
+        setIsLoading(true);
+    }
 
     const handleInputChange = (event) => {
         setIsOpen(event.target.value != '');
+        setQuery(event.target.value)
         if(isOpen){
-            event.target.value=""
-        }
-    };
+        }    };
+    console.log(query)
     const [showCart, setShowCart] = useState(false);
 
     const toggleCart = () => {
@@ -118,55 +133,43 @@ const MainHeader = () => {
                 <div className="bcont" id="bcont-content" style={{ marginTop: '30px' }}>
                     
                     
-                <div className="show_ac_results_categories" id="show_ac_results_categories"><div className="ac_result_item"><a href="https://www.fos-lighting.eu/in-ear-headphones-c-173_90_146.html"><div className="description"><div className="title">In Ear Monitoring / In-Ear <b>Hea</b>dphones</div></div><div className="clear"></div></a></div><div className="ac_result_item"><a href="https://www.fos-lighting.eu/led-theater-lighting-c-172_17_165.html"><div className="description"><div className="title">Stage Lighting / Led T<b>hea</b>ter Lighting </div></div><div className="clear"></div></a></div><div style={{clear:'both'}}></div></div>
+                <div className="show_ac_results_categories" id="show_ac_results_categories">
+    {searchResults?.map((product, index) => (
+        <div key={index} className="ac_result_item">
+            <a href={`https://www.fos-lighting.eu/${product?.Category?.name}`}>
+                <div className="description">
+                    <div className="title">Category: {product?.Category?.name}</div>
+                </div>
+            </a>
+          
+        </div>
+    ))}
+</div>
                     <div className="show_ac_results_title products" id="show_ac_results_title_products">
                         <h2 className="main-title" style={{ margin: '0' }}>Product Results:</h2>
                     </div>
                     <div className="show_ac_results_products" id="show_ac_results_products">
-        <div className="ac_result_item">
-          <a href="https://www.fos-lighting.eu/fos-12r-hybrid-pro-p-647.html">
-            <div className="image">
-              <img src="/images/product.jpg" className="mouseOver" alt="" border="0" />
-            </div>
-            <div className="description">
-              <div className="title">FOS 12R Hybrid PRO</div>
-              <div className="model">L005581</div>
-              <div className="price"><span className="productPrice">836.72€</span></div>
-            </div>
-            <div className="clear"></div>
-          </a>
-        </div>
-        <div className="ac_result_item">
-          <a href="https://www.fos-lighting.eu/is706-speaker-wall-bracket-p-1052.html">
-            <div className="image">
-              <img src="/images/product.jpg" className="mouseOver" alt="" border="0" />
-            </div>
-            <div className="description">
-              <div className="title">IS706- Speaker Wall bracket</div>
-              <div className="model">L005650</div>
-              <div className="price"><span className="productPrice">15.76€</span></div>
-            </div>
-            <div className="clear"></div>
-          </a>
-        </div>
-        <div className="ac_result_item">
-          <a href="https://www.fos-lighting.eu/fos-beam-7r-hybrid-plus-p-38.html">
-            <div className="image">
-              <img src="/images/product.jpg" className="mouseOver" alt="" border="0" />
-            </div>
-            <div className="description">
-              <div className="title">FOS Beam 7R Hybrid Plus</div>
-              <div className="model">L004937</div>
-              <div className="price"><span className="productPrice">498.00€</span></div>
-            </div>
-            <div className="clear"></div>
-          </a>
-        </div>
+       
+       
+                    {searchResults?.map(product => (
+                            <div className="ac_result_item" key={product?.id}>
+                                <a href={`https://www.fos-lighting.eu/${product?.slug}`}>
+                                    <div className="image">
+                                        <img src={product?.image} className="mouseOver" alt="" border="0" />
+                                    </div>
+                                    <div className="description">
+                                        <div className="title">{product?.title}</div>
+                                        <div className="model">{product?.code}</div>
+                                        <div className="price"><span className="productPrice">{product?.price}</span></div>
+                                    </div>
+                                    <div className="clear"></div>
+                                </a>
+                            </div>
+                        ))}
         <div style={{ clear: 'both' }}></div>
       </div>
-                    <div className="show_ac_results_products" id="show_ac_results_products"></div>
-                    <div className="noresults">No result found with these criteria <i className="las la-frown"></i></div>
-                    <div className="clear"></div>
+      { searchResults.length>0 ?"":                    <div className="noresults">No result found with these criteria <i className="las la-frown"></i></div>}
+                    
                     <a className="view-all-search text-center mt-3 mb-3 d-block" href="#">Advanced search <i className="las la-cog"></i></a>
                 </div>
             </div>

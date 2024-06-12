@@ -6,6 +6,7 @@ import { FiMenu } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { GetFeaturedProduct } from '../../Features/Newsroom/newsSlices';
+import { GetAllProducts, GetMarkets } from '../../Features/Product/ProductSlice';
 
 
 const ProductBox = () => {
@@ -14,7 +15,22 @@ const ProductBox = () => {
   useEffect(()=>{
     dispatch(GetFeaturedProduct())
   },[])
-  console.log(FeaturedP)
+  const MarketState = useSelector((state)=> state?.product?.Markets);
+  const ProductState = useSelector((state)=> state?.product?.Products);
+  const [activeMarket, setActiveMarket] = useState(null);
+  const [activeMarketProducts, setActiveMarketProducts] = useState([]);
+
+
+  useEffect (()=>{
+    dispatch(GetMarkets())
+    dispatch(GetAllProducts())
+
+  },[dispatch]);
+  const handleMarketClick = (market) => {
+    setActiveMarket(market.id);
+    setActiveMarketProducts(market.id); // assuming market object has a products property
+  };
+
   const products = [
     {
       id: 1,
@@ -69,8 +85,8 @@ const ProductBox = () => {
     <GoX size={32}color='black'></GoX>,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 5,
+    slidesToShow: 4,
+    slidesToScroll: 2,
     autoplay: true,
     autoplaySpeed: 4000,
     responsive: [
@@ -114,37 +130,31 @@ const ProductBox = () => {
               <h2 className="new-in-featured__title">New In</h2>
               <div className="ajax-carousel-container">
                 <div className="actions">
-                  <div className="action-button active" data-action="new" data-category-id="172">FOS Technologies</div>
-                  <div className="action-button" data-action="new" data-category-id="173">Intelligent Audio</div>
-                  <div className="action-button" data-action="new" data-category-id="174">Visualization Tools</div>
-                  <div className="action-button" data-action="new" data-category-id="175">Truss & Suspension</div>
+                {MarketState?.map((market) => (
+                      <div
+                        key={market.id}
+                        className={`action-button ${activeMarket === market.id ? 'active' : ''}`}
+                        onClick={() => handleMarketClick(market)}
+                      >
+                        {market.name}
+                      </div>
+                    ))}
                 </div>
                  <div className="ajax-carousel">
         <div className="container-fluid carousel-container new">
           <div className="row productboxwrap pb-0 ml- mr-0">
             <div className="col-12">
               <div className="container pl-2 pr-2">
-                <div className="row products-carousel jsHomeAjaxCarousel slick-initialized slick-slider slick-dotted">
-                  <button className="slick-prev slick-arrow" aria-label="Previous" type="button" style={{}}>
-                    Previous
-                  </button>
-                  <div className="slick-list draggable">
-                    <div className="slick-track" style={{ opacity: 1, width: '11847px', transform: 'translate3d(-1077px, 0px, 0px)' }}>
-                      {/* Your original product */}
-                      <div className="boxes-section slick-slide slick-cloned"  style={{ width: '1077px' }} data-slick-index="2" id="" >
-                   
-                      </div>
-                      {/* Your additional product */}
-                      <div className="boxes-section slick-slide slick-cloned" style={{ width: '1077px' }} data-slick-index="0">
-                      <div className="custom-slider">
+                
       <div className="slides" style={{ display: 'flex', overflowX: 'hidden', transition: 'transform 0.5s ease' }}>
         <Slider {...settings}>
-        {data.map(product => (
+        {ProductState?.map((product)=>(
+                     product.marketId === activeMarket  ? (                         <Link to={'/ProductDetail'}  tabIndex="-1">
+
           <div key={product.id} >
-            <Link to={'/ProductDetail'}  tabIndex="-1">
               <div className="product-box" data-id={product.id} data-quantity="YOUR_PRODUCT_QUANTITY" data-price="YOUR_PRODUCT_PRICE">
                 <div className="product-box__img">
-                  <img src={product.imageUrl} alt={product.title} className="lazy-scroll loaded" />
+                  <img src={product.image} alt={product.title} className="lazy-scroll loaded" />
                 </div>
                 <div className="product-box__title">
                   <span><span id="">{product.title}</span></span>
@@ -154,19 +164,16 @@ const ProductBox = () => {
                 </div>
                 <p className="product-box__desc">{product.description}</p>
               </div>
-            </Link>
           </div>
-        ))}
-        </Slider>
+          </Link>
+
+):null
+))}        </Slider>
       </div>
       
     </div>
     </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    
           </div>
         </div>
       </div>

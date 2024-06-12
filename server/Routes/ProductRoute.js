@@ -4,6 +4,7 @@ const { getProductById } = require('../Controller/ProductCtrl');
 const { getMarkets } = require('../Controller/ProductCtrl');
 const { getNewsrooms } = require('../Controller/ProductCtrl');
 const { getFeaturedProduct } = require('../Controller/ProductCtrl');
+const { search } = require('../Controller/ProductCtrl');
 const router = express.Router();
 
 
@@ -16,5 +17,6 @@ router.get('/markets',getMarkets)
 router.get('/product/:id',getProductById)
 router.get('/news',getNewsrooms)
 router.get('/featured-product',getFeaturedProduct)
+router.get('/search',search)
 
 module.exports = router
