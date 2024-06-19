@@ -7,11 +7,14 @@ import { useDispatch } from 'react-redux';
 import { FiMenu } from "react-icons/fi";
 import $ from "jquery"
 import { GetAll } from '../../Features/Product/ProductSlice';
+import { useParams } from "react-router-dom";
+
 const HeaderComponent = () => {
+  const Params = useParams()
 const dispatch = useDispatch()
   useEffect(()=>{
     dispatch(GetAll())
-  },[])
+  },[dispatch])
 
   const [register,setRegister]=useState(false);
   const toogleRegister = ()=>{
@@ -83,7 +86,8 @@ const handleReverseAction = () => {
 
 
    const [fetched , setFetched] = useState(false);
-
+const [drop,setDrop]= useState(false)
+const [user,setUser]= useState(true)
    const inverseFunction = () => {
       setFetched(!fetched);
    }
@@ -93,6 +97,10 @@ const handleReverseAction = () => {
    const toggleDropdown = () => {
      setIsDropdownOpen(!isDropdownOpen);
    };
+
+   const toggleDrop = () => {
+    setDrop(!drop);
+  };
    const dropdownStyle = {
     display:'block',
     position: 'absolute',
@@ -166,23 +174,63 @@ const handleReverseAction = () => {
       </div>
       <div className="col-6 col-lg-3 right">
         <div className="row justify-content-end">
-          <div className="col-auto icon h-100">
-            <div id="not-logged" className="login h-100 d-flex align-items-center">
-              <a href="#" id="login-popup-link" className="login-popup-link h-100 ">
-                <span className="user-name">Login / Register</span>
+          <div className="col-auto icon h-100  ">
+            {user ? 
+
+            <div id="logged" className="login h-100 d-flex align-items-center">
+              <a href="#" id="login-popup-link " className="login-popup-link h-100 ">
+
+                <span className="user-name">Wassim</span>
                 <svg viewBox="0 0 17 18">
-                  <g fill="#F58220" fillRule="nonzero">
-                    <path d="M8.5 9A4.5 4.5 0 104 4.5 4.507 4.507 0 008.5 9zm0-7.66A3.159 3.159 0 115.341 4.5 3.163 3.163 0 018.5 1.342V1.34zM1.345 18c0-3.713 3.21-6.734 7.155-6.734 3.945 0 7.154 3.021 7.154 6.734H17c0-2.122-.896-4.157-2.49-5.657C12.916 10.843 10.754 10 8.5 10s-4.416.843-6.01 2.343a7.938 7.938 0 00-1.847 2.594A7.542 7.542 0 000 18h1.345z"></path>
-                  </g>
-                </svg>
-              </a>
-            </div>
+                       <g fill="#F58220" fillRule="nonzero">
+                         <path d="M8.5 9A4.5 4.5 0 104 4.5 4.507 4.507 0 008.5 9zm0-7.66A3.159 3.159 0 115.341 4.5 3.163 3.163 0 018.5 1.342V1.34zM1.345 18c0-3.713 3.21-6.734 7.155-6.734 3.945 0 7.154 3.021 7.154 6.734H17c0-2.122-.896-4.157-2.49-5.657C12.916 10.843 10.754 10 8.5 10s-4.416.843-6.01 2.343a7.938 7.938 0 00-1.847 2.594A7.542 7.542 0 000 18h1.345z"></path>
+                       </g>
+                     </svg>
+               </a>
+
+      <ul className="logged_in_options" style={isDropdownOpen ? dropdownStyle : {}}>
+            <li>
+              <Link to={`/account-info/${"Account Information"}`}>Account Information</Link>
+            </li>
+           
+            <li>
+            <Link to={`/account-info/${"Order History"}`}>My Orders</Link>
+            </li>
+            <li>
+            
+            <Link to={`/account-info/${"Change Password"}`}>Change Password</Link>
+            </li>
+            <li>
+            <Link to={`/account-info/${"XML Products"}`}>XML Products</Link>
+            </li>
+            <li>
+            <Link to={'/log-off'}>Logout</Link>
+            </li>
+          </ul>
+        
+               
+              
+              </div>
+             :
+                 <div id="not-logged" className="login h-100 d-flex align-items-center">
+                   <a href="#" id="login-popup-link" className="login-popup-link h-100 ">
+                     <span className="user-name"onClick={toggleDrop}>Login / Register</span>
+                     <svg viewBox="0 0 17 18">
+                       <g fill="#F58220" fillRule="nonzero">
+                         <path d="M8.5 9A4.5 4.5 0 104 4.5 4.507 4.507 0 008.5 9zm0-7.66A3.159 3.159 0 115.341 4.5 3.163 3.163 0 018.5 1.342V1.34zM1.345 18c0-3.713 3.21-6.734 7.155-6.734 3.945 0 7.154 3.021 7.154 6.734H17c0-2.122-.896-4.157-2.49-5.657C12.916 10.843 10.754 10 8.5 10s-4.416.843-6.01 2.343a7.938 7.938 0 00-1.847 2.594A7.542 7.542 0 000 18h1.345z"></path>
+                       </g>
+                     </svg>
+                   </a>
+                 </div>
+              
+           }
           </div>
         </div>
       </div>
-      <div id="login-popup-container" className="login-popup-container">
-            <div id="login-popup" className="login-popup">
-                <i className="las la-times"><GoX color='black'/></i>
+      
+      <div id="login-popup-container"  className={`login-popup-container ${drop ? 'active' : ''}`}>
+            <div id="login-popup" className={`login-popup show ${drop ? 'show' : ''}`}>
+                <i className="las la-times"><GoX onClick={toggleDrop} color='black'/></i>
                 <div className="column signupcolumn">
                     <form name="login_c" id="login_c" action="https://www.fos-lighting.eu/create_account.php" method="post">
                         <div>
@@ -230,6 +278,7 @@ const handleReverseAction = () => {
                 <div className="clear"></div>
             </div>
         </div>
+
     
     </div>
   </div>

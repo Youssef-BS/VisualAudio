@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { UseSelector,useSelector } from 'react-redux/es/hooks/useSelector';
 import { useDispatch } from 'react-redux';
 import { GetProductById } from '../Features/Product/ProductSlice';
+import AccountPage from '../components/Accountinfo/Accountinfo';
 function ProductDetail() {
   const [xDisplayStyle, setXDisplayStyle] = useState('none');
   const [bDisplayStyle, setBDisplayStyle] = useState('block');

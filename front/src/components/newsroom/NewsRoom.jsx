@@ -4,13 +4,28 @@ import { useDispatch, useSelector } from "react-redux";
 import {GetNews} from '../../Features/Newsroom/newsSlices';
 
 function NewsRoom() {
+  const shuffleArray = (array) => {
+    const arrayCopy = [...array]; // Create a copy of the array
+    for (let i = arrayCopy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arrayCopy[i], arrayCopy[j]] = [arrayCopy[j], arrayCopy[i]];
+    }
+    return arrayCopy;
+  };
+
   const dispatch = useDispatch();
   const NewsState = useSelector((state)=> state?.news?.News)
+  const [news,setNews]= useState([])
   useEffect(()=>{
     dispatch(GetNews())
+    setNews(NewsState)
 
-  },[])
-  console.log(NewsState)
+  },[dispatch])
+  const randomNews = shuffleArray(NewsState).slice(0, 2);
+
+  console.log(randomNews)
+
+
   return (
     <section className="home-boxes mb-5 mt-5">
       <div className="container-fluid">
@@ -27,7 +42,7 @@ function NewsRoom() {
 
        
           <div className="row">
-          {NewsState?.map((news)=>(
+          {randomNews?.map((news)=>(
             <div className="col-lg-6">
               <div className="home-boxes__box home-boxes__box--white">
                 <a href="https://www.fos-lighting.eu/fos-bicolor-200w-fresnel-p-2768.html" className="wrap-link row flex-column flex-xl-row">

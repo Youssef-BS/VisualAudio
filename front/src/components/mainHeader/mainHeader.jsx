@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AccountPage from '../Accountinfo/Accountinfo';
 
 const MainHeader = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -48,6 +49,7 @@ const MainHeader = () => {
 
   return (
     <div className="main-header">
+      <AccountPage/>
       {/* Header content */}
       <div className="col search-header-col">
         <div className="header-search">

@@ -17,9 +17,9 @@ import ProductDetail from './Pages/ProductDetails';
 import ContactUs from './Pages/ContactUs';
 import Support from './Pages/Support';
 import AllNewsRoom from './Pages/AllNews';
-
-
-
+import AccountPage from './components/Accountinfo/Accountinfo';
+import AccountInfo from './Pages/AccountInfo';
+import LogOffPage from './Pages/LogOff';
 
 
     const Layout = ({ children }) => {
@@ -49,9 +49,17 @@ import AllNewsRoom from './Pages/AllNews';
                     path="/create-account"
                     element={<Layout><CreateAccountForm /></Layout>}
                 />
+                 <Route
+                    path="/account-info/:type"
+                    element={<Layout><AccountInfo /></Layout>}
+                />
                 <Route
                     path="/project-select"
                     element={<Layout><ImageMapperContainer /></Layout>}
+                />
+                 <Route
+                    path="/log-off"
+                    element={<Layout><LogOffPage /></Layout>}
                 />
                 <Route
                     path="/explore"

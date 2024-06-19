@@ -19,7 +19,7 @@ const CategoryBox = () => {
     dispatch(GetAllProducts())
     setData(ProductState)
 
-  },[]);
+  },[dispatch]);
  console.log(ProductState);
   const products = [
     {
@@ -95,24 +95,24 @@ const CategoryBox = () => {
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="category-box__image-wrapper">
                   <img className="category-box__image" src="https://www.fos-lighting.eu/uploads/categories_0_cat_image_172.png" alt="Intelligent Lighting Technology" />
                 </a>
-                <h2 className="category-box__title">Intelligent Lighting Technology</h2>
+                <h2 className="category-box__title">{market.name}</h2>
                 <div className="category-box__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</div>
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</a>
               </div>
               <div className="category-box__right">
                 <Slider {...settings}>
                   {ProductState?.map((product)=>(
-                     product.marketId === market.id ? (   
+                     product?.MarketId == market?.id ? (   
                     <div key={product.id}>
                       <div className="product-box">
                         <div className="product-box__img">
                         <Link to={`/ProductDetail/${product.id}`}>
 
-                          <img src={product.image} alt={product.title} />
+                          <img src={product?.image} alt={product?.title} />
                           </Link>
                         </div>
                         <div className="product-box__title">
-                          <span>{product.title}</span>
+                          <span>{product?.title}</span>
                         </div>
                         <p className="product-box__desc">{product.description}</p>
                         {/* <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link> */}
