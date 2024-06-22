@@ -25,8 +25,6 @@ sequelize.authenticate()
     Category.hasMany(Subcategory)
     SubSubcategory.belongsTo(Subcategory)
     Subcategory.hasMany(SubSubcategory)
-
-
     Product.belongsTo(Category);
     Product.belongsTo(Subcategory);
     Product.belongsTo(SubSubcategory);

@@ -1,205 +1,339 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { login ,register } from '../Features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
+
+
+const countries = [
+    'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
+    'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan',
+    'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde',
+    'Cambodia', 'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo, Democratic Republic of the',
+    'Congo, Republic of the', 'Costa Rica', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic',
+    'East Timor (Timor-Leste)', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini', 'Ethiopia', 'Fiji',
+    'Finland', 'France', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana',
+    'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan',
+    'Kazakhstan', 'Kenya', 'Kiribati', 'Korea, North', 'Korea, South', 'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho',
+    'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands',
+    'Mauritania', 'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar (Burma)',
+    'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Macedonia', 'Norway', 'Oman', 'Pakistan',
+    'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Romania', 'Russia',
+    'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino', 'Sao Tome and Principe', 'Saudi Arabia',
+    'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Sudan',
+    'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tonga',
+    'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States',
+    'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'
+];
+
 
 const CreateAccountForm = () => {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        confirmation: '',
+        firstname: '',
+        lastname: '',
+        telephone: '',
+        website: '',
+        company: '',
+        vat: '',
+        street_address: '',
+        postcode: '',
+        city: '',
+        country: '',
+        accept_terms: false,
+        accept_gdpr: false,
+    });
+
+    const [verificationCode, setVerificationCode] = useState('');
+    const [errors, setErrors] = useState({});
+    const [isVerificationSent, setIsVerificationSent] = useState(false);
+    const [verificationError, setVerificationError] = useState('');
+    const dispatch = useDispatch();
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData({
+            ...formData,
+            [name]: type === 'checkbox' ? checked : value,
+        });
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+        if (!formData.firstname) newErrors.firstname = 'First name is required';
+        if (!formData.lastname) newErrors.lastname = 'Last name is required';
+        if (!formData.email) newErrors.email = 'Email is required';
+        if (!formData.password) newErrors.password = 'Password is required';
+        if (formData.password !== formData.confirmation) newErrors.confirmation = 'Passwords do not match';
+        if (!formData.company) newErrors.company = 'Company name is required';
+        if (!formData.vat) newErrors.vat = 'VAT is required';
+        if (!formData.street_address) newErrors.street_address = 'Street address is required';
+        if (!formData.postcode) newErrors.postcode = 'Postcode is required';
+        if (!formData.city) newErrors.city = 'City is required';
+        if (!formData.country) newErrors.country = 'Country is required';
+        if (!formData.accept_terms) newErrors.accept_terms = 'You must accept the terms of cooperation to continue';
+        if (!formData.accept_gdpr) newErrors.accept_gdpr = 'You must agree to the terms of personal data protection to continue';
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!validateForm()) return;
+
+        try {
+            await dispatch(register(formData));
+            setIsVerificationSent(true);
+        } catch (error) {
+            console.error('Error registering user:', error);
+        }
+    };
+
+    const handleVerificationSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post('http://localhost:3000/auth/verifEmail', {
+                email: formData.email,
+                verificationCode,
+            });
+            navigate("/")
+            dispatch(login({ email: formData.email, password: formData.password }));
+        } catch (error) {
+            console.error('Error verifying email:', error);
+            setVerificationError('Invalid verification code');
+        }
+    };
+
     return (
-        <div className="mainbody">
-        <div className="breadcrumb" id="breadcrumb_static">
-          <div className="mainwrap container-fluid">
-            <a href="https://www.fos-lighting.eu" className="headerNavigation">Home</a>
-            <i>/</i>
-            <a href="https://www.fos-lighting.eu/projects.php" className="headerNavigation">Our Projects</a>
-          </div>
-        </div>
-  
-        <div id="maincontent" className="maincontent">
-          <div className="category-description-container container-fluid">
+        <div className="container mt-5">
+            <div className="breadcrumb mb-4">
+                <a href="https://www.fos-lighting.eu" className="breadcrumb-item">Home</a>
+                <span className="breadcrumb-item active">Create an Account</span>
+            </div>
             <div className="row">
-              <div className="col-12 col-xl-6 mx-auto title">
-                <div className="headingtitle w-100 text-center">
-                </div>
-                <div className="text-center mt-2"></div>
-              </div>
-            </div>
-          </div>
-  
-          <div className="breadcrumb_container">
-            <div className="breadcrumb" id="breadcrumb_static">
-              <div className="mainwrap container-fluid">
-                <a href="https://www.fos-lighting.eu" className="headerNavigation">Home</a>
-                <i>/</i>
-                <a href="https://www.fos-lighting.eu/projects.php" className="headerNavigation">Our Projects</a>
-              </div>
-            </div>
-          </div>
-        <div className="container-fluid">
-            <div className="section-bg-w-br-30 create-account px-3 px-lg-5 pb-0 pb-lg-5">
-                <form name="create_account" id="create_account" action="https://www.fos-lighting.eu/create_account.php" method="post" noValidate>
-                    <input type="hidden" name="action" value="process" />
-                    <div className="row text-center">
-                        <div className="col-12 col-lg-11 offset-lg-1">
-                            <div>
-                                <h1 className="headingtitle text-left pt-4 pb-3 pt-lg-5 pb-lg-5">Create Account</h1>
+                <div className="col-12 col-md-8 offset-md-2">
+                    <h1 className="mb-4 text-center">Create an Account</h1>
+                    {isVerificationSent ? (
+                        <form onSubmit={handleVerificationSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="verificationCode">Verification Code</label>
+                                <input
+                                    type="text"
+                                    id="verificationCode"
+                                    name="verificationCode"
+                                    value={verificationCode}
+                                    onChange={(e) => setVerificationCode(e.target.value)}
+                                    className="form-control"
+                                />
+                                {verificationError && <div className="text-danger">{verificationError}</div>}
                             </div>
-                        </div>
-                    </div>
-                    <div className="row pb-5 mb-5">
-            <div className="col-lg-5 offset-lg-1">
-                <div className="create-account-title">Personal Details</div>
-                <div className="separator"></div>
-                <div className="field">
-                    <div className="fieldlabel">First name:</div>
-                    <div className="fieldkey">
-                        <input type="text" name="firstname" id="firstname" />
-                        <span className="inputRequirement">*</span>
-                    </div>
-                    <div className="clear"></div>
+                            <button type="submit" className="btn btn-primary btn-block">Verify Email</button>
+                        </form>
+                    ) : (
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="firstname">First Name</label>
+                                    <input
+                                        type="text"
+                                        id="firstname"
+                                        name="firstname"
+                                        value={formData.firstname}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                    {errors.firstname && <div className="text-danger">{errors.firstname}</div>}
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="lastname">Last Name</label>
+                                    <input
+                                        type="text"
+                                        id="lastname"
+                                        name="lastname"
+                                        value={formData.lastname}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                    {errors.lastname && <div className="text-danger">{errors.lastname}</div>}
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="email">Email</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className="form-control"
+                                />
+                                {errors.email && <div className="text-danger">{errors.email}</div>}
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="telephone">Telephone</label>
+                                <input
+                                    type="text"
+                                    id="telephone"
+                                    name="telephone"
+                                    value={formData.telephone}
+                                    onChange={handleChange}
+                                    className="form-control"
+                                />
+                                {errors.telephone && <div className="text-danger">{errors.telephone}</div>}
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="website">Website</label>
+                                <input
+                                    type="text"
+                                    id="website"
+                                    name="website"
+                                    value={formData.website}
+                                    onChange={handleChange}
+                                    className="form-control"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="company">Company</label>
+                                <input
+                                    type="text"
+                                    id="company"
+                                    name="company"
+                                    value={formData.company}
+                                    onChange={handleChange}
+                                    className="form-control"
+                                />
+                                {errors.company && <div className="text-danger">{errors.company}</div>}
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="vat">VAT</label>
+                                <input
+                                    type="text"
+                                    id="vat"
+                                    name="vat"
+                                    value={formData.vat}
+                                    onChange={handleChange}
+                                    className="form-control"
+                                />
+                                {errors.vat && <div className="text-danger">{errors.vat}</div>}
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="street_address">Street Address</label>
+                                <input
+                                    type="text"
+                                    id="street_address"
+                                    name="street_address"
+                                    value={formData.street_address}
+                                    onChange={handleChange}
+                                    className="form-control"
+                                />
+                                {errors.street_address && <div className="text-danger">{errors.street_address}</div>}
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="postcode">Postcode</label>
+                                    <input
+                                        type="text"
+                                        id="postcode"
+                                        name="postcode"
+                                        value={formData.postcode}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                    {errors.postcode && <div className="text-danger">{errors.postcode}</div>}
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="city">City</label>
+                                    <input
+                                        type="text"
+                                        id="city"
+                                        name="city"
+                                        value={formData.city}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                    {errors.city && <div className="text-danger">{errors.city}</div>}
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="country">Country</label>
+                                <select
+                                    id="country"
+                                    name="country"
+                                    value={formData.country}
+                                    onChange={handleChange}
+                                    className="form-control"
+                                >
+                                    <option value="">Select Country</option>
+                                    {countries.map((country) => (
+                                        <option key={country} value={country}>{country}</option>
+                                    ))}
+                                </select>
+                                {errors.country && <div className="text-danger">{errors.country}</div>}
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="password">Password</label>
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                    {errors.password && <div className="text-danger">{errors.password}</div>}
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="confirmation">Confirm Password</label>
+                                    <input
+                                        type="password"
+                                        id="confirmation"
+                                        name="confirmation"
+                                        value={formData.confirmation}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                    {errors.confirmation && <div className="text-danger">{errors.confirmation}</div>}
+                                </div>
+                            </div>
+                            <div className="form-group form-check">
+                                <input
+                                    type="checkbox"
+                                    id="accept_terms"
+                                    name="accept_terms"
+                                    checked={formData.accept_terms}
+                                    onChange={handleChange}
+                                    className="form-check-input"
+                                />
+                                <label htmlFor="accept_terms" className="form-check-label">
+                                    I have read and accept the terms of cooperation
+                                </label>
+                                {errors.accept_terms && <div className="text-danger">{errors.accept_terms}</div>}
+                            </div>
+                            <div className="form-group form-check">
+                                <input
+                                    type="checkbox"
+                                    id="accept_gdpr"
+                                    name="accept_gdpr"
+                                    checked={formData.accept_gdpr}
+                                    onChange={handleChange}
+                                    className="form-check-input"
+                                />
+                                <label htmlFor="accept_gdpr" className="form-check-label">
+                                    I agree to the terms of personal data protection
+                                </label>
+                                {errors.accept_gdpr && <div className="text-danger">{errors.accept_gdpr}</div>}
+                            </div>
+                            <button type="submit" className="btn btn-primary btn-block">Create Account</button>
+                        </form>
+                    )}
                 </div>
-                <div className="field">
-                    <div className="fieldlabel">Last name:</div>
-                    <div className="fieldkey">
-                        <input type="text" name="lastname" id="lastname" />
-                        <span className="inputRequirement">*</span>
-                    </div>
-                    <div className="clear"></div>
-                </div>
-                <div className="field">
-                    <div className="fieldlabel">Email Address:</div>
-                    <div className="fieldkey">
-                        <input type="text" name="email_address" id="email_address" />
-                        <span className="inputRequirement">*</span>
-                    </div>
-                    <div className="clear"></div>
-                </div>
-                <div className="field">
-                    <div className="fieldlabel">Telephone:</div>
-                    <div className="fieldkey">
-                        <input type="text" name="telephone" id="telephone" />
-                        <span className="inputRequirement">*</span>
-                    </div>
-                    <div className="clear"></div>
-                </div>
-                <div className="field">
-                    <div className="fieldlabel">Website:</div>
-                    <div className="fieldkey">
-                        <input type="text" name="url" id="url" />
-                        <span className="inputRequirement">ENTRY_URL_TEXT</span>
-                    </div>
-                    <div className="clear"></div>
-                </div>
-                <div className="separator"></div>
-                <div className="create-account-title">Company Details</div>
-                <div className="separator"></div>
-                <div className="field">
-                    <div className="fieldlabel">Company name:</div>
-                    <div className="fieldkey">
-                        <input type="text" name="company" id="company" />
-                        <span className="inputRequirement">*</span>
-                    </div>
-                    <div className="clear"></div>
-                </div>
-                <div className="field">
-                    <div className="fieldlabel">VAT:</div>
-                    <div className="fieldkey">
-                        <input type="text" name="vat" id="vat" />
-                        <span className="inputRequirement">*</span>
-                    </div>
-                    <div className="clear"></div>
-                </div>
-                {/* Additional fields */}
-                {/* Acceptance checkboxes */}
-                <div className="field mainwrap d-flex flex-column p-0">
-                    <div className="">&nbsp;</div>
-                    <div className="fieldkey accept_terms d-flex flex-column">
-                        <div className="cboxcontainer accept_terms d-flex flex-column">
-                            <input type="checkbox" name="accept_terms_cbox" value="in" id="accept_terms_cbox" className="filter show_only css-checkbox accept_terms_cbox" />
-                            <label htmlFor="accept_terms_cbox" className="css-label">I accept <a href="https://www.fos-lighting.eu/terms-of-cooperation-pr-3.html" target="_blank">cooperation terms</a></label>
-                            <div className="clear"></div>
-                            <div className="clear"></div>
-                        </div>
-                        <div className="accept_terms_error">You must accept the terms of cooperation to continue.</div>
-                    </div>
-                </div>
-                <div className="field mainwrap d-flex flex-column p-0">
-                    <div className="">&nbsp;</div>
-                    <div className="fieldkey terms d-flex flex-column" style={{ marginTop: '5px' }}>
-                        <div className="cboxcontainer d-flex flex-column">
-                            <input type="checkbox" name="accept_gdpr_cbox" value="in" id="accept_gdpr_cbox" className="filter show_only css-checkbox accept_terms_cbox" />
-                            <label htmlFor="accept_gdpr_cbox" className="css-label">
-                                I agree with
-                                <a className="ml-1" href="https://www.fos-lighting.eu/gdpr.php" target="_blank" style={{ textDecoration: 'underline' }}> personal data terms</a>
-                            </label>
-                        </div>
-                        <div className="accept_gdpr_error">You must agree to the terms of personal data protection to continue.</div>
-                    </div>
-                </div>
-                {/* Address */}
-                <div className="separator"></div>
             </div>
-            <div className="col-lg-5 ">
-                <div className="create-account-title">Address</div>
-                <div className="separator"></div>
-                <div className="field">
-                    <div className="fieldlabel">Address:</div>
-                    <div className="fieldkey">
-                        <input type="text" name="street_address" id="street_address" />
-                        <span className="inputRequirement">*</span>
-                    </div>
-                    <div className="clear"></div>
-                </div>
-                <div className="field">
-                    <div className="fieldlabel">Postcode:</div>
-                    <div className="fieldkey">
-                        <input type="text" name="postcode" id="postcode" />
-                        <span className="inputRequirement">*</span>
-                    </div>
-                    <div className="clear"></div>
-                </div>
-                <div className="field">
-                    <div className="fieldlabel">City:</div>
-                    <div className="fieldkey">
-                        <input type="text" name="city" id="city" />
-                        <span className="inputRequirement">*</span>
-                    </div>
-                    <div className="clear"></div>
-                </div>
-                <div className="field">
-                    <div className="fieldlabel">Country:</div>
-                    <div className="fieldkey">
-                        <select name="country">
-                            <option value="">Select</option>
-                            {/* Options for countries */}
-                        </select>
-                        <span className="inputRequirement">*</span>
-                    </div>
-                    <div className="clear"></div>
-                </div>
-                <div className="separator"></div>
-                <div className="create-account-title pass">Password</div>
-                <div className="separator"></div>
-                <div className="field">
-                    <div className="fieldlabel">Password</div>
-                    <div className="fieldkey">
-                        <input type="password" name="password_create_account" id="password_create_account" maxLength="40" />
-                        <span className="inputRequirement">*</span>
-                    </div>
-                    <div className="clear"></div>
-                </div>
-                <div className="field">
-                    <div className="fieldlabel">Confirm new Password:</div>
-                    <div className="fieldkey">
-                        <input type="password" name="confirmation" id="confirmation" maxLength="40" />
-                        <span className="inputRequirement">*</span>
-                    </div>
-                    <div className="clear"></div>
-                </div>
-                <div className="separator"></div>
-            </div>
-        </div>                </form>
-            </div>
-        </div>
-        </div>
         </div>
     );
 };
 
-export default CreateAccountForm;
+export default CreateAccountForm ;
