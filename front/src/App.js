@@ -20,6 +20,9 @@ import AllNewsRoom from './Pages/AllNews';
 import AccountPage from './components/Accountinfo/Accountinfo';
 import AccountInfo from './Pages/AccountInfo';
 import LogOffPage from './Pages/LogOff';
+import ShoppingCart from './Pages/ShoppingCart';
+import CompleteOrder from './Pages/CompleteOrder';
+import OrderList from './Pages/wishlist';
 
 
     const Layout = ({ children }) => {
@@ -56,6 +59,18 @@ import LogOffPage from './Pages/LogOff';
                 <Route
                     path="/project-select"
                     element={<Layout><ImageMapperContainer /></Layout>}
+                />
+                 <Route
+                    path="/shopcart"
+                    element={<Layout><ShoppingCart /></Layout>}
+                />
+                 <Route
+                    path="/complete-order"
+                    element={<Layout><CompleteOrder/></Layout>}
+                />
+                 <Route
+                    path="/wishlist"
+                    element={<Layout><OrderList/></Layout>}
                 />
                  <Route
                     path="/log-off"

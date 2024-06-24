@@ -5,10 +5,12 @@ const { getMarkets } = require('../Controller/ProductCtrl');
 const { getNewsrooms } = require('../Controller/ProductCtrl');
 const { getFeaturedProduct } = require('../Controller/ProductCtrl');
 const { search } = require('../Controller/ProductCtrl');
+const {createProduct}= require('../Controller/ProductCtrl');
 const router = express.Router();
 
 
 // Get all products from a specific market
+router.post('/products', createProduct);
 
 router.get('/products',getProducts)
 

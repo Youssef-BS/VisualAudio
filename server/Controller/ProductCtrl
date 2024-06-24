@@ -14,13 +14,22 @@ const { Op } = require('sequelize');
 // @access  Public
 const createProduct = asyncHandler(async (req, res) => {
   try {
-    if (req.body.title) {
-      req.body.slug = slugify(req.body.title);
-    }
-    const newProduct = await Product.create(req.body);
+    const {
+      code, title, description, image, extra_images, extra_video,
+      price, availability, stock_eta, features, technical_details,
+      marketId, categoryId, subcategoryId, subSubcategoryId
+    } = req.body;
+
+    const newProduct = await Product.create({
+      code, title, description, image, extra_images, extra_video,
+      price, availability, stock_eta, features, technical_details,
+      marketId, categoryId, subcategoryId, subSubcategoryId
+    });
+
     res.status(201).json(newProduct);
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+    console.error('Error adding product:', error);
+    res.status(500).json({ message: 'Error adding product', error });
   }
 });
 

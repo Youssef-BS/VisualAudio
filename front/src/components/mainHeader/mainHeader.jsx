@@ -49,7 +49,6 @@ const MainHeader = () => {
 
   return (
     <div className="main-header">
-      <AccountPage/>
       {/* Header content */}
       <div className="col search-header-col">
         <div className="header-search">
