@@ -10,6 +10,13 @@ const AccountPage = () => {
   const [passwordCurrent, setPasswordCurrent] = useState('');
   const [passwordNew, setPasswordNew] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const handleOrderClick = (order) => {
+    setSelectedOrder(order);
+  }
+  const handleOrderDClick = (order) => {
+    setSelectedOrder(null);
+  }
   useEffect(()=>{
       setCurrentContent(Params.type)
   },[Params.type])
@@ -43,29 +50,185 @@ const AccountPage = () => {
       });
   };
 
-    const orders = [
-      {
-        orderId: 25990,
-        orderDate: 'Tuesday 04 June, 2024',
-        orderStatus: 'Packed Fos',
-        products: 1,
-        orderCost: '1,622.40€',
-      },
-      {
-        orderId: 20984,
-        orderDate: 'Monday 20 November, 2023',
-        orderStatus: 'Packed Fos',
-        products: 3,
-        orderCost: '6,292.80€',
-      },
-      {
-        orderId: 20948,
-        orderDate: 'Saturday 18 November, 2023',
-        orderStatus: 'Cancelled',
-        products: 1,
-        orderCost: '3,380.80€',
-      },
-    ];
+  
+  const orders = [
+    {
+      orderId: 25990,
+      orderDate: 'Tuesday 04 June, 2024',
+      orderStatus: 'Packed Fos',
+      paymentMethod: 'Bank account deposit',
+      orderCost: '1,622.40€',
+      subTotal: '1,622.40€',
+      total: '1,622.40€',
+      history: [
+        {
+          date: '04/06/2024',
+          status: 'Received',
+          comment: 'Hello. Please send us the proforma invoice to doing you immediately a bank transfer. Thanks.',
+          attachment: null,
+        },
+        {
+          date: '05/06/2024',
+          status: 'Packed Fos',
+          comment: '',
+          attachment: {
+            url: '/uploads/attachment_25990_2024_06_05_06_55_11.pdf',
+          },
+        },
+      ],
+      deliveryAddress: 'WEB EVENT SERVICES, Chaouki RAFRAFI, 7 rue Éric Tabarly, Massy, 91300, France',
+      products: [
+        {
+          quantity: 12,
+          name: 'FOS Cyclone RGB II',
+          price: '1,622.40€',
+        },
+      ],
+    },
+    {
+      orderId: 25991,
+      orderDate: 'Wednesday 05 June, 2024',
+      orderStatus: 'Shipped',
+      paymentMethod: 'Credit Card',
+      orderCost: '500.00€',
+      subTotal: '500.00€',
+      total: '500.00€',
+      history: [
+        {
+          date: '05/06/2024',
+          status: 'Processed',
+          comment: 'Order processed and ready for shipping.',
+          attachment: null,
+        },
+        {
+          date: '06/06/2024',
+          status: 'Shipped',
+          comment: '',
+          attachment: {
+            url: '/uploads/attachment_25991_2024_06_06_09_00_00.pdf',
+          },
+        },
+      ],
+      deliveryAddress: 'John Doe, 123 Main St, Anytown, 12345, USA',
+      products: [
+        {
+          quantity: 1,
+          name: 'XYZ Product',
+          price: '500.00€',
+        },
+      ],
+    },
+  ];
+
+
+  const OrderDetails = ({ order }) => (
+    <div className="content account_history_info account-panel">
+      <div className="the-order">
+        <div className="left">
+          <div className="box heading">
+            <div className="box main">
+              <div className="title id">Order #{order.orderId}</div>
+              <div className="description status">
+                Status: <span><b>{order.orderStatus}</b></span>
+              </div>
+              <div className="description">
+                Order Date: <b>{order.orderDate}</b>
+              </div>
+              <div className="description">
+                Payment Method: <b>{order.paymentMethod}</b>
+              </div>
+              <div className="description total">
+                Order Total: <b>{order.orderCost}</b>
+              </div>
+            </div>
+  
+            <div className="box history">
+              <div className="title">
+                <i className="las la-history"></i> Order History
+              </div>
+              {order.history.map((event, index) => (
+                <div className="description status" key={index}>
+                  <i>{event.date}</i> <span>{event.status}</span><br />
+                  Comment: {event.comment} <br />
+                  {event.attachment && (
+                    <span id="attachment">
+                      Attachment: 
+                      <a href={event.attachment.url} target="_blank" className="pdf_download_link">
+                        <svg fill="#1C2033" width="52" height="52" version="1.1" id="lni_lni-download" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64" style={{ enableBackground: 'new 0 0 64 64' }} xmlSpace="preserve">
+                          <g>
+                            <path d="M60,44c-1.2,0-2.3,1-2.3,2.3v8.9c0,0.9-0.7,1.6-1.6,1.6H7.9c-0.9,0-1.6-0.7-1.6-1.6v-8.9C6.3,45,5.2,44,4,44 s-2.3,1-2.3,2.3v8.9c0,3.4,2.7,6.1,6.1,6.1h48.3c3.4,0,6.1-2.7,6.1-6.1v-8.9C62.3,45,61.2,44,60,44z"></path>
+                            <path d="M30.4,46.5c0.4,0.4,1,0.6,1.6,0.6s1.1-0.2,1.6-0.6l14.5-14.1c0.9-0.9,0.9-2.3,0-3.2c-0.9-0.9-2.3-0.9-3.2,0L34.3,39.6V5 c0-1.2-1-2.3-2.3-2.3c-1.2,0-2.3,1-2.3,2.3v34.6L19.1,29.2c-0.9-0.9-2.3-0.8-3.2,0c-0.9,0.9-0.8,2.3,0,3.2L30.4,46.5z"></path>
+                          </g>
+                        </svg>
+                      </a>
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+  
+          <div className="addresses">
+            <div className="box">
+              <div className="title">
+                <i className="las la-map-marker"></i> Delivery Address
+              </div>
+              <div className="description">
+                {order.deliveryAddress}
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div className="right">
+          <div className="box products">
+            <table border="0" width="100%" cellSpacing="0" cellPadding="2">
+              <tbody>
+                <tr>
+                  <td colSpan="4" className="title">
+                    <b className="custom_size_b">
+                      <i className="las la-shopping-cart"></i> Products
+                    </b>
+                  </td>
+                </tr>
+                {order.products.map((product, index) => (
+                  <tr className="prod-row" key={index}>
+                    <td width="20" valign="top" align="right" className="description account_history_info_quantity">
+                      {product.quantity}&nbsp;<b>X</b>&nbsp;
+                    </td>
+                    <td valign="top" className="description account_history_info_products">
+                      {product.name}
+                    </td>
+                    <td align="right" valign="top" className="description"></td>
+                    <td align="right" valign="top" className="description prod-price">
+                      <b>{product.price}</b>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="order-details">
+              <div className="description">
+                Sub-Total: <b>{order.subTotal}</b>
+              </div>
+              <div className="description">
+                Total: <b>{order.total}</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div className="submit text-center">
+        <button className="shop-btn has-icon auto" onClick={() => handleOrderDClick()}>
+          <i className="las la-arrow-left"></i>Back
+        </button>
+        <a href={`https://www.fos-lighting.eu/order_info_to_pdf.php?order_id=${order.orderId}`} className="shop-btn has-icon print-btn auto" style={{ backgroundColor: '#000', borderColor: '#000' }}>
+          <i className="las la-print"></i>Print
+        </a>
+      </div>
+    </div>
+  );
   const renderContent = () => {
     switch (currentContent) {
       case 'Account Information':
@@ -365,37 +528,44 @@ const AccountPage = () => {
       case 'Order History':
         return <div className="my-account-wrap">
         <div className="mainwrap my-account">
-          <div className="headingtitle inner">
-            <h1>My Order History</h1>
-          </div>
-          <div className="content account_history account-panel">
-            <div className="all-orders">
-              {orders.map((order) => (
-                <div className="order-item" key={order.orderId}>
-                  <a href={`https://www.fos-lighting.eu/account_history_info.php?order_id=${order.orderId}`}>
-                    <div className="title">Order Number: <b>{order.orderId}</b></div>
-                    <div className="description">Order Date: <b>{order.orderDate}</b></div>
-                    <div className="description status">Order Status: <b>{order.orderStatus}</b></div>
-                    <div className="description">Products: <b>{order.products}</b></div>
-                    <div className="description price">Order Cost: <b>{order.orderCost}</b></div>
-                  </a>
-                  <div className="order-details">
-                    <a className="icon" href={`https://www.fos-lighting.eu/account_history_info.php?order_id=${order.orderId}`}>
-                      <i className="las la-search"></i>
-                    </a>
-                  </div>
+          {selectedOrder ? (
+            <OrderDetails order={selectedOrder} />
+          ) : (
+            <>
+              <div className="headingtitle inner">
+                <h1>My Order History</h1>
+              </div>
+              <div className="content account_history account-panel">
+                <div className="all-orders">
+                  {orders.map((order) => (
+                    <div className="order-item" key={order.orderId}>
+                      <a href="#" onClick={() => handleOrderClick(order)}>
+                        <div className="title">Order Number: <b>{order.orderId}</b></div>
+                        <div className="description">Order Date: <b>{order.orderDate}</b></div>
+                        <div className="description status">Order Status: <b>{order.orderStatus}</b></div>
+                        <div className="description">Products: <b>{order.products.map(p => p.name).join(', ')}</b></div>
+                        <div className="description price">Order Cost: <b>{order.orderCost}</b></div>
+                      </a>
+                      <div className="order-details">
+                        <a className="icon" href="#" onClick={() => handleOrderClick(order)}>
+                          <i className="las la-search"></i>
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                  <div className="clear"></div>
                 </div>
-              ))}
-              <div className="clear"></div>
-            </div>
-  
-            <div className="splitbox">
-              <div className="left">Showing <b>1</b> to <b>{orders.length}</b> (from <b>{orders.length}</b> orders)</div>
-              <div className="right">&nbsp;<b>1</b>&nbsp;</div>
-            </div>
-          </div>
+      
+                <div className="splitbox">
+                  <div className="left">Showing <b>1</b> to <b>{orders.length}</b> (from <b>{orders.length}</b> orders)</div>
+                  <div className="right">&nbsp;<b>1</b>&nbsp;</div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>;
+       
       case 'XML Products':
         return <div className="my-account-wrap">
         <div className="mainwrap my-account">
@@ -425,6 +595,10 @@ const AccountPage = () => {
   const handleModalClose = () => {
     setShowModal(false);
   };
+
+ 
+
+  
 
   return (
     <div className="container-fluid account-inner-pages">

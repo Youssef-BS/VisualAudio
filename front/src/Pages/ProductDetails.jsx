@@ -212,7 +212,22 @@ const product = [
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  const decreaseQuantity = () => {
+    // Implement decrease quantity logic here
+  };
 
+  const increaseQuantity = () => {
+    // Implement increase quantity logic here
+  };
+
+  const addToCart = () => {
+    // Implement add to cart logic here
+  };
+
+  
+  const addToWishlist = () => {
+    // Logic to add to wishlist
+  };
   return (
     <div id="mainbody" className="mainbody pinfo">
       {/* Breadcrumb */}
@@ -262,8 +277,34 @@ const product = [
                       </div>
                     </div>
                   </div>
-                  <div className="product-title-info row no-gutters"></div>
-                  <div className="product-c-1__wrapper">
+                  <div className="product-title-info row no-gutters" style={{ display: bDisplayStyle }}>
+      <div className="availability-container w-100 d-flex">
+        <div className="availability align-self-center d-flex">
+          <span className="product-box__availability--in-stock">In stock: 113 available</span>
+        </div>
+      </div>
+      <div className="country-storage d-flex align-items-center">
+        <div className="country-storage__item d-flex align-items-center">
+          <img src="images/icons/storage-sofia.svg" alt="storage-athens" />
+          <span className="country-storage__country"> Sofia Warehouse:</span>
+          <span className="country-storage__avail country-storage__avail--available">113</span>
+        </div>
+        <span className="country-storage__seperator"></span>
+        <div className="country-storage__item d-flex align-items-center">
+          <img src="images/icons/storage-athens.svg" alt="storage-athens" />
+          <span className="country-storage__country"> Athens Warehouse:</span>
+          <span className="country-storage__avail country-storage__avail--null">0</span>
+        </div>
+      </div>
+      <div className="eta-quantity w-100">
+        <span> Stock ETA:</span>
+        <span><b> in the last week of September 2024</b></span>
+      </div>
+      <div className="eta-quantity w-100 mb-0">
+        <span> Restocking Quantity:</span>
+        <span>100</span>
+      </div>
+    </div>                  <div className="product-c-1__wrapper">
                     <div className="product-gallery">
                       <div className="image">
                         <a href={ProductState?.image} id="main_product_image_link">
@@ -291,6 +332,8 @@ const product = [
                 </div>
                 {/* PRODUCT COLUMN 2 */}
                 <div className="col product-c-2">
+                <div className="product-c-2__wrapper">
+
                   <div className="headingtitle" style={{ display: xDisplayStyle }}>
                     <h1>{ProductState?.title}</h1>
                     <div className="product__category-img">
@@ -307,25 +350,174 @@ const product = [
                       </div>
                     </div>
                   </div>
-                  <div className="product-c-2__wrapper">
+                  <div className="product-title-info row no-gutters" style={{ display: xDisplayStyle }}>
+      <div className="availability-container w-100 d-flex">
+        <div className="availability align-self-center d-flex">
+          <span className="product-box__availability--in-stock">In stock: 113 available</span>
+        </div>
+      </div>
+      <div className="country-storage d-flex align-items-center">
+        <div className="country-storage__item d-flex align-items-center">
+          <img src="images/icons/storage-sofia.svg" alt="storage-athens" />
+          <span className="country-storage__country"> Sofia Warehouse:</span>
+          <span className="country-storage__avail country-storage__avail--available">113</span>
+        </div>
+        <span className="country-storage__seperator"></span>
+        <div className="country-storage__item d-flex align-items-center">
+          <img src="images/icons/storage-athens.svg" alt="storage-athens" />
+          <span className="country-storage__country"> Athens Warehouse:</span>
+          <span className="country-storage__avail country-storage__avail--null">0</span>
+        </div>
+      </div>
+      <div className="eta-quantity w-100">
+        <span> Stock ETA:</span>
+        <span><b> in the last week of September 2024</b></span>
+      </div>
+      <div className="eta-quantity w-100 mb-0">
+        <span> Restocking Quantity:</span>
+        <span>100</span>
+      </div>
+    </div>
+                  
                     <div className="product_description">{ProductState?.description}</div>
-                    <div className="product-checkpoints">
-                      <a href="https://www.fos-lighting.eu/why-choose-fos-pr-6.html" target="_blank" className="product-checkpoint-item">
-                        <img src="images/icons/Checkmark.svg" alt="" />
-                        <span>Why choose FOS</span>
-                      </a>
-                      <a href="https://www.fos-lighting.eu/terms-of-cooperation-pr-3.html" target="_blank" className="product-checkpoint-item">
-                        <img src="images/icons/Checkmark.svg" alt="" />
-                        <span>2 years warranty</span>
-                      </a>
-                    </div>
-                    <div className="login-for-price login-popup-link mt-4">Please <b>login</b> to see the price 
-                      <svg viewBox="0 0 17 18">
-                        <g fill="#F58220" fillRule={"nonzero"}>
-                          <path d="M8.5 9A4.5 4.5 0 104 4.5 4.507 4.507 0 008.5 9zm0-7.66A3.159 3.159 0 115.341 4.5 3.163 3.163 0 018.5 1.342V1.34zM1.345 18c0-3.713 3.21-6.734 7.155-6.734 3.945 0 7.154 3.021 7.154 6.734H17c0-2.122-.896-4.157-2.49-5.657C12.916 10.843 10.754 10 8.5 10s-4.416.843-6.01 2.343a7.938 7.938 0 00-1.847 2.594A7.542 7.542 0 000 18h1.345z"></path>
-                        </g>
-                      </svg>
-                    </div>
+                 
+                    <div className="product-info-third-part">
+                      
+      <div className="productprice wholesale">
+        <div className="inner">
+          <div id="text" className="price-container">
+            <span className="vat">Dealer price: </span>
+            <span className="price finalPriceClean">583.85€</span>
+          </div>
+          <div id="value" className="price-container">
+            <span className="vat">Your price: </span>
+            <span className="productSpecialPrice finalPrice"> 467.08€</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="productattributes options">
+        <script type="application/json" id="attributes_combinations_quantities">[]</script>
+        <input type="hidden" id="attr_count" className="attr_count" value="0" />
+      </div>
+
+      <div className="clear-selections-actions">
+        <div className="btn btn-default clear-selections" style={{ display: 'none' }}>
+          <span>IMAGE_BUTTON_CLEAR_SELECTIONS</span>
+        </div>
+      </div>
+
+      <div className="inside qty-prewrap">
+      <div className="qty-wrap">
+        
+        <div className="qty-label d-none">Quantity:</div>
+        <div className="productQuantity">
+          <i className="las la-minus update-product-quantity decrease-product-quantity" onClick={decreaseQuantity}></i>
+          <input type="text" name="cart_quantity" id="cart_quantity" value="1" className="cart_quantity_value" />
+          <input type="hidden" name="multiples_conversion" value="1" />
+          <input type="hidden" name="solid_quantity" value="1" id="solid_quantity" />
+          <i className="las la-plus update-product-quantity increase-product-quantity" onClick={increaseQuantity}></i>
+          <div className="max-quantity-warning" style={{ display: 'none' }}>Max available quantity</div>
+        </div>
+        <div className="addtocart">
+          <button type="submit" className="btn btn-icon btn-default btn-primary btn-fn-18 btn-big shop-btn update-shopping-cart final" onClick={addToCart}>
+            <svg viewBox="0 0 26 23">
+              <g fill="none" fillRule="nonzero" stroke="#000">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1.606 1h4.503l2.195 11.848a2.678 2.678 0 002.634 2.192h9.305c1.22 0 2.286-.824 2.593-2.004l2.071-8.007a.73.73 0 00-.706-.913L10.938 4.11"></path>
+                <path fill="#000" d="M11.833 18.253a1.793 1.793 0 100 3.586 1.793 1.793 0 000-3.586zM19.909 18.253a1.793 1.793 0 10.003 3.586 1.793 1.793 0 00-.003-3.586z"></path>
+              </g>
+            </svg>
+            <span> Add to cart</span>
+          </button>
+          <input type="hidden" name="customer_group_id" value="19" />
+          <input type="hidden" name="main_max_quantity" value="IN_PRODUCTION_MAX_QUANTITY" />
+          <button type="submit" className="btn btn-default shop-btn outline add-to-collection update-wishlist final ml-3" id="add_to_wishlist" data-id="1775" onClick={addToWishlist}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewBox="0 0 22 19" fill="#f58220">
+              <path d="M6.125 0.75C3.02246 0.75 0.5 3.30176 0.5 6.375C0.5 7.44727 0.986328 8.37598 1.4375 9.04688C1.88867 9.71777 2.35156 10.1484 2.35156 10.1484L10.4609 18.2812L11 18.8203L11.5391 18.2812L19.6484 10.1484C19.6484 10.1484 21.5 8.5166 21.5 6.375C21.5 3.30176 18.9775 0.75 15.875 0.75C13.2998 0.75 11.6416 2.2998 11 2.95312C10.3584 2.2998 8.7002 0.75 6.125 0.75ZM6.125 2.25C8.36621 2.25 10.4375 4.42969 10.4375 4.42969L11 5.0625L11.5625 4.42969C11.5625 4.42969 13.6338 2.25 15.875 2.25C18.1572 2.25 20 4.12207 20 6.375C20 7.53223 18.5938 9.09375 18.5938 9.09375L11 16.6875L3.40625 9.09375C3.40625 9.09375 3.04297 8.74512 2.67969 8.20312C2.31641 7.66113 2 6.95508 2 6.375C2 4.12207 3.84277 2.25 6.125 2.25Z" stroke="#f58220" strokeWidth="0"></path>
+            </svg>
+            <span>Add to list</span>
+          </button>
+        </div>
+        <input type="hidden" name="products_id" value="1775" />
+      </div>
+    </div>
+    <div className="inside qty-prewrap">
+        <div className="qty-wrap">
+          <div className="addtocart only-add-to-wish-btn-wrapper">
+            <form
+              name="cart_quantity_form"
+              id="cart_quantity_form"
+              action="https://www.fos-lighting.eu/kos-system-p-1774.html?action=add_product"
+              method="post"
+              className="cart_quantity_form"
+            >
+              <input type="hidden" name="main_max_quantity" value="1" />
+              <button
+                type="submit"
+                className="btn btn-default shop-btn outline add-to-collection update-wishlist final ml-3"
+                id="add_to_wishlist"
+                data-id="1774"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewBox="0 0 22 19" fill="none">
+                  <path
+                    d="M6.125 0.75C3.02246 0.75 0.5 3.30176 0.5 6.375C0.5 7.44727 0.986328 8.37598 1.4375 9.04688C1.88867 9.71777 2.35156 10.1484 2.35156 10.1484L10.4609 18.2812L11 18.8203L11.5391 18.2812L19.6484 10.1484C19.6484 10.1484 21.5 8.5166 21.5 6.375C21.5 3.30176 18.9775 0.75 15.875 0.75C13.2998 0.75 11.6416 2.2998 11 2.95312C10.3584 2.2998 8.7002 0.75 6.125 0.75ZM6.125 2.25C8.36621 2.25 10.4375 4.42969 10.4375 4.42969L11 5.0625L11.5625 4.42969C11.5625 4.42969 13.6338 2.25 15.875 2.25C18.1572 2.25 20 4.12207 20 6.375C20 7.53223 18.5938 9.09375 18.5938 9.09375L11 16.6875L3.40625 9.09375C3.40625 9.09375 3.04297 8.74512 2.67969 8.20312C2.31641 7.66113 2 6.95508 2 6.375C2 4.12207 3.84277 2.25 6.125 2.25Z"
+                    stroke="#f58220"
+                    strokeWidth="0"
+                    fill="#f58220"
+                  />
+                </svg>
+                <span>Add to list</span>
+              </button>
+              <input type="hidden" name="main_max_quantity" value="1" />
+              <input type="hidden" name="multiples_conversion" value="1" />
+              <input type="hidden" name="solid_quantity" value="1" id="solid_quantity" />
+              <input type="hidden" name="products_id" value="1774" />
+              <input type="hidden" name="customer_group_id" value="19" />
+            </form>
+          </div>
+        </div>
+      </div>
+    <div className="more_actions d-flex justify-content-between">
+        <div className="request-product-container">
+          <div id="request-product" className="d-flex flex-column">
+            <label id="request-product-label">Need an immediate response?</label>
+            <a href="#" className="btn btn-primary mainimagebutton3" data-toggle="modal" data-target="#requestModal" id="request_product_button">Send Request</a>
+          </div>
+        </div>
+        <div id="or"><span>Or</span></div>
+        <div className="notify-when-in-stock js">
+          <form
+            name="notify_product"
+            id="notify_product"
+            action="https://www.fos-lighting.eu/contact-submit.php"
+            method="POST"
+            noValidate
+          >
+            <input type="hidden" name="action" value="send" />
+            <input type="hidden" name="form_origin" value="notify_product" />
+            <input type="hidden" name="product_id" value="1774" />
+            <input type="hidden" name="prod_quantity" value="0" />
+            <label>Send me email when the product is in stock</label>
+            <input type="text" name="email_notify" id="email_notify" value="wes.france@yahoo.com" placeholder="Email" autoComplete="off" />
+            <input type="text" name="notify_foo" id="notify_foo" className="foo" />
+            <input
+              type="submit"
+              border="0"
+              alt="Continue"
+              value="Continue"
+              title="Continue"
+              className="btn btn-primary mainimagebutton3"
+              id="notify-customer-for-stock"
+            />
+          </form>
+          <div id="notifyProductSuccess" className="notifyProductSuccess">
+            <i className="las la-check-circle"></i>Your request was successfully sent.
+          </div>
+        </div>
+        </div>
+    </div>
+    
+  
                     {/* Additional Product Details */}
                     {/* You can add more details here */}
                   </div>
