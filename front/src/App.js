@@ -23,6 +23,7 @@ import LogOffPage from './Pages/LogOff';
 import ShoppingCart from './Pages/ShoppingCart';
 import CompleteOrder from './Pages/CompleteOrder';
 import OrderList from './Pages/wishlist';
+import Store from './Pages/Store';
 
 
     const Layout = ({ children }) => {
@@ -52,6 +53,9 @@ import OrderList from './Pages/wishlist';
                     path="/create-account"
                     element={<Layout><CreateAccountForm /></Layout>}
                 />
+                <Route path="/store" 
+                element={<Layout><Store/></Layout>}
+                />
                  <Route
                     path="/account-info/:type"
                     element={<Layout><AccountInfo /></Layout>}
@@ -77,9 +81,18 @@ import OrderList from './Pages/wishlist';
                     element={<Layout><LogOffPage /></Layout>}
                 />
                 <Route
-                    path="/explore"
+                    path="/explore/:marketId"
                     element={<Layout><Explore /></Layout>}
                 />
+                 <Route
+                    path="/explore/:marketId/:categoryId"
+                    element={<Layout><Explore /></Layout>}
+                />
+                 <Route
+                    path="/explore/:marketId/:categoryId/:subCategoryId"
+                    element={<Layout><Explore /></Layout>}
+                />
+                
                 <Route
                     path="/ProductDetail/:id"
                     element={<Layout><ProductDetail /></Layout>}

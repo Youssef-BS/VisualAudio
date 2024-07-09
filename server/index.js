@@ -6,13 +6,22 @@ const Market = require('./Models/Market')
 const Category = require('./Models/Category')
 const Subcategory = require('./Models/Subcategory')
 const ProductRoutes = require('./Routes/ProductRoute')
+const WishlistRoute = require('./Routes/WishlistRoute')
+const CartRoute = require('./Routes/CartRoute')
 const SubSubcategory = require('./Models/SubSubcategory');
 const Newsroom = require('./Models/Newsroom')
 const FeaturedProduct = require('./Models/FeaturedProduct');
-
+const User = require('./Models/User')
+const OrderHistory = require('./Models/OrderHistory')
+const Order = require('./Models/Order')
+const Cart = require("./Models/Cart")
+const CartProduct = require('./Models/CartProduct')
+const OrderProduct = require('./Models/Orderproduct')
 const app = express();
 const PORT = process.env.PORT || 3000;
 const cors = require("cors");
+const Wishlist = require('./Models/Wishlist');
+const WishlistProduct = require('./Models/WishlistProduct');
 
 // Test the database connection
 sequelize.authenticate()
@@ -36,6 +45,30 @@ sequelize.authenticate()
     Category.hasMany(Product)
     Newsroom.belongsTo(Product)
     FeaturedProduct.belongsTo(Product)
+    User.hasMany(Order);
+
+Order.belongsTo(User);
+Order.hasMany(OrderHistory);
+Order.belongsToMany(Product, { through: OrderProduct });
+Product.belongsToMany(Order, { through: OrderProduct });
+
+OrderHistory.belongsTo(Order);
+
+
+User.hasOne(Cart);
+Cart.belongsTo(User);
+
+Cart.belongsToMany(Product, { through: CartProduct });
+Product.belongsToMany(Cart, { through: CartProduct });
+CartProduct.belongsTo(Product)
+Cart.hasMany(CartProduct)
+User.hasOne(Wishlist)
+Wishlist.belongsTo(User)
+Wishlist.belongsToMany(Product, { through: WishlistProduct });
+Product.belongsToMany(Wishlist, { through: WishlistProduct });
+Wishlist.hasMany(WishlistProduct)
+WishlistProduct.belongsTo(Product)
+
     
 
 
@@ -57,6 +90,8 @@ sequelize.authenticate()
   app.use(express.json());
 
   app.use("/pro",ProductRoutes)
+  app.use("/cart",CartRoute)
+  app.use("/wishlist",WishlistRoute)
  /* const insertMarkets = async () => {
     try {
       // Insert the first market

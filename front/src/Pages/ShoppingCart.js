@@ -1,7 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchCart,updateCartItemQuantity,removeFromCart } from '../Features/cart/cartSlice';
 
 const ShoppingCart = () => {
+  const userId = 1;
+  const dispatch =useDispatch()
+  const cartState = useSelector((state)=> state.cart.cart)
+  const updState = useSelector((state)=> state.cart.upd)
+  const [total,setTotal] = useState(0)
+  useEffect(()=>{
+    dispatch(fetchCart(userId))
+  },[userId,updState])
+
+  console.log(cartState)
+  useEffect(()=>{
+    if (cartState.length>0 ){
+        let total = 0
+        cartState[0].CartProducts.map((cartProduct)=>{
+          total += cartProduct.Product.price*cartProduct.quantity
+          })
+          setTotal(total)
+    }
+  },[cartState])
+  
+  const decreaseQuantity = (cartId, productId, quantity) => {
+    if (quantity > 1) {
+      dispatch(updateCartItemQuantity({ cartId, productId, quantity: quantity - 1 }));
+    }
+    else {
+      dispatch(removeFromCart({ cartId, productId }));
+    }
+  };
+ const RemoveFromCart =(cartId,productId)=>{
+  dispatch(removeFromCart({cartId,productId}))
+
+ }
+  const increaseQuantity = (cartId, productId, quantity) => {
+    dispatch(updateCartItemQuantity({ cartId, productId, quantity: quantity + 1 }));
+  };
   return (
     <div id="maincontent" className="maincontent cart">
       <div className="container-fluid">
@@ -31,7 +68,11 @@ const ShoppingCart = () => {
                         <div className="productPriceCart">Total</div>
                       </div>
                     </div>
+                    {cartState[0]?.CartProducts?.map((cartProduct) =>  (
 
+
+                      
+                      (
                     <div className="productCart">
                       <div>
                         <div className="productItemCart">
@@ -45,45 +86,46 @@ const ShoppingCart = () => {
                               />
                             </div>
                             <div className="delete text cart_close">
-                              <i className="las la-trash-alt cart_delete_product"></i>
+                              <i className="las la-trash-alt cart_delete_product"onClick={() => RemoveFromCart(cartState[0].id, cartProduct.Product.id)}></i>
                             </div>
                           </div>
                           <div className="centerit productImageCart">
-                            <a href="https://www.fos-lighting.eu/iwm-200-p-1020.html">
+                          <Link to={`/ProductDetail/${cartProduct.Product.id}`}>
                               <img
-                                src="uploads/thumbnails/products_0_image_1020.jpg.thumb_96x64.jpg"
+                                src={cartProduct.Product.image}
                                 border="0"
-                                title="IWM-200"
-                                alt=" IWM-200 "
+                                title={cartProduct.Product.title}
+                                alt={cartProduct.Product.title}
                               />
-                            </a>
+                            </Link>
                           </div>
                           <div className="productTitleCart">
-                            <a href="https://www.fos-lighting.eu/iwm-200-p-1020.html" className="productNameCart">
-                              <b>IWM-200</b>
-                            </a>
-                            <span className="productModelCart">Model: L005774</span>
+                          <Link to={`/ProductDetail/${cartProduct.Product.id}`} className="productNameCart">
+                              <b>{cartProduct.Product.title}</b>
+                            </Link>
+                            <span className="productModelCart">Model: {cartProduct.Product.code}</span>
                           </div>
                           <div className="productQuantityCart">
-                            <i className="las la-minus update-cart-quantity decrease-cart-quantity" id="decrease-cart-quantity"></i>
+                            <i className="las la-minus update-cart-quantity decrease-cart-quantity" id="decrease-cart-quantity" onClick={() => decreaseQuantity(cartState[0].id, cartProduct.Product.id, cartProduct.quantity)}></i>
                             <input
                               type="text"
                               name="cart_quantity[]"
                               id="cart_quantity[]"
-                              value="1"
+                              value={cartProduct.quantity}
                               style={{ width: '40px', textAlign: 'center' }}
                               className="selectform cart_quantity_action cart_quantity_value"
                             />
                             <input type="hidden" name="products_id[]" value="1020" />
                             <input type="hidden" name="multiples_conversion" id="multiples_conversion_value" />
-                            <i className="las la-plus update-cart-quantity increase-cart-quantity" id="increase-cart-quantity"></i>
+                            <i className="las la-plus update-cart-quantity increase-cart-quantity" id="increase-cart-quantity" onClick={() => increaseQuantity(cartState[0].id, cartProduct.Product.id, cartProduct.quantity)}></i>
                           </div>
                           <div className="productPriceCart">
-                            <b>172.50€</b>
+                            <b>{cartProduct.Product.price}€</b>
                           </div>
                         </div>
                       </div>
                     </div>
+                     )))}
                   </div>
 
                   <div className="shoppingCartDescription">
@@ -92,7 +134,7 @@ const ShoppingCart = () => {
                       <div className="inner">
                         <div className="description total total_amount">
                           <span id="cart-text">Total:</span>
-                          <span id="cart-value">172.50€</span>
+                          <span id="cart-value">{total}</span>
                           <div className="clear"></div>
                         </div>
                         <div className="description prices-not-include-vat">Prices do not include VAT</div>

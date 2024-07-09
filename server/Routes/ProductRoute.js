@@ -6,6 +6,7 @@ const { getNewsrooms } = require('../Controller/ProductCtrl');
 const { getFeaturedProduct } = require('../Controller/ProductCtrl');
 const { search } = require('../Controller/ProductCtrl');
 const {createProduct}= require('../Controller/ProductCtrl');
+const { getMarketById } = require('../Controller/ProductCtrl');
 const router = express.Router();
 
 
@@ -13,8 +14,9 @@ const router = express.Router();
 router.post('/products', createProduct);
 
 router.get('/products',getProducts)
-
 router.get('/all',getAllMarkets)
+
+router.get('/market/:id',getMarketById)
 router.get('/markets',getMarkets)
 router.get('/product/:id',getProductById)
 router.get('/news',getNewsrooms)

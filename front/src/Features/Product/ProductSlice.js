@@ -5,6 +5,7 @@ const initialState = {
   Products: [],
   Markets : [],
   Search : [],
+  Market:{},
   Product:null,
   All : [],
   isError: false,
@@ -29,6 +30,16 @@ export const GetProductById = createAsyncThunk(
   async(id,thunkAPI) => {
       try{ 
       return await AuthProduct.GetProductById(id)
+  }catch(error){
+  return thunkAPI.rejectWithValue(error)
+
+}}
+)
+export const GetMarketById = createAsyncThunk(
+  "product/get-market",
+  async(id,thunkAPI) => {
+      try{ 
+      return await AuthProduct.GetMarketById(id)
   }catch(error){
   return thunkAPI.rejectWithValue(error)
 
@@ -99,6 +110,22 @@ export const ProductSlice = createSlice({
         state.message = "success";
       })
       .addCase(GetAllProducts.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+      .addCase(GetMarketById.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(GetMarketById.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.Market = action.payload;
+        state.message = "success";
+      })
+      .addCase(GetMarketById.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;

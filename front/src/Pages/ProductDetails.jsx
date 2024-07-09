@@ -5,9 +5,14 @@ import { UseSelector,useSelector } from 'react-redux/es/hooks/useSelector';
 import { useDispatch } from 'react-redux';
 import { GetProductById } from '../Features/Product/ProductSlice';
 import AccountPage from '../components/Accountinfo/Accountinfo';
+import { removeFromCart, updateCartItemQuantity,addToCart, fetchCart } from '../Features/cart/cartSlice';
+import { addProductToWishlist, getWishlistsByUser } from '../Features/wishlist/wishlistSlice';
 function ProductDetail() {
+  const userId = 1;
+
   const [xDisplayStyle, setXDisplayStyle] = useState('none');
   const [bDisplayStyle, setBDisplayStyle] = useState('block');
+  const [Quantity,setQuantity]=useState(1)
   const params = useParams()
   const dispatch = useDispatch();
   const ProductState = useSelector((state)=> state.product.Product)
@@ -212,21 +217,38 @@ const product = [
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  const cartState = useSelector((state)=> state.cart.cart)
+  const updState = useSelector((state)=> state.cart.upd)
+  const WishlistState = useSelector((state)=> state?.Wishlist?.wishlists)
+
+  useEffect(()=>{
+    dispatch(fetchCart(userId))
+   
+  },[updState,userId])
+
+  useEffect(()=>{
+    dispatch(getWishlistsByUser(userId))
+  },[WishlistState,userId,dispatch])
+  
   const decreaseQuantity = () => {
-    // Implement decrease quantity logic here
-  };
+    if (Quantity > 1) {
+    setQuantity(Quantity-1)
+    
+  };}
 
   const increaseQuantity = () => {
-    // Implement increase quantity logic here
+
+    setQuantity(Quantity+1)
   };
 
-  const addToCart = () => {
+  const AddToCart = (userId, productId, quantity) => {
+    dispatch(addToCart({userId, productId, quantity}))
     // Implement add to cart logic here
   };
 
   
-  const addToWishlist = () => {
-    // Logic to add to wishlist
+  const AddToWishlist = (userId, productId, quantity) => {
+    dispatch(addProductToWishlist({userId, productId, quantity}))
   };
   return (
     <div id="mainbody" className="mainbody pinfo">
@@ -412,15 +434,15 @@ const product = [
         
         <div className="qty-label d-none">Quantity:</div>
         <div className="productQuantity">
-          <i className="las la-minus update-product-quantity decrease-product-quantity" onClick={decreaseQuantity}></i>
-          <input type="text" name="cart_quantity" id="cart_quantity" value="1" className="cart_quantity_value" />
+          <i className="las la-minus update-product-quantity decrease-product-quantity" onClick={() => decreaseQuantity()}></i>
+          <input type="text" name="cart_quantity" id="cart_quantity" value={Quantity} className="cart_quantity_value" />
           <input type="hidden" name="multiples_conversion" value="1" />
           <input type="hidden" name="solid_quantity" value="1" id="solid_quantity" />
-          <i className="las la-plus update-product-quantity increase-product-quantity" onClick={increaseQuantity}></i>
+          <i className="las la-plus update-product-quantity increase-product-quantity" onClick={() => increaseQuantity()}></i>
           <div className="max-quantity-warning" style={{ display: 'none' }}>Max available quantity</div>
         </div>
         <div className="addtocart">
-          <button type="submit" className="btn btn-icon btn-default btn-primary btn-fn-18 btn-big shop-btn update-shopping-cart final" onClick={addToCart}>
+          <button type="button"onClick={() => AddToCart(userId,ProductState.id,Quantity)} className="btn btn-icon btn-default btn-primary btn-fn-18 btn-big shop-btn update-shopping-cart final" >
             <svg viewBox="0 0 26 23">
               <g fill="none" fillRule="nonzero" stroke="#000">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1.606 1h4.503l2.195 11.848a2.678 2.678 0 002.634 2.192h9.305c1.22 0 2.286-.824 2.593-2.004l2.071-8.007a.73.73 0 00-.706-.913L10.938 4.11"></path>
@@ -431,7 +453,7 @@ const product = [
           </button>
           <input type="hidden" name="customer_group_id" value="19" />
           <input type="hidden" name="main_max_quantity" value="IN_PRODUCTION_MAX_QUANTITY" />
-          <button type="submit" className="btn btn-default shop-btn outline add-to-collection update-wishlist final ml-3" id="add_to_wishlist" data-id="1775" onClick={addToWishlist}>
+          <button type="button" className="btn btn-default shop-btn outline add-to-collection update-wishlist final ml-3" id="add_to_wishlist" data-id="1775" onClick={() => AddToWishlist(userId,ProductState?.id,Quantity)}>
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewBox="0 0 22 19" fill="#f58220">
               <path d="M6.125 0.75C3.02246 0.75 0.5 3.30176 0.5 6.375C0.5 7.44727 0.986328 8.37598 1.4375 9.04688C1.88867 9.71777 2.35156 10.1484 2.35156 10.1484L10.4609 18.2812L11 18.8203L11.5391 18.2812L19.6484 10.1484C19.6484 10.1484 21.5 8.5166 21.5 6.375C21.5 3.30176 18.9775 0.75 15.875 0.75C13.2998 0.75 11.6416 2.2998 11 2.95312C10.3584 2.2998 8.7002 0.75 6.125 0.75ZM6.125 2.25C8.36621 2.25 10.4375 4.42969 10.4375 4.42969L11 5.0625L11.5625 4.42969C11.5625 4.42969 13.6338 2.25 15.875 2.25C18.1572 2.25 20 4.12207 20 6.375C20 7.53223 18.5938 9.09375 18.5938 9.09375L11 16.6875L3.40625 9.09375C3.40625 9.09375 3.04297 8.74512 2.67969 8.20312C2.31641 7.66113 2 6.95508 2 6.375C2 4.12207 3.84277 2.25 6.125 2.25Z" stroke="#f58220" strokeWidth="0"></path>
             </svg>

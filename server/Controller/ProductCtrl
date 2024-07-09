@@ -164,8 +164,33 @@ const getAllMarkets = asyncHandler(async (req, res) => {
       ]
     });
     res.json(markets);
+  });
+  const getMarketById = asyncHandler(async (req, res) => {
+    const id =req.params.id
+    console.log(id)
+    const markets = await Market.findByPk(id,{
+      include: [
+        {
+          model: Category,
+          include: [
+            {
+              model: Subcategory,
+              include: [
+                {
+                  model: SubSubcategory,
+                  include: Product // Include products in subsubcategories
+                },
+                Product // Include products in subcategories
+              ]
+            },
+            Product // Include products in categories
+          ]
+        }
+      ]
+    });
+    res.json(markets);
     console.log(markets)
   });
   
   
-module.exports = { search, createProduct, getFeaturedProduct, getProducts, getProductById, updateProduct, getNewsrooms, deleteProduct,getAllMarkets,getMarkets };
+module.exports = {getMarketById, search, createProduct, getFeaturedProduct, getProducts, getProductById, updateProduct, getNewsrooms, deleteProduct,getAllMarkets,getMarkets };

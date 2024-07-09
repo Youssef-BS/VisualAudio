@@ -1,80 +1,92 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchCart, updateCartItemQuantity, removeFromCart } from '../Features/cart/cartSlice';
 
-function Cart() {
-    const [cartItems, setCartItems] = useState([
-        {
-          id: 1020,
-          name: 'IWM-200',
-          price: 172.50,
-          quantity: 1,
-          imageUrl: 'uploads/thumbnails/products_0_image_1020.jpg.thumb_90x60.jpg',
-          productUrl: 'https://www.fos-lighting.eu/iwm-200-p-1020.html',
-        },
-        // Add more items as needed
-      ]);
-    
-      const increaseQuantity = (id) => {
-        setCartItems((prevItems) =>
-          prevItems.map((item) =>
-            item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-          )
-        );
-      };
-    
-      const decreaseQuantity = (id) => {
-        setCartItems((prevItems) =>
-          prevItems.map((item) =>
-            item.id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
-          )
-        );
-      };
-    
-      const removeItem = (id) => {
-        setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-      };
-    
-      const calculateTotal = () => {
-        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
-      };
-    return (
-       
-      
-                <div id="shopping-cart-items-container" className="container dynamic_content active">
-                     {cartItems.length === 0 ? (
+const Cart = ({ closeCart }) => {
+  const userId = 1;
+  const dispatch = useDispatch();
+  const cartState = useSelector((state) => state.cart.cart);
+  const updState = useSelector((state) => state.cart.upd);
+  const [total, setTotal] = useState(0);
+  const cartRef = useRef(null);
 
-                    <div id="shopping-cart-items-wrapper">
-                        <div className="centerit empty">
-                            Your cart is empty.
-                        </div>
-                    </div>
-                     ) : (
-                        <div id="shopping-cart-items-wrapper">
+  useEffect(() => {
+    dispatch(fetchCart(userId));
+  }, [userId, updState, dispatch]);
+
+  useEffect(() => {
+    if (cartState.length > 0) {
+      let total = 0;
+      cartState[0].CartProducts.forEach((cartProduct) => {
+        total += cartProduct.Product.price * cartProduct.quantity;
+      });
+      setTotal(total);
+    }
+  }, [cartState]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
+        closeCart();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [cartRef, closeCart]);
+
+  const increaseQuantity = (cartId, productId, quantity) => {
+    dispatch(updateCartItemQuantity({ cartId, productId, quantity: quantity + 1 }));
+  };
+
+  const decreaseQuantity = (cartId, productId, quantity) => {
+    if (quantity > 1) {
+      dispatch(updateCartItemQuantity({ cartId, productId, quantity: quantity - 1 }));
+    } else {
+      dispatch(removeFromCart({ cartId, productId }));
+    }
+  };
+
+  const removeItem = (cartId, productId) => {
+    dispatch(removeFromCart({ cartId, productId }));
+  };
+
+  return (
+    <div id="shopping-cart-items-container" className="container dynamic_content active" ref={cartRef}>
+      {cartState[0]?.CartProducts.length == 0 ? (
+        <div id="shopping-cart-items-wrapper">
+          <div className="centerit empty">Your cart is empty.</div>
+        </div>
+      ) : (
+        <div id="shopping-cart-items-wrapper">
           <div className="panel" id="mini-cart-panel">
             <div className="items">
-              {cartItems.map((item) => (
-                <div className="item" key={item.id}>
+              {cartState[0]?.CartProducts.map((item) => (
+                <div className="item" key={item.Product.id}>
                   <div className="image">
-                    <a href={item.productUrl}>
-                      <img src={item.imageUrl} className="mouseOver" alt={item.name} />
-                    </a>
+                  <Link to={`/ProductDetail/${item.Product.id}`}>
+                      <img src={item.Product.image} className="mouseOver" alt={item.Product.name} />
+                    </Link>
                   </div>
                   <div className="description">
                     <div className="title">
-                      <a href={item.productUrl}>
-                        <span className="name">{item.name}</span>
-                      </a>
+                    <Link to={`/ProductDetail/${item.Product.id}`}>
+                        <span className="name">{item.Product.title}</span>
+                      </Link>
                     </div>
                   </div>
                   <div className="price_container">
                     <div className="price">
-                      <span>Price:</span>{item.price}€
+                      <span>Price:</span>{item.Product.price}€
                     </div>
                     <div className="actionbar">
                       <span>
                         <i
                           className="las la-minus update-minicart-quantity decrease-minicart-quantity"
-                          onClick={() => decreaseQuantity(item.id)}
+                          onClick={() => decreaseQuantity(cartState[0].id, item.Product.id, item.quantity)}
                         ></i>
                       </span>
                       <span>
@@ -85,13 +97,13 @@ function Cart() {
                           className="selectform minicart_quantity_action"
                           readOnly
                         />
-                        <input type="hidden" name="minicart_products_id[]" value={item.id} />
+                        <input type="hidden" name="minicart_products_id[]" value={item.Product.id} />
                         <input type="hidden" name="multiples_conversion" value="1" />
                       </span>
                       <span>
                         <i
                           className="las la-plus update-minicart-quantity increase-minicart-quantity"
-                          onClick={() => increaseQuantity(item.id)}
+                          onClick={() => increaseQuantity(cartState[0].id, item.Product.id, item.quantity)}
                         ></i>
                       </span>
                       <span className="productRemoveMiniCart">
@@ -99,14 +111,14 @@ function Cart() {
                           <input
                             type="checkbox"
                             name="minicart_delete[]"
-                            value={item.id}
+                            value={item.Product.id}
                             className="minicart_delete_product_value minicart_close_value"
                           />
                         </div>
                         <div className="delete text minicart_close">
                           <i
                             className="las la-trash-alt minicart_delete_product"
-                            onClick={() => removeItem(item.id)}
+                            onClick={() => removeItem(cartState[0].id, item.Product.id)}
                           ></i>
                         </div>
                       </span>
@@ -119,12 +131,12 @@ function Cart() {
             </div>
           </div>
           <div className="total total_amount">
-            <span>Total:</span>{calculateTotal()}€
+            <span>Total:</span>{total.toFixed(2)}€
           </div>
           <div className="goto">
             <Link to="/shopcart">
               <button type="button" className="shop-btn outline">
-               <span>Shopping cart</span>
+                <span>Shopping cart</span>
               </button>
             </Link>
             <Link className="shop-btn has-icon right" to='/complete-order' id="gotocheckout">
@@ -134,9 +146,7 @@ function Cart() {
         </div>
       )}
     </div>
-               
- 
-    )
-}
+  );
+};
 
 export default Cart;

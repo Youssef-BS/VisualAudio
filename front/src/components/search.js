@@ -6,6 +6,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import Cart from './Cart';
 import { Link } from 'react-router-dom';
 import { Search } from '../Features/Product/ProductSlice';
+import { fetchCart } from '../Features/cart/cartSlice';
 const MainHeader = () => {
     const [isInputEmpty, setIsInputEmpty] = useState(false);
     const [query, setQuery] = useState('');
@@ -55,8 +56,18 @@ const MainHeader = () => {
 
     const toggleOpen = (event) => {
         setIsOpen(!isOpen);
-
+         
     };
+    const closeCart = () => {
+        setShowCart(false);
+      };  
+      const userId = 1;
+      const cartState = useSelector((state) => state.cart.cart);
+      const updState = useSelector((state) => state.cart.upd);
+      useEffect(() => {
+        dispatch(fetchCart(userId));
+      }, [userId, updState, dispatch]);
+    
     return (
         <>
         
@@ -218,12 +229,12 @@ const MainHeader = () => {
                                                 </g>
                                             </svg>
                                             <div className="shoppingcart_options_image responsive">
-                                                <div className="cart_show_amount responsive">0</div>
+                                                <div className="cart_show_amount responsive">{cartState[0]?.CartProducts.length}</div>
                                             </div>
-                                            <div className="caption">0.00€</div>
+                                            <div className="caption">{cartState[0]?.totale}€</div>
                                         </div>
                                         {showCart && (
-                    <Cart/>
+                    <Cart  closeCart={closeCart} />
                 )}
                                         <div className="clear"></div>
                                     </div>
