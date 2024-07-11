@@ -4,10 +4,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { GetAll, GetAllProductMarket, GetAllProducts, GetMarkets } from '../../Features/Product/ProductSlice';
 const CategoryBox = () => {
-  const test=true;
 
   const [data,setData] = useState({})
-  const [pdata,setPData] = useState({})
 
   const dispatch = useDispatch();
   const MarketState = useSelector((state)=> state?.product?.Markets);
@@ -19,24 +17,8 @@ const CategoryBox = () => {
     dispatch(GetAllProducts())
     setData(ProductState)
 
-  },[]);
+  },[dispatch]);
  console.log(ProductState);
-  const products = [
-    {
-      id: 1,
-      title: 'FOS Pixel Line 80',
-      image: 'https://www.fos-lighting.eu/uploads/categories_0_cat_image_172.png',
-      description: 'Pixel Bar 100 cm , 11.25 pitch, 80 LEDs (tri-color RGB) SMD 5050. Art-Net, Kling-Net,DMX,RDM, Viewing Angle: 120?, 2500 NITS (clear filter), IP Rating: IP20, Art-Net&amp;DMX Channels: 10/55/480. Required pixel line driver, 1000 x 37 x 95 mm , 2 kg',
-      link: 'https://www.fos-lighting.eu/fos-pixel-line-80-p-1319.html'
-    },
-    {
-      id: 2,
-      title: 'FOS Product 2',
-      image: 'https://studio-alterego.com/wp-content/uploads/2022/01/VPR_2482R_BD.jpg',
-      description: 'Description of Product 2',
-      link: 'https://www.example.com/product-2'
-    }
-  ];
 
   const settings = {
     arrows: true,
@@ -75,10 +57,8 @@ const CategoryBox = () => {
             },
         }
     ],
-  
+
   };
-  
-  
   
   
 
@@ -86,33 +66,31 @@ const CategoryBox = () => {
     <section className="section-categories-boxes">
       <div className="container-fluid">
         <div className="row">
-         
-         
-        {MarketState?.map((market)=>(
+        {MarketState?.slice(0,4).map((market)=>(
             <div className="col-xl-6 mb-4">
             <div className="category-box">
               <div className="category-box__left">
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="category-box__image-wrapper">
                   <img className="category-box__image" src="https://www.fos-lighting.eu/uploads/categories_0_cat_image_172.png" alt="Intelligent Lighting Technology" />
                 </a>
-                <h2 className="category-box__title">Intelligent Lighting Technology</h2>
+                <h2 className="category-box__title">{market.name}</h2>
                 <div className="category-box__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</div>
                 <a href="https://www.fos-lighting.eu/fos-technologies-c-172.html" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</a>
               </div>
               <div className="category-box__right">
                 <Slider {...settings}>
                   {ProductState?.map((product)=>(
-                     product.marketId === market.id ? (   
+                     product?.MarketId == market?.id ? (   
                     <div key={product.id}>
                       <div className="product-box">
                         <div className="product-box__img">
                         <Link to={`/ProductDetail/${product.id}`}>
 
-                          <img src={product.image} alt={product.title} />
+                          <img src={product?.image} alt={product?.title} />
                           </Link>
                         </div>
                         <div className="product-box__title">
-                          <span>{product.title}</span>
+                          <span>{product?.title}</span>
                         </div>
                         <p className="product-box__desc">{product.description}</p>
                         {/* <Link to="/explore" className="btn btn-primary-gray btn-big-fn18 category-box__btn">Explore</Link> */}

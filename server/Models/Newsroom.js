@@ -13,8 +13,8 @@ const Newsroom = sequelize.define('Newsroom', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: Product, // Reference the Market model
-      key: 'id' // Name of the referenced column in the Market model
+      model: Product, 
+      key: 'id' 
     }
   }
   

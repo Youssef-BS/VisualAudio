@@ -1,7 +1,6 @@
 // models/Market.js
-const { DataTypes, HasMany } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require('../config');
-const Category = require('./Category')
 const Market = sequelize.define('Market', {
   name: {
     type: DataTypes.STRING,

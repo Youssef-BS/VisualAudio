@@ -210,14 +210,13 @@ const handleSubcategoryClick = (marketId, categoryId, subcategoryId) => {
                 <ul className="second-level" style={{ display: showSubMenu ? 'block' : 'none' }}>
                                                                 <ul className="inner-second" style={{ maxHeight: '571px' }}>
 
-                  {market?.Categories?.filter(category => category?.marketId == 1).map(category => {
-                    if(category.marketId==1) console.log("www") 
+                  {market?.Categories?.filter(category => category?.marketId == " 1").map(category => {
+                    if(category.marketId==1) console.log(category.marketId) 
                     else console.log("qq") 
                     
   return (
                         <li key={category.id} className="menu-item has-children third-level-container">
                             <a onClick={() => handleCategoryClick(category?.id)} title={category?.name} data-href={category.url}>{category.name}</a>
-                            <h2>hhh</h2>
                            
                                 <i className="las la-angle-right" data-href="https://www.fos-lighting.eu/active-speakers-c-173_97.html"onClick={toggleThirdLevel}></i>
                                 {showThirdLevel && (

@@ -180,9 +180,7 @@ const MainHeader = () => {
                         <div className="row justify-content-end">
                             <div className="col-auto icon-contain my-auto">
                                 <div className="row">
-                                    {/* <div className="col-auto icon d-none">
-                                        <a href="https://www.fos-lighting.eu/"> GR </a> &nbsp;&nbsp;&nbsp; <a href="https://www.fos-lighting.eu/english/"> EN </a>
-                                    </div> */}
+                                 
                                     <div className="col-auto icon d-none">
                                         <div id="not-logged" className="login">
                                             <a href="#" id="login-popup-link" className="login-popup-link">
@@ -193,18 +191,23 @@ const MainHeader = () => {
                                             </a>
                                         </div>
                                     </div>
-                                    <div className="col-auto icon search">
+                                    
+                                    <div className="col-auto icon wishlist">
+      <a href="https://www.fos-lighting.eu/wishlist.php" className="wishlist">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewBox="0 0 22 19" fill="none">
+          <path d="M6.125 0.75C3.02246 0.75 0.5 3.30176 0.5 6.375C0.5 7.44727 0.986328 8.37598 1.4375 9.04688C1.88867 9.71777 2.35156 10.1484 2.35156 10.1484L10.4609 18.2812L11 18.8203L11.5391 18.2812L19.6484 10.1484C19.6484 10.1484 21.5 8.5166 21.5 6.375C21.5 3.30176 18.9775 0.75 15.875 0.75C13.2998 0.75 11.6416 2.2998 11 2.95312C10.3584 2.2998 8.7002 0.75 6.125 0.75ZM6.125 2.25C8.36621 2.25 10.4375 4.42969 10.4375 4.42969L11 5.0625L11.5625 4.42969C11.5625 4.42969 13.6338 2.25 15.875 2.25C18.1572 2.25 20 4.12207 20 6.375C20 7.53223 18.5938 9.09375 18.5938 9.09375L11 16.6875L3.40625 9.09375C3.40625 9.09375 3.04297 8.74512 2.67969 8.20312C2.31641 7.66113 2 6.95508 2 6.375C2 4.12207 3.84277 2.25 6.125 2.25Z" fill="#000"></path>
+        </svg>
+        <div className="wishlist-number">40</div>
+      </a>
+    </div>
+    <div className="col-auto icon search">
                                         <a href="#" className="search-toggle"onClick={toggleOpen} >
                                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M13.377 11.6288H12.587L12.307 11.3588C13.507 9.9588 14.127 8.0488 13.787 6.0188C13.317 3.2388 10.997 1.0188 8.19697 0.678799C3.96697 0.158799 0.406968 3.7188 0.926968 7.9488C1.26697 10.7488 3.48697 13.0688 6.26697 13.5388C8.29697 13.8788 10.207 13.2588 11.607 12.0588L11.877 12.3388V13.1288L16.127 17.3788C16.537 17.7888 17.207 17.7888 17.617 17.3788C18.027 16.9688 18.027 16.2988 17.617 15.8888L13.377 11.6288ZM7.37697 11.6288C4.88697 11.6288 2.87697 9.6188 2.87697 7.1288C2.87697 4.6388 4.88697 2.6288 7.37697 2.6288C9.86697 2.6288 11.877 4.6388 11.877 7.1288C11.877 9.6188 9.86697 11.6288 7.37697 11.6288Z" fill="#454852"></path>
                                             </svg>
                                         </a>
-                                    </div>
-                                    
-                             
-                                </div>
-                            </div>
-                            <div className="col-auto cart-contain ">
+                                    </div>          
+        <div className="col-auto cart-contain ">
                                 <div className="shoppingcart toggler">
                                     <div className="shoppingpopup dynamic_content" onClick={toggleCart}>
                                         <div id="mini-shopping-cart-details-dynamic" className="details">
@@ -225,8 +228,13 @@ const MainHeader = () => {
                                         <div className="clear"></div>
                                     </div>
                                 </div>
+                            </div>       
+                                </div>
                             </div>
-                        </div>
+                            
+                           
+                            
+                            </div>
                     </div>
                 </div>
             </div>

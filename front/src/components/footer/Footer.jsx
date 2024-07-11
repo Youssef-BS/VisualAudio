@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import ScrollToTop from '../scrollToTop/ScrollToTop';
 
 const Footer = () => {
   return (
@@ -93,9 +94,8 @@ const Footer = () => {
         </div>
       </div>
     </div>
-    {/* Back to top button */}
     <div className="to-top-icons show bottom">
-      <a href="javascript:" id="return-to-top"><i className="las la-angle-up"></i></a>
+      <ScrollToTop />
       <div className="to-top-filters" data-toggle="modal" data-target="#filtersModal">
         <i className="las la-sliders-h"></i> <span>Filters</span>
       </div>
