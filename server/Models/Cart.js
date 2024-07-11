@@ -12,14 +12,7 @@ const Cart = sequelize.define('Cart', {
     allowNull: false,
     defaultValue: 1
   },
-  UserId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: User, 
-      key: 'id' 
-    }
-  }
+
 }, {
   sequelize,
   modelName: 'Cart',

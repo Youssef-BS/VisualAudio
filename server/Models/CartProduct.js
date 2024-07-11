@@ -14,22 +14,7 @@ const CartProduct = sequelize.define('CartProduct', {
     allowNull: false,
     defaultValue: 1
   },
-  CartId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Cart, // Reference the Market model
-      key: 'id' // Name of the referenced column in the Market model
-    }
-  },
-  ProductId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Product, // Reference the Market model
-      key: 'id' // Name of the referenced column in the Market model
-    }
-  }
+
 }, {
   sequelize,
   modelName: 'CartProduct',

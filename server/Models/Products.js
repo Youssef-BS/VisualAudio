@@ -51,38 +51,7 @@ const Product = sequelize.define('Product', {
     type: DataTypes.JSON, 
     allowNull: true 
   },
-  marketId: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: {
-      model: Market, 
-      key: 'id' 
-    }
-  },
-  categoryId: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: {
-      model: Category, 
-      key: 'id' 
-    }
-  },
-  subcategoryId: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: {
-      model: Subcategory, 
-      key: 'id' 
-    }
-  },
-  subSubcategoryId: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: {
-      model: SubSubcategory, 
-      key: 'id' 
-    }
-  } , 
+ 
 
 });
 

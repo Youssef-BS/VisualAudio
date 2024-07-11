@@ -7,14 +7,7 @@ const Category = sequelize.define('Category', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  marketId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Market, 
-      key: 'id' 
-    }
-  }
+
 });
 
 module.exports = Category;

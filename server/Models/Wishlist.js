@@ -12,14 +12,7 @@ const Wishlist = sequelize.define('Wishlist', {
     allowNull: false,
     defaultValue: 1
   },
-  UserId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: User, // Reference the Market model
-      key: 'id' // Name of the referenced column in the Market model
-    }
-  }
+
 }, {
   sequelize,
   modelName: 'wishlist',

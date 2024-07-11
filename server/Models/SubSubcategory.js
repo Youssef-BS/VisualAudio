@@ -7,14 +7,7 @@ const SubSubcategory = sequelize.define('SubSubcategory', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  subcategoryId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Subcategory, 
-      key: 'id' 
-    }
-  }
+
 });
 
 module.exports = SubSubcategory;
