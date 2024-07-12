@@ -1,13 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config');
-const Gallery = require('./Gallery');
 
 const Project = sequelize.define('Project', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
   title: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -21,7 +15,5 @@ const Project = sequelize.define('Project', {
     allowNull: false,
   },
 });
-
-Project.hasMany(Gallery, { as: 'gallery' });
 
 module.exports = Project;

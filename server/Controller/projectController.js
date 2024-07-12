@@ -1,5 +1,5 @@
-const Project = require("../Models/Project")
-const Gallery = require("../Models/Gallery")
+const Project = require('../Models/Project');
+const Gallery = require('../Models/Gallery');
 
 // Create a new project
 const createProject = async (req, res) => {
@@ -14,9 +14,9 @@ const createProject = async (req, res) => {
       title,
       description,
       image,
-      gallery: gallery.map(item => ({ url: item.url }))
+      galleries: gallery.map(item => ({ url: item.url }))
     }, {
-      include: [{ model: Gallery, as: 'gallery' }]
+      include: [{ model: Gallery, as: 'galleries' }]
     });
 
     res.status(201).json(project);
@@ -26,26 +26,27 @@ const createProject = async (req, res) => {
   }
 };
 
-
 // Get all projects
 const getAllProjects = async (req, res) => {
   try {
     const projects = await Project.findAll({
-      include: [{ model: Gallery, as: 'gallery' }]
+      include: [{ model: Gallery, as: 'galleries' }]
     });
 
     res.status(200).json(projects);
   } catch (error) {
+    console.error("Error fetching projects:", error);
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // Get a project by ID
 const getProjectById = async (req, res) => {
   try {
     const { id } = req.params;
     const project = await Project.findByPk(id, {
-      include: [{ model: Gallery, as: 'gallery' }]
+      include: [{ model: Gallery, as: 'galleries' }]
     });
 
     if (!project) {
@@ -103,6 +104,10 @@ const deleteProject = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+
+
 
 module.exports = {
   createProject,

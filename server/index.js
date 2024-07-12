@@ -5,6 +5,7 @@ const Product = require('./Models/Products');
 const Market = require('./Models/Market')
 const Category = require('./Models/Category')
 const Subcategory = require('./Models/Subcategory')
+const userRoutes = require('./Routes/userRoutes');
 const ProductRoutes = require('./Routes/ProductRoute')
 const WishlistRoute = require('./Routes/WishlistRoute')
 const CartRoute = require('./Routes/CartRoute')
@@ -22,6 +23,12 @@ const PORT = process.env.PORT || 3000;
 const cors = require("cors");
 const Wishlist = require('./Models/Wishlist');
 const WishlistProduct = require('./Models/WishlistProduct');
+const authRoutes = require('./Routes/authRoutes');
+const projectRoutes = require('./Routes/projectRoutes');
+const Gallery = require('./Models/Gallery');
+const Project = require('./Models/Project');
+const ProjectProduct = require('./Models/ProjectProduct');
+const projectProductRoutes = require('./Routes/projectProductRoutes');
 
 // Test the database connection
 sequelize.authenticate()
@@ -29,6 +36,9 @@ sequelize.authenticate()
     console.log('Database connection has been established successfully.');
     Category.belongsTo(Market);
     Market.hasMany(Category)
+
+    Project.hasMany(Gallery, { as: 'galleries', foreignKey: 'ProjectId' });
+    Gallery.belongsTo(Project, { foreignKey: 'ProjectId' });
 
     Subcategory.belongsTo(Category);
     Category.hasMany(Subcategory)
@@ -69,6 +79,12 @@ Product.belongsToMany(Wishlist, { through: WishlistProduct });
 Wishlist.hasMany(WishlistProduct)
 WishlistProduct.belongsTo(Product)
 
+ProjectProduct.belongsTo(Project, { foreignKey: 'projectId' });
+ProjectProduct.belongsTo(Product, { foreignKey: 'productId' });
+Project.hasMany(ProjectProduct, { foreignKey: 'projectId' });
+Product.hasMany(ProjectProduct, { foreignKey: 'productId' });
+
+
     
 
 
@@ -92,6 +108,10 @@ WishlistProduct.belongsTo(Product)
   app.use("/pro",ProductRoutes)
   app.use("/cart",CartRoute)
   app.use("/wishlist",WishlistRoute)
+  app.use("/auth",authRoutes)
+  app.use('/user', userRoutes);
+  app.use('/projects' , projectRoutes);
+  app.use("/project-product", projectProductRoutes)
  /* const insertMarkets = async () => {
     try {
       // Insert the first market

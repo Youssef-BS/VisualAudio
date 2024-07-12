@@ -7,29 +7,24 @@ const asyncHandler = require('express-async-handler');
 const addToCart = asyncHandler(async (req, res) => {
   const { productId, quantity } = req.body;
   const userId = req.params.userId;
-  const userid=2; // Assuming cartId is passed as a parameter
-
   try {
     // Check if the product exists
-    const product = await Product.findAll({
-        where: { id:productId },
-      });
+    const product = await Product.findByPk(productId);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
     // Check if the cart already exists or create a new one
-    let cart = await Cart.findAll({
-      where : {UserId : userId}
+    let cart = await Cart.findOrCreate({
+      where: { UserId: userId },
+      defaults: { totale: 0, UserId: userId }
     });
-    if (!cart) {    
-      // Create a new cart if it doesn't exist
-      cart = await Cart.create({ totale: 0,UserId : userId }); // Assuming id is passed as cartId
-    }
+    // `findOrCreate` returns an array, where the first element is the instance, and the second element indicates if it was created
+    cart = cart[0];
 
     // Check if the cart already contains this product
     let cartProduct = await CartProduct.findOne({
-      where: { CartId:cart[0].id, ProductId :product[0].id }
+      where: { CartId: cart.id, ProductId: productId }
     });
 
     if (cartProduct) {
@@ -38,15 +33,14 @@ const addToCart = asyncHandler(async (req, res) => {
     } else {
       // Create a new cart product if it doesn't exist
       cartProduct = await CartProduct.create({
-        CartId:cart[0].id ,
-        ProductId:productId,
-
-        quantity:quantity
+        CartId: cart.id,
+        ProductId: productId,
+        quantity: quantity
       });
     }
     // Update the total price in the Cart model
-    const updatedTotal = cart[0].totale + (product.price * quantity);
-    await cart[0].update({ totale: updatedTotal });
+    const updatedTotal = cart.totale + (product.price * quantity);
+    await cart.update({ totale: updatedTotal });
 
     res.status(201).json(cartProduct);
   } catch (error) {
@@ -54,6 +48,7 @@ const addToCart = asyncHandler(async (req, res) => {
     res.status(500).json({ message: 'Failed to add product to cart' });
   }
 });
+
 
 // Retrieve all items in the cart
 const getCartItems = asyncHandler(async (req, res) => {
